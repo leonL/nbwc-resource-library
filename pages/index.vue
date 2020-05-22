@@ -8,6 +8,7 @@
       <h2 class="subtitle">
         Nav intefrace for a collection of COVID19 resources curated by the New Brunswick Women&#39;s Council 
       </h2>
+      <p>{{ articles }}</p>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -32,6 +33,20 @@
 import Logo from '~/components/Logo.vue'
 
 export default {
+   data () {
+    return {
+      articles: []
+    }
+  },
+  async fetch () {
+    const $nbwcResorcesBase = this.$http.create({
+      prefixUrl: 'https://api.airtable.com/v0/appAT2nFRkjglBRZl/Articles',
+      searchParams: [['view', 'All articles']]
+    })
+    $nbwcResorcesBase.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer')
+    const data = await $nbwcResorcesBase.$get('')
+    this.articles = data.records.map(record => record.fields.Title) 
+  },
   components: {
     Logo
   }
