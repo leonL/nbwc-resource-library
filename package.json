@@ -1,7 +1,7 @@
 {
   "name": "nbwc-covid-resources",
   "version": "1.0.0",
-  "description": "Nav intefrace for a collection of COVID19 resources curated by the New Brunswick Women&#39;s Council ",
+  "description": "Nav interface for a collection of COVID19 resources curated by the New Brunswick Women&#39;s Council ",
   "author": "Leon Lukashevsky",
   "private": true,
   "scripts": {

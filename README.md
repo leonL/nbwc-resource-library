@@ -1,6 +1,6 @@
 # nbwc-covid-resources
 
-> Nav intefrace for a collection of COVID19 resources curated by the New Brunswick Women&#39;s Council 
+> Nav interface for a collection of COVID19 resources curated by the New Brunswick Women&#39;s Council 
 
 ## Build Setup
 
