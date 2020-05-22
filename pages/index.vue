@@ -6,7 +6,7 @@
         nbwc-covid-resources
       </h1>
       <h2 class="subtitle">
-        Nav intefrace for a collection of COVID19 resources curated by the New Brunswick Women&#39;s Council 
+        {{ $t('welcome') }} 
       </h2>
       <p>{{ articles }}</p>
       <div class="links">
