@@ -40,12 +40,12 @@ export default {
   },
   async fetch () {
     const $nbwcResorcesBase = this.$http.create({
-      prefixUrl: 'https://api.airtable.com/v0/appAT2nFRkjglBRZl/Articles',
-      searchParams: [['view', 'All articles']]
+      prefixUrl: 'https://api.airtable.com/v0/app393cel1ZJ5Wi13/RESOURCES',
+      searchParams: [['view', 'ALL RECORDS']]
     })
     $nbwcResorcesBase.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer')
     const data = await $nbwcResorcesBase.$get('')
-    this.articles = data.records.map(record => record.fields.Title) 
+    this.articles = data.records.map(record => record.fields.TITLE) 
   },
   components: {
     Logo
