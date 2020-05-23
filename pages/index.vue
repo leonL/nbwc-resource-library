@@ -1,14 +1,16 @@
 <template>
   <div class="container">
     <div>
-      <logo />
+      <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)">
+      <!-- <img src="../assets/NBWC_logo_e.png"> -->
       <h1 class="title">
         nbwc-covid-resources
       </h1>
       <h2 class="subtitle">
         {{ $t('welcome') }} 
       </h2>
-      <p>{{ articles }}</p>
+      <p>{{ "NBWC_logo_e.png" }}</p>
+      <p>{{ resourceTitles }}</p>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -28,14 +30,13 @@
     </div>
   </div>
 </template>
-
 <script>
-import Logo from '~/components/Logo.vue'
 
 export default {
    data () {
     return {
-      articles: []
+      lang: "e",
+      resourceTitles: []
     }
   },
   async fetch () {
@@ -45,10 +46,7 @@ export default {
     })
     $nbwcResorcesBase.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer')
     const data = await $nbwcResorcesBase.$get('')
-    this.articles = data.records.map(record => record.fields.TITLE) 
-  },
-  components: {
-    Logo
+    this.resourceTitles = data.records.map(record => record.fields.TITLE) 
   }
 }
 </script>
