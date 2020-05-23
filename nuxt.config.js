@@ -51,10 +51,10 @@ export default {
       fallbackLocale: 'en',
       messages: {
         en: {
-          welcome: 'Welcome'
+          intro: 'COVID-19 Resource Library'
         },
         fr: {
-          welcome: 'Bienvenue'
+          intro: 'Bibliothèque de ressources COVID-19'
         }
       }
     }

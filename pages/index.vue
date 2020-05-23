@@ -2,16 +2,11 @@
   <div class="container">
     <div>
       <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)">
-      <!-- <img src="../assets/NBWC_logo_e.png"> -->
-      <h1 class="title">
-        nbwc-covid-resources
-      </h1>
-      <h2 class="subtitle">
-        {{ $t('welcome') }} 
+      <h2 class="title">
+        {{ $t('intro') }} 
       </h2>
-      <p>{{ "NBWC_logo_e.png" }}</p>
       <p>{{ resourceTitles }}</p>
-      <div class="links">
+      <!-- <div class="links">
         <a
           href="https://nuxtjs.org/"
           target="_blank"
@@ -26,7 +21,7 @@
         >
           GitHub
         </a>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -35,7 +30,6 @@
 export default {
    data () {
     return {
-      lang: "e",
       resourceTitles: []
     }
   },
@@ -53,12 +47,12 @@ export default {
 
 <style>
 .container {
-  margin: 0 auto;
-  min-height: 100vh;
+  margin: 10px auto;
+  /* min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  text-align: center; */
 }
 
 .title {
@@ -66,20 +60,8 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 42px;
   color: #35495e;
   letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
 }
 </style>
