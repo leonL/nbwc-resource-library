@@ -9,8 +9,9 @@
         v-for="(resource, index) in resources"
         v-bind:item="resource"
         v-bind:index="index"
-        v-bind:key="resource.id" 
-        v-bind:title="resource.TITLE" />
+        v-bind:key="resource.id"
+        v-bind:title="resource['TITLE']"
+        v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" />
       <!-- <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -37,7 +38,8 @@ import Resource from '@/components/Resource'
 export default {
    data () {
     return {
-      resources: []
+      resources: [],
+      upperCaseLocale: this.$i18n.locale.toUpperCase()
     }
   },
   async fetch () {
@@ -47,6 +49,7 @@ export default {
     })
     $nbwcResorcesBase.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer')
     const data = await $nbwcResorcesBase.$get('')
+    console.log(data.records[0])
     this.resources = data.records.map(record => record.fields) 
   },
   components: {
