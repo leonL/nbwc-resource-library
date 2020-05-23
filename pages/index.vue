@@ -5,7 +5,12 @@
       <h2 class="title">
         {{ $t('intro') }} 
       </h2>
-      <p>{{ resourceTitles }}</p>
+      <Resource
+        v-for="(resource, index) in resources"
+        v-bind:item="resource"
+        v-bind:index="index"
+        v-bind:key="resource.id" 
+        v-bind:title="resource.TITLE" />
       <!-- <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -25,12 +30,14 @@
     </div>
   </div>
 </template>
+
 <script>
+import Resource from '@/components/Resource'
 
 export default {
    data () {
     return {
-      resourceTitles: []
+      resources: []
     }
   },
   async fetch () {
@@ -40,7 +47,10 @@ export default {
     })
     $nbwcResorcesBase.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer')
     const data = await $nbwcResorcesBase.$get('')
-    this.resourceTitles = data.records.map(record => record.fields.TITLE) 
+    this.resources = data.records.map(record => record.fields) 
+  },
+  components: {
+    Resource
   }
 }
 </script>
