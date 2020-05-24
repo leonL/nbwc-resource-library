@@ -1,7 +1,8 @@
 <template>
     <li>
-        <span v-for="ct in contentTypes" :key="ct">
-            {{ ct }}
+        <span v-for="(ct, index) in contentTypes" :key="ct">
+            <span v-if="index > 0"> / </span>
+            {{ ct }} 
         </span>
         <h3>{{ title }}</h3>
     </li>
