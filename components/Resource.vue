@@ -11,6 +11,7 @@
             <span v-if="index > 0"> / </span>
             {{ gs }} 
         </span>
+        <h5>{{ language }}</h5>
     </li>
 </template>
 
@@ -32,6 +33,10 @@ export default {
         },
         geographicScopes: {
             type: Array,
+            required: true
+        },
+        language: {
+            type: String,
             required: true
         }
     }
