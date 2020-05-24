@@ -12,6 +12,10 @@
             {{ gs }} 
         </span>
         <h5>{{ language }}</h5>
+        <span v-for="(issue, index) in issues" :key="issue">
+            <span v-if="index > 0"> / </span>
+            {{ issue }} 
+        </span>
     </li>
 </template>
 
@@ -37,6 +41,10 @@ export default {
         },
         language: {
             type: String,
+            required: true
+        },
+        issues: {
+            type: Array,
             required: true
         }
     }

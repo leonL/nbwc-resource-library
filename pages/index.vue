@@ -15,6 +15,7 @@
         v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
         v-bind:geographicScopes="resource[`GEOGRAPHIC SCOPES ${upperCaseLocale}`]" 
         v-bind:language="resource[`LANGUAGE ${upperCaseLocale}`][0]" 
+        v-bind:issues="resource[`ISSUES ${upperCaseLocale}`]" 
       />
     </div>
   </div>
