@@ -4,7 +4,9 @@
             <span v-if="index > 0"> / </span>
             {{ ct }} 
         </span>
-        <h3>{{ title }}</h3>
+        <a :href="link" target="_blank">
+            <h3>{{ title }}</h3>
+        </a>
     </li>
 </template>
 
@@ -13,6 +15,10 @@ export default {
     name: 'Resource',
     props: {
         title: {
+            type: String,
+            required: true
+        },
+        link: {
             type: String,
             required: true
         },

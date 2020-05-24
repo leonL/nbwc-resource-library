@@ -11,23 +11,8 @@
         v-bind:index="index"
         v-bind:key="resource.id"
         v-bind:title="resource['TITLE']"
+        v-bind:link="resource['LINK']"
         v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" />
-      <!-- <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div> -->
     </div>
   </div>
 </template>
