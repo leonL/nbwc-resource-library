@@ -7,6 +7,10 @@
         <a :href="link" target="_blank">
             <h3>{{ title }}</h3>
         </a>
+        <span v-for="(gs, index) in geographicScopes" :key="gs">
+            <span v-if="index > 0"> / </span>
+            {{ gs }} 
+        </span>
     </li>
 </template>
 
@@ -23,6 +27,10 @@ export default {
             required: true
         },
         contentTypes: {
+            type: Array,
+            required: true
+        },
+        geographicScopes: {
             type: Array,
             required: true
         }

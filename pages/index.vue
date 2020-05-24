@@ -12,7 +12,9 @@
         v-bind:key="resource.id"
         v-bind:title="resource['TITLE']"
         v-bind:link="resource['LINK']"
-        v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" />
+        v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
+        v-bind:geographicScopes="resource[`GEOGRAPHIC SCOPES ${upperCaseLocale}`]" 
+      />
     </div>
   </div>
 </template>
