@@ -11,6 +11,7 @@
           v-bind:item="resource"
           v-bind:index="index"
           v-bind:key="resource.id"
+          v-bind:language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
           v-bind:titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
           v-bind:links="{en: resource['LINK EN'], fr: resource['LINK FR']}"
           v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
@@ -34,14 +35,27 @@ export default {
     }
   },
   async fetch () {
-    const $nbwcResorcesBase = this.$http.create({
-      prefixUrl: 'https://api.airtable.com/v0/app393cel1ZJ5Wi13/RESOURCES',
+    const libraryBaseApiPrefix = 'https://api.airtable.com/v0/app393cel1ZJ5Wi13',
+    apiKey = process.env.NBWC_AIRTABLE_API_KEY
+    
+    const $resourcesModel = this.$http.create({
+      prefixUrl: libraryBaseApiPrefix + '/RESOURCES',
       searchParams: [['view', 'ALL RECORDS']]
     })
-    $nbwcResorcesBase.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer')
-    const data = await $nbwcResorcesBase.$get('')
-    console.log(data.records[0])
-    this.resources = data.records.map(record => record.fields) 
+    $resourcesModel.setToken(apiKey, 'Bearer')
+    const $geographicScopesModel = this.$http.create({
+      prefixUrl: libraryBaseApiPrefix + '/GEOGRAPHIC%20SCOPES',
+      searchParams: [['view', 'ALL RECORDS']]
+    })
+    $geographicScopesModel.setToken(apiKey, 'Bearer')
+
+    const allResources = await $resourcesModel.$get('')
+    // console.log(allResources.records[0])
+    this.resources = allResources.records.map(record => record.fields) 
+
+    const allGeographicScopes = await $geographicScopesModel.$get('')
+    console.log(allGeographicScopes.records[0])
+    this.geographicScopes = allGeographicScopes.records.map(record => record.fields) 
   },
   components: {
     Resource
