@@ -51,10 +51,18 @@ export default {
       fallbackLocale: 'en',
       messages: {
         en: {
-          intro: 'COVID-19 Resource Library'
+          intro: 'COVID-19 Resource Library',
+          frAvailable: 'French Version',
+          frUnavailable: 'No French Version',
+          enAvailable: 'English Version',
+          enUnavailable: 'No English Version'
         },
         fr: {
-          intro: 'Bibliothèque de ressources COVID-19'
+          intro: 'Bibliothèque de ressources COVID-19',
+          frAvailable: 'Version française',
+          frUnavailable: 'Pas de version française',
+          enAvailable: 'Version anglaise',
+          enUnavailable: 'Pas de version anglaise'
         }
       }
     }

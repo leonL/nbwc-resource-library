@@ -5,18 +5,20 @@
       <h2 class="title">
         {{ $t('intro') }} 
       </h2>
-      <Resource
-        v-for="(resource, index) in resources"
-        v-bind:item="resource"
-        v-bind:index="index"
-        v-bind:key="resource.id"
-        v-bind:title="resource['TITLE']"
-        v-bind:link="resource['LINK']"
-        v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
-        v-bind:geographicScopes="resource[`GEOGRAPHIC SCOPES ${upperCaseLocale}`]" 
-        v-bind:language="resource[`LANGUAGE ${upperCaseLocale}`][0]" 
-        v-bind:issues="resource[`ISSUES ${upperCaseLocale}`]" 
-      />
+      <ul>
+        <Resource
+          v-for="(resource, index) in resources"
+          v-bind:item="resource"
+          v-bind:index="index"
+          v-bind:key="resource.id"
+          v-bind:titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
+          v-bind:links="{en: resource['LINK EN'], fr: resource['LINK FR']}"
+          v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
+          v-bind:geographicScopes="resource[`GEOGRAPHIC SCOPES ${upperCaseLocale}`]" 
+          v-bind:language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
+          v-bind:issues="resource[`ISSUES ${upperCaseLocale}`]" 
+        />
+      </ul>
     </div>
   </div>
 </template>
