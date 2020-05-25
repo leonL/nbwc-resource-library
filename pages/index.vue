@@ -5,7 +5,7 @@
       <h2 class="title">
         {{ $t('intro') }} 
       </h2>
-      <FilterControl v-bind:options="geographicScopes.map(scope => { return {id: scope.ID, label: scope[`${upperCaseLocale}`]}})"/>
+      <FilterControl v-bind:options="geographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"/>
       <ul>
         <Resource
           v-for="(resource, index) in resources"
