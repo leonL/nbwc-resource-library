@@ -5,6 +5,7 @@
       <h2 class="title">
         {{ $t('intro') }} 
       </h2>
+      <FilterControl v-bind:options="geographicScopes.map(scope => { return {id: scope.ID, label: scope[`${upperCaseLocale}`]}})"/>
       <ul>
         <Resource
           v-for="(resource, index) in resources"
@@ -16,7 +17,6 @@
           v-bind:links="{en: resource['LINK EN'], fr: resource['LINK FR']}"
           v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
           v-bind:geographicScopes="resource[`GEOGRAPHIC SCOPES ${upperCaseLocale}`]" 
-          v-bind:language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
           v-bind:issues="resource[`ISSUES ${upperCaseLocale}`]" 
         />
       </ul>
@@ -26,11 +26,13 @@
 
 <script>
 import Resource from '@/components/Resource'
+import FilterControl from '@/components/FilterControl'
 
 export default {
    data () {
     return {
       resources: [],
+      geographicScopes: [],
       upperCaseLocale: this.$i18n.locale.toUpperCase()
     }
   },
@@ -58,7 +60,8 @@ export default {
     this.geographicScopes = allGeographicScopes.records.map(record => record.fields) 
   },
   components: {
-    Resource
+    Resource,
+    FilterControl
   }
 }
 </script>
