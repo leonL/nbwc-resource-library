@@ -1,16 +1,19 @@
 <template>
-    <li>
-        <span v-for="(ct, index) in contentTypes" :key="ct">
-            <span v-if="index > 0"> / </span>
-            {{ ct }} 
-        </span>
+    <li class="resource">
+        <div class="content-types">
+            <h6 v-for="(ct) in contentTypes" :key="ct" class="content-type">
+                {{ ct }} 
+            </h6>
+        </div>
         <a :href="links[`${$i18n.locale}`]" target="_blank">
             <h3>{{ title() }}</h3>
         </a>
-        <span v-for="(gs, index) in geographicScopes" :key="gs">
-            <span v-if="index > 0"> / </span>
-            {{ gs }} 
-        </span>
+        <div>
+            <h6 v-for="(gs, index) in geographicScopes" :key="gs" class="geo-scope">
+                <span v-if="index > 0"> / </span>
+                {{ gs }} 
+            </h6>
+        </div>
         <span v-for="(issue, index) in issues" :key="issue">
             <span v-if="index > 0"> / </span>
             {{ issue }} 
@@ -85,8 +88,29 @@ export default {
 
 <style scoped>
 
-li {
+li.resource {
     list-style: none;
+    border-bottom: 0.9px #979797 solid;
+    margin-top: 25px;
+}
+
+.content-types {
+    position: relative;
+    left: -5px;
+}
+
+.content-type {
+    border-radius: 24.4px;
+    background-color: #e8f8ff;
+    padding: 5px 10px;
+    text-align: center;
+    display: inline;
+    margin-right: 10px;
+    line-height: 35px;
+}
+
+.geo-scope {
+    display: inline;
 }
 
 </style>
