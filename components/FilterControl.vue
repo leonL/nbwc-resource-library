@@ -1,5 +1,5 @@
 <template>
-    <b-dropdown text="Geographic Scope" ref="dropdown" class="m-2">
+    <b-dropdown :text="label" ref="dropdown" class="m-2">
         <b-dropdown-form>
             <b-form-checkbox v-for="(option) in options" :key="option.value" :value="option.value" v-model="selected" class="mb-3">
                 {{ option.text }}
@@ -17,6 +17,10 @@ export default {
         }
     },
     props: {
+        label: {
+            type: String,
+            required: true
+        },
         options: {
             type: Array,
             required: true

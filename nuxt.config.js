@@ -55,14 +55,18 @@ export default {
           frAvailable: 'French Version',
           frUnavailable: 'No French Version',
           enAvailable: 'English Version',
-          enUnavailable: 'No English Version'
+          enUnavailable: 'No English Version',
+          geoScopes: 'Geographic Scopes',
+          contentTypes: 'Content Types'
         },
         fr: {
           intro: 'Bibliothèque de ressources COVID-19',
           frAvailable: 'Version française',
           frUnavailable: 'Pas de version française',
           enAvailable: 'Version anglaise',
-          enUnavailable: 'Pas de version anglaise'
+          enUnavailable: 'Pas de version anglaise',
+          geoScopes: 'Portées géographiques',
+          contentTypes: 'Types de contenu'
         }
       }
     }

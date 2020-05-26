@@ -8,8 +8,15 @@
       </h2>
 
       <FilterControl 
+        v-bind:label="$t('geoScopes')"
         v-bind:options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
         v-on:optionsChanged="checkedScopeIds = $event"
+      />
+
+       <FilterControl 
+        v-bind:label="$t('contentTypes')"
+        v-bind:options="allContentTypes.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
+        v-on:optionsChanged="checkedContentTypeIds = $event"
       />
 
       <ul>
@@ -38,6 +45,8 @@ export default {
     return {
       allGeographicScopes: [],
       checkedScopeIds: [],
+      allContentTypes: [],
+      checkedContentTypeIds: [],
       resources: [],
       upperCaseLocale: this.$i18n.locale.toUpperCase()
     }
@@ -51,29 +60,49 @@ export default {
       searchParams: [['view', 'ALL RECORDS']]
     })
     $resourcesModel.setToken(apiKey, 'Bearer')
+
     const $geographicScopesModel = this.$http.create({
       prefixUrl: libraryBaseApiPrefix + '/GEOGRAPHIC%20SCOPES',
       searchParams: [['view', 'ALL RECORDS']]
     })
     $geographicScopesModel.setToken(apiKey, 'Bearer')
 
+    const $contentTypesModel = this.$http.create({
+      prefixUrl: libraryBaseApiPrefix + '/CONTENT%20TYPES',
+      searchParams: [['view', 'ALL RECORDS']]
+    })
+    $contentTypesModel.setToken(apiKey, 'Bearer')
+    
     const allResources = await $resourcesModel.$get('')
-    console.log(allResources.records[0])
+    // console.log(allResources.records[0])
     this.resources = allResources.records.map(record => record.fields) 
 
     const allGeographicScopes = await $geographicScopesModel.$get('')
-    console.log(allGeographicScopes.records[0])
+    // console.log(allGeographicScopes.records[0])
     this.allGeographicScopes = allGeographicScopes.records.map(record => record.fields) 
+
+    const allContentTypes = await $contentTypesModel.$get('')
+    console.log(allContentTypes.records[0])
+    this.allContentTypes = allContentTypes.records.map(record => record.fields) 
   },
   methods: {
     filterResources () {
       let filteredResources = this.resources
+
       if (this.checkedScopeIds.length) {
-        filteredResources = this.resources.filter(r => {
+        filteredResources = filteredResources.filter(r => {
           return r['GEOGRAPHIC SCOPE IDS'].some(id => {
             return this.checkedScopeIds.includes(id)
           })
         }) 
+      }
+
+      if (this.checkedContentTypeIds.length) {
+        filteredResources = filteredResources.filter(r => {
+          return r['CONTENT TYPE IDS'].some(id => {
+            return this.checkedContentTypeIds.includes(id)
+          })
+        })
       }
       return filteredResources
     }
