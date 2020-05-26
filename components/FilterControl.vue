@@ -1,8 +1,7 @@
 <template>
     <b-dropdown text="Geographic Scope" ref="dropdown" class="m-2">
         <b-dropdown-form>
-            <b-form-checkbox value="orange" v-on:click="$emit('enlarge-text', 0.1)">Orange</b-form-checkbox>
-            <b-form-checkbox v-for="(option) in options" :key="option.value" class="mb-3">
+            <b-form-checkbox v-for="(option) in options" :key="option.value" :value="option.value" v-model="selected" class="mb-3">
                 {{ option.text }}
             </b-form-checkbox>
         </b-dropdown-form>
@@ -12,10 +11,20 @@
 <script>
 export default {
     name: 'FilterControls',
+    data () {
+        return {
+            selected: []
+        }
+    },
     props: {
         options: {
             type: Array,
             required: true
+        }
+    },
+    watch: {
+        selected: function (val, oldVal) {
+            this.$emit('optionsChanged', val)
         }
     }
 }

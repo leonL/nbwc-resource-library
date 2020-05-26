@@ -4,12 +4,17 @@
       <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)">
       <h2 class="title">
         {{ $t('intro') }} 
+      
       </h2>
-      <FilterControl v-bind:options="geographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"/>
+
+      <FilterControl 
+        v-bind:options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
+        v-on:optionsChanged="checkedScopeIds = $event"
+      />
+
       <ul>
         <Resource
-          v-for="(resource, index) in resources"
-          v-bind:item="resource"
+          v-for="(resource, index) in filterResources()"
           v-bind:index="index"
           v-bind:key="resource.id"
           v-bind:language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
@@ -31,8 +36,9 @@ import FilterControl from '@/components/FilterControl'
 export default {
    data () {
     return {
+      allGeographicScopes: [],
+      checkedScopeIds: [],
       resources: [],
-      geographicScopes: [],
       upperCaseLocale: this.$i18n.locale.toUpperCase()
     }
   },
@@ -52,12 +58,25 @@ export default {
     $geographicScopesModel.setToken(apiKey, 'Bearer')
 
     const allResources = await $resourcesModel.$get('')
-    // console.log(allResources.records[0])
+    console.log(allResources.records[0])
     this.resources = allResources.records.map(record => record.fields) 
 
     const allGeographicScopes = await $geographicScopesModel.$get('')
     console.log(allGeographicScopes.records[0])
-    this.geographicScopes = allGeographicScopes.records.map(record => record.fields) 
+    this.allGeographicScopes = allGeographicScopes.records.map(record => record.fields) 
+  },
+  methods: {
+    filterResources () {
+      let filteredResources = this.resources
+      if (this.checkedScopeIds.length) {
+        filteredResources = this.resources.filter(r => {
+          return r['GEOGRAPHIC SCOPE IDS'].some(id => {
+            return this.checkedScopeIds.includes(id)
+          })
+        }) 
+      }
+      return filteredResources
+    }
   },
   components: {
     Resource,
