@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name: 'FilterControl',
+    name: 'CheckboxFilter',
     data () {
         return {
             selected: []

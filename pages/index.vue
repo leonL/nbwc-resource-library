@@ -15,19 +15,19 @@
       />
 
 
-      <FilterControl 
+      <CheckboxFilter 
         v-bind:label="$t('geoScopes')"
         v-bind:options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
         v-on:optionsChanged="checkedScopeIds = $event"
       />
 
-       <FilterControl 
+       <CheckboxFilter 
         v-bind:label="$t('contentTypes')"
         v-bind:options="allContentTypes.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
         v-on:optionsChanged="checkedContentTypeIds = $event"
       />
 
-       <FilterControl 
+       <CheckboxFilter 
         v-bind:label="$t('issues')"
         v-bind:options="allIssues.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
         v-on:optionsChanged="checkedIssueIds = $event"
@@ -52,7 +52,7 @@
 
 <script>
 import Resource from '@/components/Resource'
-import FilterControl from '@/components/FilterControl'
+import CheckboxFilter from '@/components/FilterControls/CheckboxFilter.vue'
 import RadioButtonFilter from '@/components/FilterControls/RadioButtonFilter.vue'
 
 export default {
@@ -164,7 +164,7 @@ export default {
   },
   components: {
     Resource,
-    FilterControl,
+    CheckboxFilter,
     RadioButtonFilter
   }
 }
