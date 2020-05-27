@@ -42,7 +42,7 @@
           v-bind:titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
           v-bind:links="{en: resource['LINK EN'], fr: resource['LINK FR']}"
           v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
-          v-bind:geographicScopes="resource[`GEOGRAPHIC SCOPES ${upperCaseLocale}`]" 
+          v-bind:geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
           v-bind:issues="resource[`ISSUES ${upperCaseLocale}`]" 
         />
       </ul>
@@ -137,9 +137,8 @@ export default {
 
       if (this.checkedScopeIds.length) {
         filteredResources = filteredResources.filter(r => {
-          return r['GEOGRAPHIC SCOPE IDS'].some(id => {
-            return this.checkedScopeIds.includes(id)
-          })
+          const rGeoScopeId = r['GEOGRAPHIC SCOPE ID'][0]
+          return this.checkedScopeIds.includes(rGeoScopeId)
         }) 
       }
 
