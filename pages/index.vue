@@ -7,6 +7,14 @@
       
       </h2>
 
+      <RadioButtonFilter 
+        v-bind:label="$t('language')"
+        v-bind:options="allLanguages.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
+        :defaultSelectedOptionId="checkedLanguageId"
+        v-on:selectedOptionsChanged="checkedLanguageId=$event"
+      />
+
+
       <FilterControl 
         v-bind:label="$t('geoScopes')"
         v-bind:options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
@@ -45,10 +53,13 @@
 <script>
 import Resource from '@/components/Resource'
 import FilterControl from '@/components/FilterControl'
+import RadioButtonFilter from '@/components/FilterControls/RadioButtonFilter.vue'
 
 export default {
    data () {
     return {
+      allLanguages: [],
+      checkedLanguageId: "BOTH",
       allGeographicScopes: [],
       checkedScopeIds: [],
       allContentTypes: [],
@@ -87,9 +98,15 @@ export default {
     })
     $issuesModel.setToken(apiKey, 'Bearer')
 
+    const $languagesModel = this.$http.create({
+      prefixUrl: libraryBaseApiPrefix + '/LANGUAGES',
+      searchParams: [['view', 'ALL RECORDS']]
+    })
+    $languagesModel.setToken(apiKey, 'Bearer')
+
     const allResources = await $resourcesModel.$get('')
     // console.log(allResources.records[0])
-    this.resources = allResources.records.map(record => record.fields) 
+    this.resources = allResources.records.map(record => record.fields)
 
     const allGeographicScopes = await $geographicScopesModel.$get('')
     // console.log(allGeographicScopes.records[0])
@@ -100,12 +117,23 @@ export default {
     this.allContentTypes = allContentTypes.records.map(record => record.fields) 
 
     const allIssues = await $issuesModel.$get('')
-    console.log(allIssues.records[0])
+    // console.log(allIssues.records[0])
     this.allIssues = allIssues.records.map(record => record.fields) 
+
+    const allLanguages = await $languagesModel.$get('')
+    // console.log(allLanguages.records[0])
+    this.allLanguages = allLanguages.records.map(record => record.fields) 
   },
   methods: {
     filterResources () {
-      let filteredResources = this.resources
+      let filteredResources = this.resources.slice(0, 35) // remove slice after implementing content management staging - temporary measure to aviod blank records while Airtable is being populated by NBWC
+
+      if (this.checkedLanguageId !== "BOTH") {
+        filteredResources = filteredResources.filter(r => {
+          const rLangId = r['LANGUAGE ID'][0]
+          return rLangId === "BOTH" || rLangId === this.checkedLanguageId 
+        })
+      }
 
       if (this.checkedScopeIds.length) {
         filteredResources = filteredResources.filter(r => {
@@ -130,12 +158,14 @@ export default {
           })
         })
       }
+
       return filteredResources
     }
   },
   components: {
     Resource,
-    FilterControl
+    FilterControl,
+    RadioButtonFilter
   }
 }
 </script>

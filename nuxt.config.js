@@ -56,6 +56,7 @@ export default {
           frUnavailable: 'No French Version',
           enAvailable: 'English Version',
           enUnavailable: 'No English Version',
+          language: 'Language',
           geoScopes: 'Geographic Scopes',
           contentTypes: 'Content Types',
           issues: 'Issues'
@@ -66,6 +67,7 @@ export default {
           frUnavailable: 'Pas de version française',
           enAvailable: 'Version anglaise',
           enUnavailable: 'Pas de version anglaise',
+          language: 'Langue',
           geoScopes: 'Portées géographiques',
           contentTypes: 'Types de contenu',
           issues: 'Sujets'

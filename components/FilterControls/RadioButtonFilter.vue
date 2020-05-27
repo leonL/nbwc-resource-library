@@ -1,9 +1,9 @@
 <template>
     <b-dropdown :text="label" ref="dropdown" class="m-2">
         <b-dropdown-form>
-            <b-form-checkbox v-for="(option) in options" :key="option.value" :value="option.value" v-model="selected" class="mb-3">
+            <b-form-radio v-for="(option) in options" :key="option.value" :value="option.value" v-model="selectedOptionId" class="mb-3">
                 {{ option.text }}
-            </b-form-checkbox>
+            </b-form-radio>
         </b-dropdown-form>
     </b-dropdown>
 </template>
@@ -13,7 +13,7 @@ export default {
     name: 'FilterControl',
     data () {
         return {
-            selected: []
+            selectedOptionId: this.defaultSelectedOptionId
         }
     },
     props: {
@@ -24,11 +24,15 @@ export default {
         options: {
             type: Array,
             required: true
+        },
+        defaultSelectedOptionId: {
+            type: String,
+            required: true
         }
     },
     watch: {
-        selected: function (val, oldVal) {
-            this.$emit('optionsChanged', val)
+        selectedOptionId: function (val, oldVal) {
+            this.$emit('selectedOptionsChanged', val)
         }
     }
 }
