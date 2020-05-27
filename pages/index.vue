@@ -19,6 +19,12 @@
         v-on:optionsChanged="checkedContentTypeIds = $event"
       />
 
+       <FilterControl 
+        v-bind:label="$t('issues')"
+        v-bind:options="allIssues.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
+        v-on:optionsChanged="checkedIssueIds = $event"
+      />
+
       <ul>
         <Resource
           v-for="(resource, index) in filterResources()"
@@ -47,6 +53,8 @@ export default {
       checkedScopeIds: [],
       allContentTypes: [],
       checkedContentTypeIds: [],
+      allIssues: [],
+      checkedIssueIds: [],
       resources: [],
       upperCaseLocale: this.$i18n.locale.toUpperCase()
     }
@@ -73,6 +81,12 @@ export default {
     })
     $contentTypesModel.setToken(apiKey, 'Bearer')
     
+    const $issuesModel = this.$http.create({
+      prefixUrl: libraryBaseApiPrefix + '/ISSUES',
+      searchParams: [['view', 'ALL RECORDS']]
+    })
+    $issuesModel.setToken(apiKey, 'Bearer')
+
     const allResources = await $resourcesModel.$get('')
     // console.log(allResources.records[0])
     this.resources = allResources.records.map(record => record.fields) 
@@ -82,8 +96,12 @@ export default {
     this.allGeographicScopes = allGeographicScopes.records.map(record => record.fields) 
 
     const allContentTypes = await $contentTypesModel.$get('')
-    console.log(allContentTypes.records[0])
+    // console.log(allContentTypes.records[0])
     this.allContentTypes = allContentTypes.records.map(record => record.fields) 
+
+    const allIssues = await $issuesModel.$get('')
+    console.log(allIssues.records[0])
+    this.allIssues = allIssues.records.map(record => record.fields) 
   },
   methods: {
     filterResources () {
@@ -101,6 +119,14 @@ export default {
         filteredResources = filteredResources.filter(r => {
           return r['CONTENT TYPE IDS'].some(id => {
             return this.checkedContentTypeIds.includes(id)
+          })
+        })
+      }
+
+      if (this.checkedIssueIds.length) {
+        filteredResources = filteredResources.filter(r => {
+          return r['ISSUE IDS'].some(id => {
+            return this.checkedIssueIds.includes(id)
           })
         })
       }

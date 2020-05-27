@@ -57,7 +57,8 @@ export default {
           enAvailable: 'English Version',
           enUnavailable: 'No English Version',
           geoScopes: 'Geographic Scopes',
-          contentTypes: 'Content Types'
+          contentTypes: 'Content Types',
+          issues: 'Issues'
         },
         fr: {
           intro: 'Bibliothèque de ressources COVID-19',
@@ -66,7 +67,8 @@ export default {
           enAvailable: 'Version anglaise',
           enUnavailable: 'Pas de version anglaise',
           geoScopes: 'Portées géographiques',
-          contentTypes: 'Types de contenu'
+          contentTypes: 'Types de contenu',
+          issues: 'Sujets'
         }
       }
     }
