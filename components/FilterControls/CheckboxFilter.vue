@@ -1,7 +1,7 @@
 <template>
     <b-dropdown :text="label" ref="dropdown" class="m-2">
         <b-dropdown-form>
-            <b-form-checkbox v-for="(option) in options" :key="option.value" :value="option.value" v-model="selected" class="mb-3">
+            <b-form-checkbox v-for="(option) in options" :key="option.value" :value="option.value" v-model="selectedOptionsIds" class="mb-3">
                 {{ option.text }}
             </b-form-checkbox>
         </b-dropdown-form>
@@ -13,7 +13,7 @@ export default {
     name: 'CheckboxFilter',
     data () {
         return {
-            selected: []
+            selectedOptionsIds: []
         }
     },
     props: {
@@ -27,8 +27,8 @@ export default {
         }
     },
     watch: {
-        selected: function (val, oldVal) {
-            this.$emit('optionsChanged', val)
+        selectedOptionsIds: function (val, oldVal) {
+            this.$emit('selectedOptionsChanged', val)
         }
     }
 }

@@ -18,19 +18,19 @@
       <CheckboxFilter 
         v-bind:label="$t('geoScopes')"
         v-bind:options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
-        v-on:optionsChanged="checkedScopeIds = $event"
+        v-on:selectedOptionsChanged="checkedScopeIds = $event"
       />
 
        <CheckboxFilter 
         v-bind:label="$t('contentTypes')"
         v-bind:options="allContentTypes.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
-        v-on:optionsChanged="checkedContentTypeIds = $event"
+        v-on:selectedOptionsChanged="checkedContentTypeIds = $event"
       />
 
        <CheckboxFilter 
         v-bind:label="$t('issues')"
         v-bind:options="allIssues.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
-        v-on:optionsChanged="checkedIssueIds = $event"
+        v-on:selectedOptionsChanged="checkedIssueIds = $event"
       />
 
       <ul>
