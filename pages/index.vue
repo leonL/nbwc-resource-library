@@ -41,6 +41,7 @@
           v-bind:language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
           v-bind:titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
           v-bind:links="{en: resource['LINK EN'], fr: resource['LINK FR']}"
+          :author="resource['AUTHOR']"
           v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
           v-bind:geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
           v-bind:issues="resource[`ISSUES ${upperCaseLocale}`]" 
@@ -126,7 +127,7 @@ export default {
   },
   methods: {
     filterResources () {
-      let filteredResources = this.resources.slice(0, 35) // remove slice after implementing content management staging - temporary measure to aviod blank records while Airtable is being populated by NBWC
+      let filteredResources = this.resources.slice(0, 70) // remove slice after implementing content management staging - temporary measure to aviod blank records while Airtable is being populated by NBWC
 
       if (this.checkedLanguageId !== "BOTH") {
         filteredResources = filteredResources.filter(r => {

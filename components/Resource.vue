@@ -9,6 +9,9 @@
             <h3>{{ title() }}</h3>
         </a>
         <div>
+            <h6>{{ author }}</h6>
+        </div>
+        <div>
             <h6 v-for="(gs, index) in geographicScopes" :key="gs" class="geo-scope">
                 <span v-if="index > 0"> / </span>
                 {{ gs }} 
@@ -40,6 +43,10 @@ export default {
         links: {
             type: Object,
             required: true
+        },
+        author: {
+            type: String,
+            required: false
         },
         contentTypes: {
             type: Array,
