@@ -9,7 +9,9 @@
             <h3>{{ title() }}</h3>
         </a>
         <div>
-            <h6>{{ author }}</h6>
+            <span>{{ author }}</span>
+            <span>{{ organization }}</span>
+            <span>{{ publication }}</span>
         </div>
         <div>
             <h6 v-for="(gs, index) in geographicScopes" :key="gs" class="geo-scope">
@@ -45,6 +47,14 @@ export default {
             required: true
         },
         author: {
+            type: String,
+            required: false
+        },
+        organization: {
+            type: String,
+            required: false
+        },
+        publication: {
             type: String,
             required: false
         },

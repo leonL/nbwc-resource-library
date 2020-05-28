@@ -42,6 +42,8 @@
           v-bind:titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
           v-bind:links="{en: resource['LINK EN'], fr: resource['LINK FR']}"
           :author="resource['AUTHOR']"
+          :organization="getOrganization(resource)"
+          :publication="getPublication(resource)"
           v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
           v-bind:geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
           v-bind:issues="resource[`ISSUES ${upperCaseLocale}`]" 
@@ -160,6 +162,24 @@ export default {
       }
 
       return filteredResources
+    },
+    getOrganization(resource, locale = this.upperCaseLocale) {
+      let organization = '',
+      propertyName = `ORGANIZATION ${locale}` 
+
+      if (resource.hasOwnProperty(propertyName)) {
+        organization = resource[propertyName][0]
+      }
+      return organization
+    },
+    getPublication(resource, locale = this.upperCaseLocale) {
+      let publication = '',
+      propertyName = `PUBLICATION ${locale}` 
+
+      if (resource.hasOwnProperty(propertyName)) {
+        publication = resource[propertyName][0]
+      }
+      return publication
     }
   },
   components: {
