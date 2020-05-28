@@ -33,6 +33,8 @@
         v-on:selectedOptionsChanged="checkedIssueIds = $event"
       />
 
+      <b-form-input v-model="searchInputText" placeholder="Search"></b-form-input>
+
       <ul>
         <Resource
           v-for="(resource, index) in filterResources()"
@@ -70,6 +72,7 @@ export default {
       allIssues: [],
       checkedIssueIds: [],
       resources: [],
+      searchInputText: "",
       upperCaseLocale: this.$i18n.locale.toUpperCase()
     }
   },
@@ -161,7 +164,28 @@ export default {
         })
       }
 
+      const searchStr = this.searchInputText.trim(), 
+      searchReg = RegExp(searchStr, 'g')
+      if(searchStr) {
+        filteredResources = filteredResources.filter(r => {
+          let titleLanguage = r['LANGUAGE ID'][0]
+          if (titleLanguage === 'BOTH') titleLanguage = this.upperCaseLocale 
+          const searchMatches = Array.from(this.getTitle(r, titleLanguage).matchAll(searchReg))
+          return searchMatches.length ? true : false
+        })
+      }
+
+
       return filteredResources
+    },
+    getTitle(resource, locale = this.upperCaseLocale) {
+      let title = '',
+      propertyName = `TITLE ${locale}`
+
+      if (resource.hasOwnProperty(propertyName)) {
+        title = resource[propertyName]
+      }
+      return title
     },
     getOrganization(resource, locale = this.upperCaseLocale) {
       let organization = '',
