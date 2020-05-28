@@ -8,45 +8,45 @@
       </h2>
 
       <RadioButtonFilter 
-        v-bind:label="$t('language')"
-        v-bind:options="allLanguages.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
+        :label="$t('language')"
+        :options="allLanguages.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
         :defaultSelectedOptionId="checkedLanguageId"
         v-on:selectedOptionsChanged="checkedLanguageId=$event"
       />
 
 
       <CheckboxFilter 
-        v-bind:label="$t('geoScopes')"
-        v-bind:options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
+        :label="$t('geoScopes')"
+        :options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
         v-on:selectedOptionsChanged="checkedScopeIds = $event"
       />
 
        <CheckboxFilter 
-        v-bind:label="$t('contentTypes')"
-        v-bind:options="allContentTypes.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
+        :label="$t('contentTypes')"
+        :options="allContentTypes.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
         v-on:selectedOptionsChanged="checkedContentTypeIds = $event"
       />
 
        <CheckboxFilter 
-        v-bind:label="$t('issues')"
-        v-bind:options="allIssues.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
+        :label="$t('issues')"
+        :options="allIssues.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
         v-on:selectedOptionsChanged="checkedIssueIds = $event"
       />
 
       <ul>
         <Resource
           v-for="(resource, index) in filterResources()"
-          v-bind:index="index"
-          v-bind:key="resource.id"
-          v-bind:language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
-          v-bind:titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
-          v-bind:links="{en: resource['LINK EN'], fr: resource['LINK FR']}"
+          :index="index"
+          :key="resource.id"
+          :language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
+          :titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
+          :links="{en: resource['LINK EN'], fr: resource['LINK FR']}"
           :author="resource['AUTHOR']"
           :organization="getOrganization(resource)"
           :publication="getPublication(resource)"
-          v-bind:contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
-          v-bind:geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
-          v-bind:issues="resource[`ISSUES ${upperCaseLocale}`]" 
+          :contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
+          :geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
+          :issues="resource[`ISSUES ${upperCaseLocale}`]" 
         />
       </ul>
     </div>
