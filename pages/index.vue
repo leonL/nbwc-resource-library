@@ -164,19 +164,20 @@ export default {
         })
       }
 
-      const searchStr = this.searchInputText.trim(), 
-      searchReg = RegExp(searchStr, 'g')
-      if(searchStr) {
+      if(this.searchInputText.trim()) {
+        let searchRegx = this.getSearchRegx()
+
         filteredResources = filteredResources.filter(r => {
           let titleLanguage = r['LANGUAGE ID'][0]
           if (titleLanguage === 'BOTH') titleLanguage = this.upperCaseLocale 
-          const searchMatches = Array.from(this.getTitle(r, titleLanguage).matchAll(searchReg))
-          return searchMatches.length ? true : false
+
+          return searchRegx.test(this.getTitle(r, titleLanguage))
         })
       }
-
-
       return filteredResources
+    },
+    getSearchRegx() {
+      return new RegExp(this.searchInputText.trim(), 'gi')
     },
     getTitle(resource, locale = this.upperCaseLocale) {
       let title = '',
