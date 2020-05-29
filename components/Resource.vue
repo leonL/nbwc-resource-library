@@ -108,29 +108,22 @@ export default {
             return text
         },
         getTitleMarked: function () {
-            let titleMarked = this.title()
-            const titleWithoutDiacritics = this.$removeDiacritics(titleMarked)
-            
-            if (this.isTextSearching) {
-                titleWithoutDiacritics.replace(this.searchRegx, (match, offset) => {
-                    titleMarked = `${titleMarked.substr(0, offset)}<mark>${titleMarked.substr(offset, match.length)}</mark>${titleMarked.substr(offset + match.length, titleMarked.length -1)}`
-                    return match
-                })
-            } 
-            return titleMarked
+            return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.title()) : this.title()   
         },
         getAuthorMarked: function() {
-            let authorMarked = this.author
-            const authorWithoutDiacritics = this.$removeDiacritics(authorMarked)
+            return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.author) : this.author   
+        },
+        wrapMatchedWithMarkTag: function(text, search = this.searchRegx) {
+            let textMarked = text
+            const textWithoutDiacritics = this.$removeDiacritics(textMarked)
             
-            if (this.isTextSearching) {
-                authorWithoutDiacritics.replace(this.searchRegx, (match, offset) => {
-                    authorMarked = `${authorMarked.substr(0, offset)}<mark>${authorMarked.substr(offset, match.length)}</mark>${authorMarked.substr(offset + match.length, authorMarked.length -1)}`
-                    return match
-                })
-            } 
-            return authorMarked
-        }
+            textWithoutDiacritics.replace(this.searchRegx, (match, offset) => {
+                textMarked = `${textMarked.substr(0, offset)}<mark>${textMarked.substr(offset, match.length)}</mark>${textMarked.substr(offset + match.length, textMarked.length -1)}`
+                return match
+            })
+            
+            return textMarked
+        } 
     }
 }
 </script>
