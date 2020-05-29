@@ -174,8 +174,10 @@ export default {
           if (titleLanguage === 'BOTH') titleLanguage = this.upperCaseLocale 
 
           let titleWithoutDiacritics = this.$removeDiacritics(this.getTitle(r, titleLanguage)), 
-          authorithoutDiacritics = this.$removeDiacritics(this.getAuthor(r)),
-          keyWords = `${titleWithoutDiacritics} ${authorithoutDiacritics}`
+          authorWithoutDiacritics = this.$removeDiacritics(this.getAuthor(r)),
+          organizationWithoutDiacritics = this.$removeDiacritics(this.getOrganization(r)),
+          publicationWithoutDiacritics = this.$removeDiacritics(this.getPublication(r)),
+          keyWords = `${titleWithoutDiacritics} ${authorWithoutDiacritics} ${organizationWithoutDiacritics} ${publicationWithoutDiacritics}`
 
           return searchRegx.test(keyWords)
         })
