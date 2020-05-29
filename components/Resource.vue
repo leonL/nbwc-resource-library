@@ -10,8 +10,8 @@
         </a>
         <div>
             <span v-html="getAuthorMarked()"></span>
-            <span>{{ organization }}</span>
-            <span>{{ publication }}</span>
+            <span v-html="getOrganizationMarked()"></span>
+            <span v-html="getPublicationMarked()"></span>
         </div>
         <div>
             <h6 v-for="(gs, index) in geographicScopes" :key="gs" class="geo-scope">
@@ -113,12 +113,23 @@ export default {
         getAuthorMarked: function() {
             return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.author) : this.author   
         },
+        getOrganizationMarked: function() {
+            return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.organization) : this.organization   
+        },
+        getPublicationMarked: function() {
+            return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.publication) : this.publication   
+        },
         wrapMatchedWithMarkTag: function(text, search = this.searchRegx) {
-            let textMarked = text
-            const textWithoutDiacritics = this.$removeDiacritics(textMarked)
+            const ot = "<mark>", ct = "</mark>"
+            let textMarked = text, counter = 0, markTagsOffset = (ot + ct).length
+            const textWithoutDiacritics = this.$removeDiacritics(text)
             
-            textWithoutDiacritics.replace(this.searchRegx, (match, offset) => {
-                textMarked = `${textMarked.substr(0, offset)}<mark>${textMarked.substr(offset, match.length)}</mark>${textMarked.substr(offset + match.length, textMarked.length -1)}`
+            textWithoutDiacritics.replace(search, (match, offset) => {
+                let totalOffset = offset + markTagsOffset * counter
+                textMarked = textMarked.substr(0, totalOffset) + ot + 
+                    textMarked.substr(totalOffset, match.length) + ct + 
+                    textMarked.substr(totalOffset + match.length, textMarked.length -1)
+                counter++
                 return match
             })
             
