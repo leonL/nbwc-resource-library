@@ -33,7 +33,7 @@
         v-on:selectedOptionsChanged="checkedIssueIds = $event"
       />
 
-      <b-form-input v-model="searchInputText" placeholder="Search"></b-form-input>
+      <b-form-input v-model="searchInputText" placeholder="Search" debounce="500"></b-form-input>
 
       <ul>
         <Resource
@@ -173,7 +173,9 @@ export default {
           let titleLanguage = r['LANGUAGE ID'][0]
           if (titleLanguage === 'BOTH') titleLanguage = this.upperCaseLocale 
 
-          return searchRegx.test(this.getTitle(r, titleLanguage))
+          let titleWithoutDiacritics = this.$removeDiacritics(this.getTitle(r, titleLanguage))
+
+          return searchRegx.test(titleWithoutDiacritics)
         })
       }
       return filteredResources

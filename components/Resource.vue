@@ -109,9 +109,13 @@ export default {
         },
         titleMarked: function () {
             let titleMarked = this.title()
+            const titleWithoutDiacritics = this.$removeDiacritics(this.title())
             
-            if(this.isTextSearching) {
-                titleMarked = titleMarked.replace(this.searchRegx, (match) => `<mark>${match}</mark>`)
+            if (this.isTextSearching) {
+                titleWithoutDiacritics.replace(this.searchRegx, (match, offset) => {
+                    titleMarked = `${titleMarked.substr(0, offset)}<mark>${titleMarked.substr(offset, match.length)}</mark>${titleMarked.substr(offset + match.length, titleMarked.length -1)}`
+                    return match
+                })
             } 
             return titleMarked
         }
