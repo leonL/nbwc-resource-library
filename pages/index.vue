@@ -48,7 +48,8 @@
           :publication="getPublication(resource)"
           :contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
           :geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
-          :issues="resource[`ISSUES ${upperCaseLocale}`]" 
+          :issues="resource[`ISSUES ${upperCaseLocale}`]"
+          :paywall="getPaywall(resource)"
           :searchRegx="getSearchRegx()"
           :isTextSearching="isTextSearching()"
         />
@@ -216,6 +217,9 @@ export default {
     },
     getAuthor(resource) {
       return (resource['AUTHOR']) ? resource['AUTHOR'] : ""
+    },
+    getPaywall(resource) {
+      return (resource['PAYWALL']) ? resource['PAYWALL'] : false
     },
     isTextSearching() {
       return this.searchInputText.trim() ? true : false

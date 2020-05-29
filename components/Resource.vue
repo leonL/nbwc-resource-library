@@ -1,5 +1,6 @@
 <template>
     <li class="resource">
+        <span v-if="paywall" class="paywall">PAYWALL</span>
         <div class="content-types">
             <h6 v-for="(ct) in contentTypes" :key="ct" class="content-type">
                 {{ ct }} 
@@ -74,6 +75,10 @@ export default {
             type: Array,
             required: true
         },
+        paywall: {
+            type: Boolean,
+            required: true
+        },
         searchRegx: {
             type: RegExp,
             required: true
@@ -81,7 +86,7 @@ export default {
         isTextSearching: {
             type: Boolean,
             required: true
-        }  
+        }
     },
     methods: {
         otherLocale: function() {
@@ -164,6 +169,11 @@ li.resource {
 
 .geo-scope {
     display: inline;
+}
+
+.paywall {
+    position: absolute;
+    right: 0;
 }
 
 </style>
