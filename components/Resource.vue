@@ -6,7 +6,7 @@
             </h6>
         </div>
         <a :href="links[`${$i18n.locale}`]" target="_blank">
-            <h3>{{ title() }}</h3>
+            <h3 v-html="titleMarked()" class="tl"></h3>
         </a>
         <div>
             <span>{{ author }}</span>
@@ -73,7 +73,15 @@ export default {
         issues: {
             type: Array,
             required: true
-        }
+        },
+        searchRegx: {
+            type: RegExp,
+            required: true
+        },
+        isTextSearching: {
+            type: Boolean,
+            required: true
+        }  
     },
     methods: {
          otherLocale: function() {
@@ -98,6 +106,14 @@ export default {
             var text = ""
             text = (this.$i18n.locale === 'en') ? this.$t('frAvailable') : this.$t('enAvailable')
             return text
+        },
+        titleMarked: function () {
+            let titleMarked = this.title()
+            
+            if(this.isTextSearching) {
+                titleMarked = titleMarked.replace(this.searchRegx, (match) => `<mark>${match}</mark>`)
+            } 
+            return titleMarked
         }
     }
 }

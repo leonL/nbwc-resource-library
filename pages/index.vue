@@ -49,6 +49,8 @@
           :contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
           :geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
           :issues="resource[`ISSUES ${upperCaseLocale}`]" 
+          :searchRegx="getSearchRegx()"
+          :isTextSearching="isTextSearching()"
         />
       </ul>
     </div>
@@ -164,7 +166,7 @@ export default {
         })
       }
 
-      if(this.searchInputText.trim()) {
+      if(this.isTextSearching()) {
         let searchRegx = this.getSearchRegx()
 
         filteredResources = filteredResources.filter(r => {
@@ -205,6 +207,9 @@ export default {
         publication = resource[propertyName][0]
       }
       return publication
+    },
+    isTextSearching() {
+      return this.searchInputText.trim() ? true : false
     }
   },
   components: {
@@ -233,5 +238,9 @@ export default {
   font-size: 42px;
   color: #35495e;
   letter-spacing: 1px;
+}
+
+mark {
+  padding: 0px;
 }
 </style>
