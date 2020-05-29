@@ -6,10 +6,10 @@
             </h6>
         </div>
         <a :href="links[`${$i18n.locale}`]" target="_blank">
-            <h3 v-html="titleMarked()" class="tl"></h3>
+            <h3 v-html="getTitleMarked()" class="tl"></h3>
         </a>
         <div>
-            <span>{{ author }}</span>
+            <span v-html="getAuthorMarked()"></span>
             <span>{{ organization }}</span>
             <span>{{ publication }}</span>
         </div>
@@ -48,15 +48,15 @@ export default {
         },
         author: {
             type: String,
-            required: false
+            required: true
         },
         organization: {
             type: String,
-            required: false
+            required: true
         },
         publication: {
             type: String,
-            required: false
+            required: true
         },
         contentTypes: {
             type: Array,
@@ -107,9 +107,9 @@ export default {
             text = (this.$i18n.locale === 'en') ? this.$t('frAvailable') : this.$t('enAvailable')
             return text
         },
-        titleMarked: function () {
+        getTitleMarked: function () {
             let titleMarked = this.title()
-            const titleWithoutDiacritics = this.$removeDiacritics(this.title())
+            const titleWithoutDiacritics = this.$removeDiacritics(titleMarked)
             
             if (this.isTextSearching) {
                 titleWithoutDiacritics.replace(this.searchRegx, (match, offset) => {
@@ -118,6 +118,18 @@ export default {
                 })
             } 
             return titleMarked
+        },
+        getAuthorMarked: function() {
+            let authorMarked = this.author
+            const authorWithoutDiacritics = this.$removeDiacritics(authorMarked)
+            
+            if (this.isTextSearching) {
+                authorWithoutDiacritics.replace(this.searchRegx, (match, offset) => {
+                    authorMarked = `${authorMarked.substr(0, offset)}<mark>${authorMarked.substr(offset, match.length)}</mark>${authorMarked.substr(offset + match.length, authorMarked.length -1)}`
+                    return match
+                })
+            } 
+            return authorMarked
         }
     }
 }
