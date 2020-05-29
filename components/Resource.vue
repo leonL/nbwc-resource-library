@@ -84,7 +84,7 @@ export default {
         }  
     },
     methods: {
-         otherLocale: function() {
+        otherLocale: function() {
             return (this.$i18n.locale === "en") ? "fr" : "en"
         },
         title: function () {

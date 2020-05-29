@@ -43,7 +43,7 @@
           :language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
           :titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
           :links="{en: resource['LINK EN'], fr: resource['LINK FR']}"
-          :author="resource['AUTHOR']"
+          :author="getAuthor(resource)"
           :organization="getOrganization(resource)"
           :publication="getPublication(resource)"
           :contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
@@ -113,7 +113,7 @@ export default {
     $languagesModel.setToken(apiKey, 'Bearer')
 
     const allResources = await $resourcesModel.$get('')
-    // console.log(allResources.records[0])
+    console.log(allResources.records[0])
     this.resources = allResources.records.map(record => record.fields)
 
     const allGeographicScopes = await $geographicScopesModel.$get('')
@@ -173,9 +173,11 @@ export default {
           let titleLanguage = r['LANGUAGE ID'][0]
           if (titleLanguage === 'BOTH') titleLanguage = this.upperCaseLocale 
 
-          let titleWithoutDiacritics = this.$removeDiacritics(this.getTitle(r, titleLanguage))
+          let titleWithoutDiacritics = this.$removeDiacritics(this.getTitle(r, titleLanguage)), 
+          authorithoutDiacritics = this.$removeDiacritics(this.getAuthor(r)),
+          keyWords = `${titleWithoutDiacritics} ${authorithoutDiacritics}`
 
-          return searchRegx.test(titleWithoutDiacritics)
+          return searchRegx.test(keyWords)
         })
       }
       return filteredResources
@@ -209,6 +211,9 @@ export default {
         publication = resource[propertyName][0]
       }
       return publication
+    },
+    getAuthor(resource) {
+      return (resource['AUTHOR']) ? resource['AUTHOR'] : ""
     },
     isTextSearching() {
       return this.searchInputText.trim() ? true : false
