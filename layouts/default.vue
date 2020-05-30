@@ -17,6 +17,10 @@ html {
   box-sizing: border-box;
 }
 
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
 *,
 *:before,
 *:after {
