@@ -1,13 +1,8 @@
 <template>
     <li class="resource">
         <span v-if="paywall" class="paywall">PAYWALL</span>
-        <div class="content-types">
-            <h6 v-for="(ct) in contentTypes" :key="ct" class="content-type">
-                {{ ct }} 
-            </h6>
-        </div>
         <a :href="links[`${$i18n.locale}`]" target="_blank">
-            <h3 v-html="getTitleMarked()" class="tl"></h3>
+            <h2 v-html="getTitleMarked()" class="rTitle"></h2>
         </a>
         <div>
             <span v-html="getAuthorMarked()"></span>
@@ -18,6 +13,11 @@
             <h6 v-for="(gs, index) in geographicScopes" :key="gs" class="geo-scope">
                 <span v-if="index > 0"> / </span>
                 {{ gs }} 
+            </h6>
+        </div>
+        <div class="content-types">
+            <h6 v-for="(ct) in contentTypes" :key="ct" class="content-type">
+                {{ ct }} 
             </h6>
         </div>
         <span v-for="(issue, index) in issues" :key="issue">
@@ -150,6 +150,13 @@ li.resource {
     list-style: none;
     border-bottom: 0.9px #979797 solid;
     margin-top: 25px;
+}
+
+.rTitle {
+    font-size: 30px;
+    font-weight: bold;
+    line-height: normal;
+    color: #000000;
 }
 
 .content-types {
