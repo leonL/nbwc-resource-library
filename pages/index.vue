@@ -4,38 +4,38 @@
       <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)">
       <h2 class="title">
         {{ $t('intro') }} 
-      
       </h2>
 
-      <RadioButtonFilter 
-        :label="$t('language')"
-        :options="allLanguages.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
-        :defaultSelectedOptionId="checkedLanguageId"
-        v-on:selectedOptionsChanged="checkedLanguageId=$event"
-      />
+      <div class="filter-controls">
+        <RadioButtonFilter 
+          :label="$t('language')"
+          :options="allLanguages.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
+          :defaultSelectedOptionId="checkedLanguageId"
+          v-on:selectedOptionsChanged="checkedLanguageId=$event"
+        />
 
+        <CheckboxFilter 
+          :label="$t('geoScopes')"
+          :options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
+          v-on:selectedOptionsChanged="checkedScopeIds = $event"
+        />
 
-      <CheckboxFilter 
-        :label="$t('geoScopes')"
-        :options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
-        v-on:selectedOptionsChanged="checkedScopeIds = $event"
-      />
+        <CheckboxFilter 
+          :label="$t('contentTypes')"
+          :options="allContentTypes.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
+          v-on:selectedOptionsChanged="checkedContentTypeIds = $event"
+        />
 
-       <CheckboxFilter 
-        :label="$t('contentTypes')"
-        :options="allContentTypes.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
-        v-on:selectedOptionsChanged="checkedContentTypeIds = $event"
-      />
+        <CheckboxFilter 
+          :label="$t('issues')"
+          :options="allIssues.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
+          v-on:selectedOptionsChanged="checkedIssueIds = $event"
+        />
 
-       <CheckboxFilter 
-        :label="$t('issues')"
-        :options="allIssues.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
-        v-on:selectedOptionsChanged="checkedIssueIds = $event"
-      />
+        <b-form-input v-model="searchInputText" :placeholder="$t('searchPlaceholder')" debounce="500" class="search"></b-form-input>
+      </div>
 
-      <b-form-input v-model="searchInputText" placeholder="Search" debounce="500"></b-form-input>
-
-      <ul>
+      <ul class="resources">
         <Resource
           v-for="(resource, index) in filterResources()"
           :index="index"
@@ -236,11 +236,6 @@ export default {
 <style>
 .container {
   margin: 10px auto;
-  /* min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center; */
 }
 
 .title {
@@ -251,6 +246,15 @@ export default {
   font-size: 42px;
   color: #35495e;
   letter-spacing: 1px;
+}
+
+input.search {
+  margin-top: 0.5rem;
+  max-width: 500px;
+}
+
+.resources {
+  padding: 0;
 }
 
 mark {

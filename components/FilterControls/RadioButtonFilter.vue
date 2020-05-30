@@ -1,5 +1,5 @@
 <template>
-    <b-dropdown :text="label" ref="dropdown" class="m-2">
+    <b-dropdown :text="label" ref="dropdown">
         <b-dropdown-form>
             <b-form-radio v-for="(option) in options" :key="option.value" :value="option.value" v-model="selectedOptionId" class="mb-3">
                 {{ option.text }}

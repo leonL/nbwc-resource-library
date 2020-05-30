@@ -60,7 +60,8 @@ export default {
           language: 'Language',
           geoScopes: 'Geographic Scopes',
           contentTypes: 'Content Types',
-          issues: 'Issues'
+          issues: 'Issues',
+          searchPlaceholder: 'Search by title, author, organization, publication'
         },
         fr: {
           intro: 'Bibliothèque de ressources COVID-19',
@@ -71,7 +72,8 @@ export default {
           language: 'Langue',
           geoScopes: 'Portées géographiques',
           contentTypes: 'Types de contenu',
-          issues: 'Sujets'
+          issues: 'Sujets',
+          searchPlaceholder: 'Recherche par titres, auteurs-es, organisations, publication'
         }
       }
     }
