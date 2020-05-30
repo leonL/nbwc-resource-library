@@ -4,11 +4,7 @@
         <a :href="links[`${$i18n.locale}`]" target="_blank">
             <h2 v-html="getTitleMarked()" class="rTitle"></h2>
         </a>
-        <div>
-            <span v-html="getAuthorMarked()"></span>
-            <span v-html="getOrganizationMarked()"></span>
-            <span v-html="getPublicationMarked()"></span>
-        </div>
+        <div v-html="getAccreditationHtml()"></div>
         <div>
             <h6 v-for="(gs, index) in geographicScopes" :key="gs" class="geo-scope">
                 <span v-if="index > 0"> / </span>
@@ -139,7 +135,25 @@ export default {
             })
             
             return textMarked
-        } 
+        },
+        getAccreditationHtml: function() {
+            const possibleAccreditations = [this.getAuthorMarked(), this.getOrganizationMarked(), this.getPublicationMarked()],
+            bulletHtml = " <span>&#8226;</span> "
+            let actualAccreditations = [],
+            html = ""
+
+            possibleAccreditations.forEach(pa => {
+                if(pa) actualAccreditations.push(pa)
+                return false
+            })
+
+            actualAccreditations.forEach((aa, index) => {
+                if (index > 0) html += bulletHtml
+                html += aa 
+            })
+
+            return html
+        }
     }
 }
 </script>
