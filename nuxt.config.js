@@ -53,7 +53,7 @@ export default {
       fallbackLocale: 'en',
       messages: {
         en: {
-          intro: 'COVID-19 Resource Library',
+          intro: 'COVID-19 library',
           frAvailable: 'French Version',
           frUnavailable: 'No French Version',
           enAvailable: 'English Version',
@@ -65,7 +65,7 @@ export default {
           searchPlaceholder: 'Search by title, author, organization, publication'
         },
         fr: {
-          intro: 'Bibliothèque de ressources COVID-19',
+          intro: 'Bibliothèque de COVID-19',
           frAvailable: 'Version française',
           frUnavailable: 'Pas de version française',
           enAvailable: 'Version anglaise',

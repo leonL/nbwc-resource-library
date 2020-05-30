@@ -239,13 +239,9 @@ export default {
 }
 
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 42px;
-  color: #35495e;
-  letter-spacing: 1px;
+  font-size: 48px;
+  font-weight: bold;
+  color: #000000;
 }
 
 input.search {
