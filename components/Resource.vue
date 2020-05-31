@@ -1,6 +1,6 @@
 <template>
     <li class="resource">
-        <span v-if="paywall" class="paywall">PAYWALL</span>
+        <h6 v-if="paywall" class="paywall">PAYWALL</h6>
         <h2 class="rTitle">
             <a :href="links[this.getPrimaryLanguageId()]" 
                 v-html="getTitleMarked()"
@@ -166,6 +166,7 @@ li.resource h5 {
     font-size: 30px;
     font-weight: bold;
     margin-bottom: 5px;
+    max-width: 90%;
 }
 
 .tags {
@@ -193,6 +194,12 @@ li.resource h5 {
 .paywall {
     position: absolute;
     right: 0;
+    font-weight: bold;
+    border-radius: 27px;
+    background-color: #ff9d54;
+    padding: 5px;
+    color: #ffffff;
+    font-size: 14px;
 }
 
 </style>

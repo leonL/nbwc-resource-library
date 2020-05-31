@@ -251,6 +251,7 @@ input.search {
 
 .resources {
   padding: 0;
+  position: relative;
 }
 
 mark {
