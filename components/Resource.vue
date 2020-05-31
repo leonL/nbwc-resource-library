@@ -88,7 +88,7 @@ export default {
         otherLocale: function() {
             return (this.$i18n.locale === "en") ? "fr" : "en"
         },
-        title: function () {
+        getTitle: function () {
             var title = "",
             langID = this.language.id,
             locale = this.$i18n.locale,
@@ -109,7 +109,7 @@ export default {
             return text
         },
         getTitleMarked: function () {
-            return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.title()) : this.title()   
+            return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.getTitle()) : this.getTitle()   
         },
         getAuthorMarked: function() {
             return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.author) : this.author   
@@ -170,7 +170,6 @@ li.resource {
     font-size: 30px;
     font-weight: bold;
     line-height: normal;
-    color: #000000;
 }
 
 .content-types {
