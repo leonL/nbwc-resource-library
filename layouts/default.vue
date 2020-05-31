@@ -29,6 +29,7 @@ html {
 
 body {
   font-family: 'Open Sans', sans-serif;
+  line-height: normal;
 }
 
 *,

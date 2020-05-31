@@ -54,10 +54,7 @@ export default {
       messages: {
         en: {
           intro: 'COVID-19 library',
-          frAvailable: 'French Version',
-          frUnavailable: 'No French Version',
-          enAvailable: 'English Version',
-          enUnavailable: 'No English Version',
+          frAvailable: 'Also available in French',
           language: 'Language',
           geoScopes: 'Geographic Scopes',
           contentTypes: 'Types of content',
@@ -66,10 +63,7 @@ export default {
         },
         fr: {
           intro: 'Bibliothèque de COVID-19',
-          frAvailable: 'Version française',
-          frUnavailable: 'Pas de version française',
-          enAvailable: 'Version anglaise',
-          enUnavailable: 'Pas de version anglaise',
+          enAvailable: 'Disponible aussi en anglais',
           language: 'Langue',
           geoScopes: 'Portées géographiques',
           contentTypes: 'Types de contenu',

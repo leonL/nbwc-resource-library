@@ -6,7 +6,12 @@
                 v-html="getTitleMarked()"
                 target="_blank"></a>
         </h2>
-        <div v-html="getAccreditationHtml()" class="accreditation"></div>
+        <h5 v-html="getAccreditationHtml()" class="accreditation"></h5>
+        <h5 v-if="language.id === 'both'" class="translation-available">
+             <a :href="links[`${otherLocale()}`]" target="_blank">
+                {{ translationAvailableText() }}
+            </a>
+        </h5>
         <div>
             <h6 v-for="(gs, index) in geographicScopes" :key="gs" class="geo-scope">
                 <span v-if="index > 0"> / </span>
@@ -22,11 +27,6 @@
             <span v-if="index > 0"> / </span>
             {{ issue }} 
         </span>
-        <h5 v-if="language.id === 'both'">
-             <a :href="links[`${otherLocale()}`]" target="_blank">
-                {{ translationAvailableText() }}
-            </a>
-        </h5>
     </li>
 </template>
 
@@ -154,16 +154,14 @@ li.resource {
     margin-top: 25px;
 }
 
+li.resource h5 {
+    font-size: 18px;
+}
+
 .rTitle {
     font-size: 30px;
     font-weight: bold;
-    line-height: normal;
-    margin-bottom: 0;
-}
-
-.accreditation {
-    font-size: 18px;
-    line-height: normal;
+    margin-bottom: 5px;
 }
 
 .content-types {
