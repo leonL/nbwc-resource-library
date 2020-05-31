@@ -54,25 +54,27 @@ export default {
       messages: {
         en: {
           home: 'Home',
-          about: 'About',
-          intro: 'COVID-19 library',
+          homeTitle: 'COVID-19 library',
           frAvailable: 'Also available in French',
           language: 'Language',
           geoScopes: 'Geographic Scopes',
           contentTypes: 'Types of content',
           issues: 'Issues',
-          searchPlaceholder: 'Search by title, author, organization, publication'
+          searchPlaceholder: 'Search by title, author, organization, publication',
+          about: 'About',
+          aboutTitle: 'About this library'
         },
         fr: {
           home: 'Accueil',
-          about: 'À propos',
-          intro: 'Bibliothèque de COVID-19',
+          homeTitle: 'Bibliothèque de COVID-19',
           enAvailable: 'Disponible aussi en anglais',
           language: 'Langue',
           geoScopes: 'Portées géographiques',
           contentTypes: 'Types de contenu',
           issues: 'Enjeux',
-          searchPlaceholder: 'Recherche par titres, auteurs-es, organisations, publication'
+          searchPlaceholder: 'Recherche par titres, auteurs-es, organisations, publication',
+          about: 'À propos',
+          aboutTitle: 'À propos de cette bibliothèque'
         }
       }
     }

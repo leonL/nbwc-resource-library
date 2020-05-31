@@ -1,5 +1,5 @@
 <template>
-    <p>About hello world</p>
+    <h2 class="page-title">{{ $t('aboutTitle') }} </h2>
 </template>
 
 <script>

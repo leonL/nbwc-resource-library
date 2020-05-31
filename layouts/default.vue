@@ -17,7 +17,7 @@
 export default {
   head () {
     return {
-      title: this.$t('intro')
+      title: this.$t('homeTitle')
     }
   }
 }
@@ -81,6 +81,13 @@ body {
 
 .logo {
   width: 239px;
+}
+
+.page-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 15px;
 }
 
 *,

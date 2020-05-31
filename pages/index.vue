@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>
-      <h2 class="title">
-        {{ $t('intro') }} 
+      <h2 class="page-title">
+        {{ $t('homeTitle') }} 
       </h2>
 
       <div class="filter-controls">
@@ -180,13 +180,6 @@ export default {
 </script>
 
 <style>
-.title {
-  font-size: 48px;
-  font-weight: bold;
-  color: #000000;
-  margin-bottom: 15px;
-}
-
 input.search {
   margin-top: 0.5rem;
   max-width: 500px;
