@@ -63,7 +63,7 @@ import CheckboxFilter from '@/components/FilterControls/CheckboxFilter.vue'
 import RadioButtonFilter from '@/components/FilterControls/RadioButtonFilter.vue'
 
 export default {
-   data () {
+  data () {
     const data = this.$store.state.data
     return {
       allLanguages: data.allLanguages,

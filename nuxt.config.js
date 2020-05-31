@@ -45,6 +45,7 @@ export default {
     'bootstrap-vue/nuxt',
     '@nuxt/http',
     'nuxt-i18n',
+    '@nuxtjs/markdownit'
   ],
   i18n: {
     locales: ['en', 'fr'],
@@ -78,6 +79,9 @@ export default {
         }
       }
     }
+  },
+  markdownit: {
+    injected: true
   },
   /*
   ** Build configuration

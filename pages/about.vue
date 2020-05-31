@@ -1,14 +1,53 @@
 <template>
-    <h2 class="page-title">{{ $t('aboutTitle') }} </h2>
+    <div>
+      <div v-html="$md.render(aboutLibrary[$i18n.locale])" class="about library"></div>
+      <div class='double-pane'>
+        <div v-html="$md.render(aboutNBWC[$i18n.locale])" class="about-nbwc"></div>
+        <div v-html="$md.render(aboutOpenCall[$i18n.locale])" class="about-open-call"></div>
+      </div>
+    </div>
+    
 </template>
 
 <script>
 export default {
-    nuxtI18n: {
-        paths: {
-        en: '/about',
-        fr: '/a-propos'
-        }
+  data () {
+    const text = this.$store.state.data.text,
+      enText = text[0], frText = text[1]
+    return {
+      aboutLibrary: { en: enText['ABOUT:LIBRARY'], fr: frText['ABOUT:LIBRARY'] },
+      aboutNBWC: { en: enText['ABOUT:NBWC'], fr: frText['ABOUT:NBWC'] },
+      aboutOpenCall: { en: enText['ABOUT:OPEN CALL'], fr: frText['ABOUT:OPEN CALL'] }
     }
+  },
+  nuxtI18n: {
+    paths: {
+      en: '/about',
+      fr: '/a-propos'
+    }
+  } 
 }
 </script>
+
+<style scoped>
+
+.about-library {
+  margin-bottom: 50px;
+}
+
+.double-pane {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 50px;
+}
+
+.about-nbwc {
+  margin-right: 25px;  
+}
+
+.about-open-call {
+  margin-left: 25px;
+}
+
+
+</style>

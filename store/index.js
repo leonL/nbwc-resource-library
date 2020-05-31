@@ -36,6 +36,12 @@ export const actions = {
             searchParams: [['view', 'ALL RECORDS']]
         })
         $languagesModel.setToken(apiKey, 'Bearer')
+        
+        const $textModel = this.$http.create({
+            prefixUrl: libraryBaseApiPrefix + '/TEXT',
+            searchParams: [['view', 'ALL RECORDS']]
+        })
+        $textModel.setToken(apiKey, 'Bearer')
 
         const allResources = await $resourcesModel.$get('')
         // console.log(allResources.records[0])
@@ -56,6 +62,9 @@ export const actions = {
         const allLanguages = await $languagesModel.$get('')
         // console.log(allLanguages.records[0])
         state.data['allLanguages'] = allLanguages.records.map(record => record.fields)
-        
+
+        const text = await $textModel.$get('')
+        console.log(text.records[0])
+        state.data['text'] = text.records.map(record => record.fields)
     }
 }
