@@ -3,8 +3,10 @@
     <div class='header'>
       <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)" class="logo">
       <div class="links">
-        <nuxt-link :to="switchLocalePath('fr')">FR</nuxt-link>
-        <nuxt-link :to="switchLocalePath('en')">EN</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{ $t('home') }}</nuxt-link>
+        <nuxt-link :to="localePath('about')">{{ $t('about') }}</nuxt-link>
+        <nuxt-link :to="switchLocalePath('fr')" class='localeToggle'>FR</nuxt-link>
+        <nuxt-link :to="switchLocalePath('en')" class='localeToggle'>EN</nuxt-link>
       </div>
     </div>
     <nuxt />
@@ -53,18 +55,28 @@ body {
 .links {
   align-self: center;
   font-size: 25px;
-  font-weight: bold;
 }
 
 .links a {
-  color: #000000
+  color: #000000;
+  margin-right: 25px;
+}
+
+.links a.localeToggle {
+  font-weight: bold;
+  margin-right: 0;
 }
 
 .links a.nuxt-link-exact-active {
+  text-decoration: underline;
+}
+
+.links a.nuxt-link-exact-active.localeToggle {
   border-radius: 27px;
   background-color: #11b6ff;
   padding: 5px 10px;
   color: #ffffff;
+  text-decoration: none;
 }
 
 .logo {

@@ -53,6 +53,8 @@ export default {
       fallbackLocale: 'en',
       messages: {
         en: {
+          home: 'Home',
+          about: 'About',
           intro: 'COVID-19 library',
           frAvailable: 'Also available in French',
           language: 'Language',
@@ -62,6 +64,8 @@ export default {
           searchPlaceholder: 'Search by title, author, organization, publication'
         },
         fr: {
+          home: 'Accueil',
+          about: 'À propos',
           intro: 'Bibliothèque de COVID-19',
           enAvailable: 'Disponible aussi en anglais',
           language: 'Langue',

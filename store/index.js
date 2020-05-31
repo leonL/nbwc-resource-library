@@ -38,7 +38,7 @@ export const actions = {
         $languagesModel.setToken(apiKey, 'Bearer')
 
         const allResources = await $resourcesModel.$get('')
-        console.log(allResources.records[0])
+        // console.log(allResources.records[0])
         state.data['resources'] = allResources.records.map(record => record.fields)
 
         const allGeographicScopes = await $geographicScopesModel.$get('')
