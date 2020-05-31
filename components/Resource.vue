@@ -92,9 +92,7 @@ export default {
             return this.titles[this.getPrimaryLanguageId()]
         },
         translationAvailableText: function () {
-            var text = ""
-            text = (this.$i18n.locale === 'en') ? this.$t('frAvailable') : this.$t('enAvailable')
-            return text
+            return (this.$i18n.locale === 'en') ? this.$t('frAvailable') : this.$t('enAvailable')
         },
         getTitleMarked: function () {
             return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.getTitle()) : this.getTitle()   
