@@ -1,10 +1,12 @@
 <template>
     <li class="resource">
         <span v-if="paywall" class="paywall">PAYWALL</span>
-        <a :href="links[this.getPrimaryLanguageId()]" target="_blank">
-            <h2 v-html="getTitleMarked()" class="rTitle"></h2>
-        </a>
-        <div v-html="getAccreditationHtml()"></div>
+        <h2 class="rTitle">
+            <a :href="links[this.getPrimaryLanguageId()]" 
+                v-html="getTitleMarked()"
+                target="_blank"></a>
+        </h2>
+        <div v-html="getAccreditationHtml()" class="accreditation"></div>
         <div>
             <h6 v-for="(gs, index) in geographicScopes" :key="gs" class="geo-scope">
                 <span v-if="index > 0"> / </span>
@@ -155,6 +157,12 @@ li.resource {
 .rTitle {
     font-size: 30px;
     font-weight: bold;
+    line-height: normal;
+    margin-bottom: 0;
+}
+
+.accreditation {
+    font-size: 18px;
     line-height: normal;
 }
 
