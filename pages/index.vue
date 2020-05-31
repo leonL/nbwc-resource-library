@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div>
       <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)">
       <h2 class="title">
@@ -234,10 +234,6 @@ export default {
 </script>
 
 <style>
-.container {
-  margin: 10px auto;
-}
-
 .title {
   font-size: 48px;
   font-weight: bold;
