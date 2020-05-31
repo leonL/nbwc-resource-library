@@ -89,14 +89,10 @@ export default {
             return (this.$i18n.locale === "en") ? "fr" : "en"
         },
         getTitle: function () {
-            var title = "",
-            langID = this.language.id,
-            locale = this.$i18n.locale,
-            otherLocale = this.otherLocale()
-
-            title = (langID === otherLocale) ? this.titles[otherLocale] : this.titles[locale]
-
-            return title
+            return this.titles[this.getPrimaryLanguageId()]
+        },
+        getPrimaryLanguageId: function() {
+            return (this.language.id === "both") ? this.$i18n.locale : this.language.id
         },
         translationUnavailableText: function () {
             var text = ""
