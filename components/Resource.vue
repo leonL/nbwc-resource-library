@@ -1,7 +1,7 @@
 <template>
     <li class="resource">
         <span v-if="paywall" class="paywall">PAYWALL</span>
-        <a :href="links[`${$i18n.locale}`]" target="_blank">
+        <a :href="links[this.getPrimaryLanguageId()]" target="_blank">
             <h2 v-html="getTitleMarked()" class="rTitle"></h2>
         </a>
         <div v-html="getAccreditationHtml()"></div>
