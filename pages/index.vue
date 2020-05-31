@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>
-      <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)">
       <h2 class="title">
         {{ $t('intro') }} 
       </h2>
@@ -238,6 +237,7 @@ export default {
   font-size: 48px;
   font-weight: bold;
   color: #000000;
+  margin-bottom: 15px;
 }
 
 input.search {
