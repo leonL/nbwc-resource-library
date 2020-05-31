@@ -25,9 +25,6 @@
                 {{ translationAvailableText() }}
             </a>
         </h5>
-        <h5 v-else>
-            {{ translationUnavailableText() }}
-        </h5>
     </li>
 </template>
 
@@ -88,16 +85,11 @@ export default {
         otherLocale: function() {
             return (this.$i18n.locale === "en") ? "fr" : "en"
         },
-        getTitle: function () {
-            return this.titles[this.getPrimaryLanguageId()]
-        },
         getPrimaryLanguageId: function() {
             return (this.language.id === "both") ? this.$i18n.locale : this.language.id
         },
-        translationUnavailableText: function () {
-            var text = ""
-            text = (this.language.id === 'en') ? this.$t('frUnavailable') : this.$t('enUnavailable')
-            return text
+        getTitle: function () {
+            return this.titles[this.getPrimaryLanguageId()]
         },
         translationAvailableText: function () {
             var text = ""
