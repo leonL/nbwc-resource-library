@@ -12,21 +12,22 @@
                 {{ translationAvailableText() }}
             </a>
         </h5>
-        <div>
-            <h6 v-for="(gs, index) in geographicScopes" :key="gs" class="geo-scope">
+        <div class="geo-scopes pills">
+            <h6 v-for="(gs, index) in geographicScopes" :key="gs">
                 <span v-if="index > 0"> / </span>
                 {{ gs }} 
             </h6>
         </div>
-        <div class="content-types">
-            <h6 v-for="(ct) in contentTypes" :key="ct" class="content-type">
+        <div class="content-types pills">
+            <h6 v-for="(ct) in contentTypes" :key="ct">
                 {{ ct }} 
             </h6>
         </div>
-        <span v-for="(issue, index) in issues" :key="issue">
-            <span v-if="index > 0"> / </span>
-            {{ issue }} 
-        </span>
+        <div class="issues pills">
+            <h6 v-for="(issue) in issues" :key="issue">
+                {{ issue }} 
+            </h6>
+        </div>
     </li>
 </template>
 
@@ -164,12 +165,14 @@ li.resource h5 {
     margin-bottom: 5px;
 }
 
-.content-types {
+.pills {
     position: relative;
     left: -5px;
 }
 
-.content-type {
+.pills h6 {
+    font-size: 16px;
+    font-weight: 600;
     border-radius: 24.4px;
     background-color: #e8f8ff;
     padding: 5px 10px;
@@ -177,10 +180,7 @@ li.resource h5 {
     display: inline;
     margin-right: 10px;
     line-height: 35px;
-}
-
-.geo-scope {
-    display: inline;
+    color: #000000;
 }
 
 .paywall {
