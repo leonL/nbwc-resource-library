@@ -16,20 +16,25 @@
         <CheckboxFilter 
           :label="$t('geoScopes')"
           :options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
+          :defaultSelectedOptionIds="checkedScopeIds"
           v-on:selectedOptionsChanged="checkedScopeIds = $event"
         />
 
         <CheckboxFilter 
           :label="$t('contentTypes')"
           :options="allContentTypes.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
+          :defaultSelectedOptionIds="checkedContentTypeIds"
           v-on:selectedOptionsChanged="checkedContentTypeIds = $event"
         />
 
         <CheckboxFilter 
           :label="$t('issues')"
           :options="allIssues.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
+          :defaultSelectedOptionIds="checkedIssueIds"
           v-on:selectedOptionsChanged="checkedIssueIds = $event"
         />
+
+        <span v-on:click="clearFilters" class="clear-filters">{{ $t('clearFilters') }}</span>
 
         <b-form-input v-model="searchInputText" :placeholder="$t('searchPlaceholder')" debounce="500" class="search"></b-form-input>
       </div>
@@ -82,7 +87,7 @@ export default {
     }
   },
   methods: {
-    filterResources () {
+    filterResources() {
       let filteredResources = this.resources.slice(0, 88) // remove slice after implementing content management staging - temporary measure to aviod blank records while Airtable is being populated by NBWC
 
       if (this.checkedLanguageId !== "BOTH") {
@@ -171,7 +176,14 @@ export default {
     },
     isTextSearching() {
       return this.searchInputText.trim() ? true : false
-    }
+    },
+    clearFilters() {
+      this.checkedLanguageId = "BOTH"
+      this.checkedScopeIds = []
+      this.checkedContentTypeIds = []
+      this.checkedIssueIds = []
+      return true
+    } 
   },
   components: {
     Resource,
@@ -189,6 +201,16 @@ input.search {
 
 .filter-controls {
   margin-bottom: 15px;
+}
+
+.clear-filters {
+  margin-left: 10px;
+  text-decoration: underline;
+  color: #000000;
+}
+
+.clear-filters:hover {
+  cursor: pointer;
 }
 
 .resource-count {

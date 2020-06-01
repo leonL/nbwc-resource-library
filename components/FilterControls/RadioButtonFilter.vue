@@ -34,6 +34,9 @@ export default {
         selectedOptionId: function (val, oldVal) {
             this.$emit('selectedOptionsChanged', val)
         }
+    },
+    beforeUpdate: function() {
+        this.selectedOptionId = this.defaultSelectedOptionId
     }
 }
 </script>

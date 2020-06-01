@@ -66,7 +66,8 @@ export default {
           about: 'About',
           aboutTitle: 'About this library',
           showing: 'Showing',
-          outOf: 'out of'
+          outOf: 'out of',
+          clearFilters: 'Clear Filters'
         },
         fr: {
           home: 'Accueil',
@@ -81,7 +82,8 @@ export default {
           about: 'À propos',
           aboutTitle: 'À propos de cette bibliothèque',
           showing: 'Affichage de',
-          outOf: 'sur'
+          outOf: 'sur',
+          clearFilters: 'Effacer les filtres'
         }
       }
     }
