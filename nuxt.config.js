@@ -67,7 +67,8 @@ export default {
           aboutTitle: 'About this library',
           showing: 'Showing',
           outOf: 'out of',
-          clearFilters: 'Clear Filters'
+          clearFilters: 'Clear Filters',
+          paywall: 'Paywall'
         },
         fr: {
           home: 'Accueil',
@@ -83,7 +84,8 @@ export default {
           aboutTitle: 'À propos de cette bibliothèque',
           showing: 'Affichage de',
           outOf: 'sur',
-          clearFilters: 'Effacer les filtres'
+          clearFilters: 'Effacer les filtres',
+          paywall: 'Contenu payant'
         }
       }
     }

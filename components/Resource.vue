@@ -1,6 +1,6 @@
 <template>
     <li class="resource">
-        <h6 v-if="paywall" class="paywall">PAYWALL</h6>
+        <h6 v-if="paywall" class="paywall">{{ $t('paywall').toUpperCase() }}</h6>
         <h2 class="rTitle">
             <a :href="links[this.getPrimaryLanguageId()]" 
                 v-html="getTitleMarked()"
@@ -169,7 +169,7 @@ li.resource h5 {
     font-size: 30px;
     font-weight: bold;
     margin-bottom: 5px;
-    max-width: 90%;
+    max-width: 85%;
 }
 
 .tags {
@@ -193,12 +193,13 @@ li.resource h5 {
     font-weight: 600;
     border-radius: 24.4px;
     background-color: #e8f8ff;
-    padding: 5px 10px;
+    padding: 0 10px;
     text-align: center;
     display: inline;
     margin-right: 10px;
-    line-height: 35px;
+    line-height: 25px;
     color: #000000;
+    display: inline-block;
 }
 
 .paywall {
