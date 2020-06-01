@@ -14,17 +14,20 @@
         </h5>
         <div class="tags">
             <div class="geo-scopes pills">
+                <h5 class="label">{{ $t('geoScope') }}:</h5>
                 <h6 v-for="(gs, index) in geographicScopes" :key="gs">
                     <span v-if="index > 0"> / </span>
                     {{ gs }} 
                 </h6>
             </div>
             <div class="content-types pills">
+                <h5 class="label">{{ $t('contentTypes') }}:</h5>
                 <h6 v-for="(ct) in contentTypes" :key="ct">
                     {{ ct }} 
                 </h6>
             </div>
             <div class="issues pills">
+                <h5 class="label">{{ $t('issues') }}:</h5>
                 <h6 v-for="(issue) in issues" :key="issue">
                     {{ issue }} 
                 </h6>
@@ -176,6 +179,13 @@ li.resource h5 {
 .pills {
     position: relative;
     left: -5px;
+    margin-bottom: 5px;
+}
+
+.pills .label {
+    display: inline;
+    margin-right: 20px;
+    color: #767676;
 }
 
 .pills h6 {
