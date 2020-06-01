@@ -5,8 +5,18 @@
         <div v-html="$md.render(aboutNBWC[$i18n.locale])" class="about-nbwc"></div>
         <div v-html="$md.render(aboutOpenCall[$i18n.locale])" class="about-open-call"></div>
       </div>
+      <div class="logos">
+        <a href="https://www.nbwomenscouncil.ca/" target="_blank">
+          <img src="~/assets/NBWC_logo_icon.png" class="logo">
+        </a>
+        <a href="https://www.facebook.com/NBWomensCouncil/" target="_blank">
+          <img src="~/assets/fb_logo.png" class="logo">
+        </a>
+        <a href="https://twitter.com/nbwomenscouncil" target="_blank">
+          <img src="~/assets/twitter_logo.png" class="logo">
+        </a>
+      </div>
     </div>
-    
 </template>
 
 <script>
@@ -38,7 +48,7 @@ export default {
 .double-pane {
   display: flex;
   align-items: flex-start;
-  margin-top: 50px;
+  margin: 50px 0 5px 0;
 }
 
 .about-nbwc {
@@ -47,6 +57,15 @@ export default {
 
 .about-open-call {
   margin-left: 25px;
+}
+
+.logos {
+  margin-bottom: 30px;
+}
+
+.logo {
+  width: 65px;
+  margin-right: 15px;
 }
 
 
