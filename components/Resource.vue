@@ -12,6 +12,7 @@
                 {{ translationAvailableText() }}
             </a>
         </h5>
+        <p v-if="notes[$i18n.locale].length > 0" v-html="$md.render(notes[$i18n.locale])" class="notes"></p>
         <div class="tags">
             <div class="geo-scopes pills">
                 <h5 class="label">{{ $t('geoScope') }}:</h5>
@@ -58,6 +59,10 @@ export default {
         },
         publication: {
             type: String,
+            required: true
+        },
+        notes: {
+            type: Object,
             required: true
         },
         contentTypes: {
@@ -170,6 +175,11 @@ li.resource h5 {
     font-weight: bold;
     margin-bottom: 5px;
     max-width: 85%;
+}
+
+.notes {
+    font-size: 16px;
+    color: #767676;
 }
 
 .tags {

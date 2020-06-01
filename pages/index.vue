@@ -58,6 +58,7 @@
           :paywall="getPaywall(resource)"
           :searchRegx="getSearchRegx()"
           :isTextSearching="isTextSearching()"
+          :notes="{en: getNotes(resource, 'en'), fr: getNotes(resource, 'fr')}"
         />
       </ul>
     </div>
@@ -169,10 +170,14 @@ export default {
       return publication
     },
     getAuthor(resource) {
-      return (resource['AUTHOR']) ? resource['AUTHOR'] : ""
+      return resource['AUTHOR'] || ""
     },
     getPaywall(resource) {
-      return (resource['PAYWALL']) ? resource['PAYWALL'] : false
+      return resource['PAYWALL'] || false
+    },
+    getNotes(resource, lang) {
+      const upperCaseLang = lang.toUpperCase()
+      return resource[`NOTES ${upperCaseLang}`] || "" 
     },
     isTextSearching() {
       return this.searchInputText.trim() ? true : false
