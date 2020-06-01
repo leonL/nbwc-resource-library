@@ -56,6 +56,7 @@
           :geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
           :issues="resource[`ISSUES ${upperCaseLocale}`]"
           :paywall="getPaywall(resource)"
+          :paywallHelpText="getPaywallText()"
           :searchRegx="getSearchRegx()"
           :isTextSearching="isTextSearching()"
           :notes="{en: getNotes(resource, 'en'), fr: getNotes(resource, 'fr')}"
@@ -84,7 +85,8 @@ export default {
       checkedIssueIds: [],
       resources: data.resources,
       searchInputText: "",
-      upperCaseLocale: this.$i18n.locale.toUpperCase()
+      upperCaseLocale: this.$i18n.locale.toUpperCase(),
+      paywallTexts: { en: data.text[0]['HELP:PAYWALL'], fr: data.text[1]['HELP:PAYWALL'] }
     }
   },
   methods: {
@@ -174,6 +176,9 @@ export default {
     },
     getPaywall(resource) {
       return resource['PAYWALL'] || false
+    },
+    getPaywallText() {
+      return this.paywallTexts[this.$i18n.locale]
     },
     getNotes(resource, lang) {
       const upperCaseLang = lang.toUpperCase()

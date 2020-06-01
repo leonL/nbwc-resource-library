@@ -13,6 +13,7 @@
             </a>
         </h5>
         <p v-if="notes[$i18n.locale].length > 0" v-html="$md.render(notes[$i18n.locale])" class="notes"></p>
+        <p v-if="paywall" v-html="$md.render(paywallHelpText)" class="notes pw"></p>
         <div class="tags">
             <div class="geo-scopes pills">
                 <h5 class="label">{{ $t('geoScope') }}:</h5>
@@ -83,6 +84,10 @@ export default {
         },
         paywall: {
             type: Boolean,
+            required: true
+        },
+        paywallHelpText: {
+            type: String,
             required: true
         },
         searchRegx: {
