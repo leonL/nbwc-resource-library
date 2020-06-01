@@ -12,8 +12,8 @@
                 {{ translationAvailableText() }}
             </a>
         </h5>
-        <p v-if="notes[$i18n.locale].length > 0" v-html="$md.render(notes[$i18n.locale])" class="notes"></p>
-        <p v-if="paywall" v-html="$md.render(paywallHelpText)" class="notes pw"></p>
+        <span v-if="notes[$i18n.locale].length > 0" v-html="$md.render(notes[$i18n.locale])" class="notes"></span>
+        <span v-if="paywall" v-html="$md.render(paywallHelpText)" class="notes pw"></span>
         <div class="tags">
             <div class="geo-scopes pills">
                 <h5 class="label">{{ $t('geoScope') }}:</h5>
