@@ -64,7 +64,9 @@ export default {
           issues: 'Issues',
           searchPlaceholder: 'Search by title, author, organization, publication',
           about: 'About',
-          aboutTitle: 'About this library'
+          aboutTitle: 'About this library',
+          showing: 'Showing',
+          outOf: 'out of'
         },
         fr: {
           home: 'Accueil',
@@ -77,7 +79,9 @@ export default {
           issues: 'Enjeux',
           searchPlaceholder: 'Recherche par titres, auteurs-es, organisations, publication',
           about: 'À propos',
-          aboutTitle: 'À propos de cette bibliothèque'
+          aboutTitle: 'À propos de cette bibliothèque',
+          showing: 'Affichage de',
+          outOf: 'sur'
         }
       }
     }

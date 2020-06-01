@@ -33,6 +33,8 @@
 
         <b-form-input v-model="searchInputText" :placeholder="$t('searchPlaceholder')" debounce="500" class="search"></b-form-input>
       </div>
+      
+      <span class="resource-count">{{ $t('showing') }} {{ filterResources().length }} {{ $t('outOf') }} {{ resources.length }}</span>
 
       <ul class="resources">
         <Resource
@@ -81,7 +83,7 @@ export default {
   },
   methods: {
     filterResources () {
-      let filteredResources = this.resources.slice(0, 70) // remove slice after implementing content management staging - temporary measure to aviod blank records while Airtable is being populated by NBWC
+      let filteredResources = this.resources.slice(0, 88) // remove slice after implementing content management staging - temporary measure to aviod blank records while Airtable is being populated by NBWC
 
       if (this.checkedLanguageId !== "BOTH") {
         filteredResources = filteredResources.filter(r => {
@@ -185,9 +187,22 @@ input.search {
   max-width: 500px;
 }
 
+.filter-controls {
+  margin-bottom: 15px;
+}
+
+.resource-count {
+  font-size: 15px;
+  font-weight: 600;
+}
+
 .resources {
   padding: 0;
   position: relative;
+}
+
+ul.resources li:first-child {
+  margin-top: 10px;
 }
 
 mark {
