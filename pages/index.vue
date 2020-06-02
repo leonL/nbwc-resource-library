@@ -40,7 +40,7 @@
         <b-form-input v-model="searchInputText" :placeholder="$t('searchPlaceholder')" debounce="500" class="search"></b-form-input>
       </div>
       
-      <span class="resource-count">{{ $t('showing') }} {{ filterResources().length }} {{ $t('outOf') }} {{ resources.length }}</span>
+      <span class="resource-count">{{ filterResources().length }} {{ $t('resultsShowing') }} </span>
 
       <ul class="resources">
         <Resource
