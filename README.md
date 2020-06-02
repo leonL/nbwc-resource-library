@@ -1,22 +1,4 @@
-# nbwc-covid-resources
-
-> Nav interface for a collection of COVID19 resources curated by the New Brunswick Women&#39;s Council 
-
-## Build Setup
-
-```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
+## COVID-19 library
+### A collection of content on the COVID-19 pandemic that considers marginalized populations, the not-for-profit sector, or uses a social justice lens.
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
