@@ -68,7 +68,10 @@ export default {
           showing: 'Showing',
           outOf: 'out of',
           clearFilters: 'Clear Filters',
-          paywall: 'Paywall'
+          paywall: 'Paywall',
+          nbwcURL: 'https://www.nbwomenscouncil.ca/',
+          facebookURL: 'https://www.facebook.com/NBWomensCouncil/',
+          twitterURL: 'https://twitter.com/nbwomenscouncil'
         },
         fr: {
           home: 'Accueil',
@@ -85,7 +88,10 @@ export default {
           showing: 'Affichage de',
           outOf: 'sur',
           clearFilters: 'Effacer les filtres',
-          paywall: 'Contenu payant'
+          paywall: 'Contenu payant',
+          nbwcURL: 'https://www.nbwomenscouncil.ca/content/vnbw-vfnb/fr.html',
+          facebookURL: 'https://www.facebook.com/ConseilfemmesNB/?ref=br_rs',
+          twitterURL: 'https://twitter.com/conseilfemmesnb'
         }
       }
     }

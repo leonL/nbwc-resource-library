@@ -6,13 +6,13 @@
         <div v-html="$md.render(aboutOpenCall[$i18n.locale])" class="about-open-call"></div>
       </div>
       <div class="logos">
-        <a href="https://www.nbwomenscouncil.ca/" target="_blank">
+        <a :href="$t('nbwcURL')" target="_blank">
           <img src="~/assets/NBWC_logo_icon.png" class="logo">
         </a>
-        <a href="https://www.facebook.com/NBWomensCouncil/" target="_blank">
+        <a :href="$t('facebookURL')" target="_blank">
           <img src="~/assets/fb_logo.png" class="logo">
         </a>
-        <a href="https://twitter.com/nbwomenscouncil" target="_blank">
+        <a :href="$t('twitterURL')" target="_blank">
           <img src="~/assets/twitter_logo.png" class="logo">
         </a>
       </div>
