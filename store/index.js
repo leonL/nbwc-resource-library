@@ -39,11 +39,17 @@ export const actions = {
             searchParams: [['view', 'ALL RECORDS']]
         })
 
-        let offsetToken = '', allResourcesFetched = false, fetchedResources = {} 
+        let offsetToken = '', allResourcesFetched = false
         while (allResourcesFetched === false) {
-            fetchedResources = await $resourcesModel.$get('', {searchParams: [['view', 'POST'], ['offset', offsetToken]]})
-            state.data['resources'] = [...state.data['resources'], ...fetchedResources.records.map(record => record.fields)]
-            fetchedResources['offset'] ? (offsetToken = fetchedResources['offset']) : (allResourcesFetched = true)
+            let fetchedResourcesJson = await $resourcesModel.$get('', {searchParams: [['view', 'POST'], ['offset', offsetToken]]}),
+            fetchedResources = fetchedResourcesJson.records.map(record => record.fields),
+            validFetchedResources = fetchedResources.filter(r => {
+                return ((r['TITLE EN'] && ['LINK EN']) || (r['TITLE FR'] && ['LINK FR'])) ? true : false
+            })
+
+            state.data['resources'] = [...state.data['resources'], ...validFetchedResources]
+            // console.log(state.data['resources'][state.data['resources'].length - 1])
+            fetchedResourcesJson['offset'] ? (offsetToken = fetchedResourcesJson['offset']) : (allResourcesFetched = true)
         }
 
         const allGeographicScopes = await $geographicScopesModel.$get('')
