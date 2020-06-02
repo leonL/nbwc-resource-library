@@ -15,21 +15,21 @@
         />
 
         <CheckboxFilter 
-          :label="$t('geoScopes')"
+          :label="$t('geoScopesFilter')"
           :options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
           :defaultSelectedOptionIds="checkedScopeIds"
           v-on:selectedOptionsChanged="checkedScopeIds = $event"
         />
 
         <CheckboxFilter 
-          :label="$t('contentTypes')"
+          :label="$t('contentTypesFilter')"
           :options="allContentTypes.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
           :defaultSelectedOptionIds="checkedContentTypeIds"
           v-on:selectedOptionsChanged="checkedContentTypeIds = $event"
         />
 
         <CheckboxFilter 
-          :label="$t('issues')"
+          :label="$t('issuesFilter')"
           :options="allIssues.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
           :defaultSelectedOptionIds="checkedIssueIds"
           v-on:selectedOptionsChanged="checkedIssueIds = $event"
