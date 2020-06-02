@@ -4,47 +4,43 @@ export const state = () => ({
 
 export const actions = {
     async nuxtServerInit ({ state }, { req }) {
-        const libraryBaseApiPrefix = 'https://api.airtable.com/v0/app393cel1ZJ5Wi13',
-        apiKey = process.env.NBWC_AIRTABLE_API_KEY
-
+        const libraryBaseApiPrefix = 'https://api.airtable.com/v0/app393cel1ZJ5Wi13'
+        
+        this.$http.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer')
+        
         const $resourcesModel = this.$http.create({
             prefixUrl: libraryBaseApiPrefix + '/RESOURCES',
-            searchParams: [['view', 'POST']]
+            searchParams: [['view', 'all records']]
         })
-        $resourcesModel.setToken(apiKey, 'Bearer')
 
         const $geographicScopesModel = this.$http.create({
             prefixUrl: libraryBaseApiPrefix + '/GEOGRAPHIC%20SCOPES',
             searchParams: [['view', 'ALL RECORDS']]
         })
-        $geographicScopesModel.setToken(apiKey, 'Bearer')
 
         const $contentTypesModel = this.$http.create({
             prefixUrl: libraryBaseApiPrefix + '/CONTENT%20TYPES',
             searchParams: [['view', 'ALL RECORDS']]
         })
-        $contentTypesModel.setToken(apiKey, 'Bearer')
 
         const $issuesModel = this.$http.create({
             prefixUrl: libraryBaseApiPrefix + '/ISSUES',
             searchParams: [['view', 'ALL RECORDS']]
         })
-        $issuesModel.setToken(apiKey, 'Bearer')
 
         const $languagesModel = this.$http.create({
             prefixUrl: libraryBaseApiPrefix + '/LANGUAGES',
             searchParams: [['view', 'ALL RECORDS']]
         })
-        $languagesModel.setToken(apiKey, 'Bearer')
         
         const $textModel = this.$http.create({
             prefixUrl: libraryBaseApiPrefix + '/TEXT',
             searchParams: [['view', 'ALL RECORDS']]
         })
-        $textModel.setToken(apiKey, 'Bearer')
 
         const allResources = await $resourcesModel.$get('')
-        // console.log(allResources.records[0])
+        console.log(allResources)
+        // console.log(allResources.records[allResources.records.length - 1])
         state.data['resources'] = allResources.records.map(record => record.fields)
 
         const allGeographicScopes = await $geographicScopesModel.$get('')
