@@ -44,11 +44,10 @@ export const actions = {
             let fetchedResourcesJson = await $resourcesModel.$get('', {searchParams: [['view', 'POST'], ['offset', offsetToken]]}),
             fetchedResources = fetchedResourcesJson.records.map(record => record.fields),
             validFetchedResources = fetchedResources.filter(r => {
-                return ((r['TITLE EN'] && ['LINK EN']) || (r['TITLE FR'] && ['LINK FR'])) ? true : false
+                return (r['LANGUAGE ID'] && (r['TITLE EN'] && ['LINK EN']) || (r['TITLE FR'] && ['LINK FR'])) ? true : false
             })
 
             state.data['resources'] = [...state.data['resources'], ...validFetchedResources]
-            // console.log(state.data['resources'][state.data['resources'].length - 1])
             fetchedResourcesJson['offset'] ? (offsetToken = fetchedResourcesJson['offset']) : (allResourcesFetched = true)
         }
 
