@@ -4,6 +4,7 @@
       <h2 class="page-title">
         {{ $t('homeTitle') }} 
       </h2>
+      <h3 class="subtitle" v-html="$md.render(subtitleTexts[$i18n.locale])" ></h3>
 
       <div class="filter-controls">
         <RadioButtonFilter 
@@ -86,7 +87,8 @@ export default {
       resources: data.resources,
       searchInputText: "",
       upperCaseLocale: this.$i18n.locale.toUpperCase(),
-      paywallTexts: { en: data.text[0]['HELP:PAYWALL'], fr: data.text[1]['HELP:PAYWALL'] }
+      paywallTexts: { en: data.text[0]['HELP:PAYWALL'], fr: data.text[1]['HELP:PAYWALL'] },
+      subtitleTexts: { en: data.text[0]['HOME:SUBTITLE'], fr: data.text[1]['HOME:SUBTITLE'] }
     }
   },
   methods: {
@@ -226,6 +228,12 @@ export default {
 </script>
 
 <style>
+.subtitle {
+  font-size: 24px;
+  color: #767676;
+  margin-bottom: 65px;
+}
+
 input.search {
   margin-top: 0.5rem;
   max-width: 500px;
