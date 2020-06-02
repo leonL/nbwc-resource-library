@@ -1,5 +1,7 @@
 export const state = () => ({
-    data: {}
+    data: {
+        resources: []
+    }
 })
 
 export const actions = {
@@ -9,8 +11,7 @@ export const actions = {
         this.$http.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer')
         
         const $resourcesModel = this.$http.create({
-            prefixUrl: libraryBaseApiPrefix + '/RESOURCES',
-            searchParams: [['view', 'all records']]
+            prefixUrl: libraryBaseApiPrefix + '/RESOURCES'
         })
 
         const $geographicScopesModel = this.$http.create({
@@ -38,10 +39,12 @@ export const actions = {
             searchParams: [['view', 'ALL RECORDS']]
         })
 
-        const allResources = await $resourcesModel.$get('')
-        console.log(allResources)
-        // console.log(allResources.records[allResources.records.length - 1])
-        state.data['resources'] = allResources.records.map(record => record.fields)
+        let offsetToken = '', allResourcesFetched = false, fetchedResources = {} 
+        while (allResourcesFetched === false) {
+            fetchedResources = await $resourcesModel.$get('', {searchParams: [['view', 'POST'], ['offset', offsetToken]]})
+            state.data['resources'] = [...state.data['resources'], ...fetchedResources.records.map(record => record.fields)]
+            fetchedResources['offset'] ? (offsetToken = fetchedResources['offset']) : (allResourcesFetched = true)
+        }
 
         const allGeographicScopes = await $geographicScopesModel.$get('')
         // console.log(allGeographicScopes.records[0])
