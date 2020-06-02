@@ -64,7 +64,7 @@ export const actions = {
         state.data['allLanguages'] = allLanguages.records.map(record => record.fields)
 
         const text = await $textModel.$get('')
-        console.log(text.records[0])
+        // console.log(text.records[0])
         state.data['text'] = text.records.map(record => record.fields)
     }
 }

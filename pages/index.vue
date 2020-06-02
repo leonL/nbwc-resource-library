@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     filterResources() {
-      let filteredResources = this.resources
+      let filteredResources = [...this.resources]
 
       if (this.checkedLanguageId !== "BOTH") {
         filteredResources = filteredResources.filter(r => {
@@ -139,6 +139,27 @@ export default {
           return searchRegx.test(keyWords)
         })
       }
+
+      filteredResources.sort((a, b) => {
+        const langA = a['LANGUAGE ID'][0], 
+          langB = b['LANGUAGE ID'][0]
+        let returnValue = 0; 
+
+        if (langA === 'BOTH') {
+          returnValue = (langB === 'BOTH') ? 0 : -1  
+        } else if (langA === this.upperCaseLocale) {
+          if (langB === 'BOTH') {
+            returnValue = 1
+          } else if (langB === this.upperCaseLocale) {
+            returnValue = 0
+          } else {
+            returnValue = -1
+          }
+        } else {
+          returnValue = (langB === 'BOTH' || langB === this.upperCaseLocale) ? 1 : 0 
+        }        
+        return returnValue
+      })     
 
       return filteredResources
     },
