@@ -9,7 +9,7 @@ export const actions = {
 
         const $resourcesModel = this.$http.create({
             prefixUrl: libraryBaseApiPrefix + '/RESOURCES',
-            searchParams: [['view', 'ALL RECORDS']]
+            searchParams: [['view', 'POST']]
         })
         $resourcesModel.setToken(apiKey, 'Bearer')
 

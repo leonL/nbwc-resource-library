@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     filterResources() {
-      let filteredResources = this.resources.slice(0, 88) // remove slice after implementing content management staging - temporary measure to aviod blank records while Airtable is being populated by NBWC
+      let filteredResources = this.resources
 
       if (this.checkedLanguageId !== "BOTH") {
         filteredResources = filteredResources.filter(r => {
@@ -139,6 +139,7 @@ export default {
           return searchRegx.test(keyWords)
         })
       }
+
       return filteredResources
     },
     getSearchRegx() {
