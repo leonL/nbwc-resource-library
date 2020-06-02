@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <div class='header'>
-      <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)" class="logo">
+       <nuxt-link :to="localePath('/')">
+        <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)" class="logo">
+       </nuxt-link>
       <div class="links">
         <nuxt-link :to="localePath('/')">{{ $t('home') }}</nuxt-link>
         <nuxt-link :to="localePath('about')">{{ $t('about') }}</nuxt-link>
