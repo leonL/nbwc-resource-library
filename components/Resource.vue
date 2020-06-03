@@ -221,10 +221,9 @@ li.resource h5 {
     position: absolute;
     right: 0;
     font-weight: bold;
-    border-radius: 27px;
-    background-color: #ff9d54;
+    background-color: #fed8b1;
     padding: 5px;
-    color: #ffffff;
+    color: black;
     font-size: 14px;
 }
 

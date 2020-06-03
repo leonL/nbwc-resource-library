@@ -40,6 +40,10 @@ html {
   box-sizing: border-box;
 }
 
+a {
+  color: #3366FF;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
   line-height: normal;
@@ -77,7 +81,7 @@ body {
 
 .links a.nuxt-link-exact-active.localeToggle {
   border-radius: 27px;
-  background-color: #11b6ff;
+  background-color: #3366FF;
   padding: 5px 10px;
   color: #ffffff;
   text-decoration: none;
