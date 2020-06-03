@@ -6,42 +6,15 @@ export const state = () => ({
 
 export const actions = {
     async nuxtServerInit ({ state }, { req }) {
-        const libraryBaseApiPrefix = 'https://api.airtable.com/v0/app393cel1ZJ5Wi13'
-        
         this.$http.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer')
-        
-        const $resourcesModel = this.$http.create({
-            prefixUrl: libraryBaseApiPrefix + '/RESOURCES'
-        })
-
-        const $geographicScopesModel = this.$http.create({
-            prefixUrl: libraryBaseApiPrefix + '/GEOGRAPHIC%20SCOPES',
-            searchParams: [['view', 'ALL RECORDS']]
-        })
-
-        const $contentTypesModel = this.$http.create({
-            prefixUrl: libraryBaseApiPrefix + '/CONTENT%20TYPES',
-            searchParams: [['view', 'ALL RECORDS']]
-        })
-
-        const $issuesModel = this.$http.create({
-            prefixUrl: libraryBaseApiPrefix + '/ISSUES',
-            searchParams: [['view', 'ALL RECORDS']]
-        })
-
-        const $languagesModel = this.$http.create({
-            prefixUrl: libraryBaseApiPrefix + '/LANGUAGES',
-            searchParams: [['view', 'ALL RECORDS']]
-        })
-        
-        const $textModel = this.$http.create({
-            prefixUrl: libraryBaseApiPrefix + '/TEXT',
+        const httpAirtableNbwcBase = this.$http.create({ 
+            prefixUrl: 'https://api.airtable.com/v0/app393cel1ZJ5Wi13',
             searchParams: [['view', 'ALL RECORDS']]
         })
 
         let offsetToken = '', allResourcesFetched = false
         while (allResourcesFetched === false) {
-            let fetchedResourcesJson = await $resourcesModel.$get('', {searchParams: [['view', 'POST'], ['offset', offsetToken]]}),
+            let fetchedResourcesJson = await httpAirtableNbwcBase.$get('RESOURCES', {searchParams: [['view', 'POST'], ['offset', offsetToken]]}),
             fetchedResources = fetchedResourcesJson.records.map(record => record.fields),
             validFetchedResources = fetchedResources.filter(r => {
                 return (r['LANGUAGE ID'] && (r['TITLE EN'] && ['LINK EN']) || (r['TITLE FR'] && ['LINK FR'])) ? true : false
@@ -51,24 +24,19 @@ export const actions = {
             fetchedResourcesJson['offset'] ? (offsetToken = fetchedResourcesJson['offset']) : (allResourcesFetched = true)
         }
 
-        const allGeographicScopes = await $geographicScopesModel.$get('')
-        // console.log(allGeographicScopes.records[0])
+        const allGeographicScopes = await httpAirtableNbwcBase.$get('GEOGRAPHIC%20SCOPES')
         state.data['allGeographicScopes'] = allGeographicScopes.records.map(record => record.fields) 
 
-        const allContentTypes = await $contentTypesModel.$get('')
-        // console.log(allContentTypes.records[0])
+        const allContentTypes = await httpAirtableNbwcBase.$get('CONTENT%20TYPES')
         state.data['allContentTypes'] = allContentTypes.records.map(record => record.fields) 
 
-        const allIssues = await $issuesModel.$get('')
-        // console.log(allIssues.records[0])
+        const allIssues = await httpAirtableNbwcBase.$get('ISSUES')
         state.data['allIssues'] = allIssues.records.map(record => record.fields) 
 
-        const allLanguages = await $languagesModel.$get('')
-        // console.log(allLanguages.records[0])
+        const allLanguages = await httpAirtableNbwcBase.$get('LANGUAGES')
         state.data['allLanguages'] = allLanguages.records.map(record => record.fields)
 
-        const text = await $textModel.$get('')
-        // console.log(text.records[0])
+        const text = await httpAirtableNbwcBase.$get('TEXT')
         state.data['text'] = text.records.map(record => record.fields)
     }
 }
