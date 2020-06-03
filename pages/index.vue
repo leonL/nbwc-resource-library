@@ -37,7 +37,8 @@
 
         <span v-on:click="clearFilters" class="clear-filters">{{ $t('clearFilters') }}</span>
 
-        <b-form-input v-model="searchInputText" :placeholder="$t('searchPlaceholder')" debounce="500" class="search"></b-form-input>
+        <b-form-input v-model="searchInputText" :placeholder="$t('searchPlaceholder')" debounce="500" 
+          class="search" :aria-label="$t('searchPlaceholder')"></b-form-input>
       </div>
       
       <span class="resource-count">{{ filterResources().length }} {{ $t('resultsShowing') }} </span>
