@@ -7,13 +7,16 @@
       </div>
       <div class="logos">
         <a :href="$t('nbwcURL')" target="_blank">
-          <img src="~/assets/NBWC_logo_icon.png" class="logo">
+          <img src="~/assets/NBWC_logo_icon.png" class="logo"
+            :alt="$t('altTextlogo')">
         </a>
         <a :href="$t('facebookURL')" target="_blank">
-          <img src="~/assets/fb_logo.png" class="logo">
+          <img src="~/assets/fb_logo.png" class="logo"
+            alt="Facebook logo">
         </a>
         <a :href="$t('twitterURL')" target="_blank">
-          <img src="~/assets/twitter_logo.png" class="logo">
+          <img src="~/assets/twitter_logo.png" class="logo"
+            alt="Twitter logo">
         </a>
       </div>
     </div>

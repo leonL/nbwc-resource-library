@@ -72,7 +72,8 @@ export default {
           paywall: 'Paywall',
           nbwcURL: 'https://www.nbwomenscouncil.ca/',
           facebookURL: 'https://www.facebook.com/NBWomensCouncil/',
-          twitterURL: 'https://twitter.com/nbwomenscouncil'
+          twitterURL: 'https://twitter.com/nbwomenscouncil',
+          altTextlogo: "New Brunswick Women's Council logo"
         },
         fr: {
           home: 'Accueil',
@@ -93,7 +94,8 @@ export default {
           paywall: 'Contenu payant',
           nbwcURL: 'https://www.nbwomenscouncil.ca/content/vnbw-vfnb/fr.html',
           facebookURL: 'https://www.facebook.com/ConseilfemmesNB/?ref=br_rs',
-          twitterURL: 'https://twitter.com/conseilfemmesnb'
+          twitterURL: 'https://twitter.com/conseilfemmesnb',
+          altTextlogo: "Logo du Conseil des femmes du Nouveau-Brunswick"
         }
       }
     }

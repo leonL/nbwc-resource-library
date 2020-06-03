@@ -2,7 +2,8 @@
   <div class="container">
     <div class='header'>
        <nuxt-link :to="localePath('/')">
-        <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)" class="logo">
+        <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)" class="logo"
+          :alt="$t('altTextlogo')">
        </nuxt-link>
       <div class="links">
         <nuxt-link :to="localePath('/')">{{ $t('home') }}</nuxt-link>
