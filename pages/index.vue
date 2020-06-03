@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class='b'>
       <h2 class="page-title">
         {{ $t('homeTitle') }} 
       </h2>
