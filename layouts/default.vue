@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="main-frame">
     <div class='header'>
        <nuxt-link :to="localePath('/')">
         <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)" class="logo"
@@ -49,7 +49,9 @@ body {
   line-height: normal;
 }
 
-.container {
+.main-frame {
+  width: 95%;
+  max-width: 960px;
   margin: 10px auto;
 }
 
