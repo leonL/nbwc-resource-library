@@ -271,4 +271,11 @@ ul.resources li:first-child {
 mark {
   padding: 0px;
 }
+
+.page-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 15px;
+}
 </style>

@@ -1,13 +1,24 @@
 <template>
   <div class="main-frame">
+
     <div class='header'>
+      <div class="mobile-menu">
+        <b-icon-list v-b-toggle="'menu'" class="burger"></b-icon-list>
+
+        <b-collapse id="menu">
+          <div class='mobile-links'>
+            <nuxt-link :to="localePath('/')" class="link">{{ $t('home') }}</nuxt-link>
+            <nuxt-link :to="localePath('about')" class="link">{{ $t('about') }}</nuxt-link>
+          </div>
+        </b-collapse>
+      </div>
        <nuxt-link :to="localePath('/')">
         <img :src="require(`../assets/NBWC_logo_${$i18n.locale}.png`)" class="logo"
           :alt="$t('altTextlogo')">
        </nuxt-link>
       <div class="links">
-        <nuxt-link :to="localePath('/')">{{ $t('home') }}</nuxt-link>
-        <nuxt-link :to="localePath('about')">{{ $t('about') }}</nuxt-link>
+        <nuxt-link :to="localePath('/')" class="home">{{ $t('home') }}</nuxt-link>
+        <nuxt-link :to="localePath('about')" class="about">{{ $t('about') }}</nuxt-link>
         <nuxt-link :to="switchLocalePath('fr')" class='localeToggle'>FR</nuxt-link>
         <nuxt-link :to="switchLocalePath('en')" class='localeToggle'>EN</nuxt-link>
       </div>
@@ -17,12 +28,16 @@
 </template>
 
 <script>
+import { BIconList } from 'bootstrap-vue'
 export default {
   head () {
     return {
       htmlAttrs: { lang: this.$i18n.locale },
       title: this.$t('homeTitle')
     }
+  },
+  components: {
+    BIconList
   }
 }
 </script>
@@ -93,11 +108,59 @@ body {
   width: 239px;
 }
 
-.page-title {
-  font-size: 48px;
-  font-weight: bold;
-  color: #000000;
-  margin-bottom: 15px;
+.mobile-menu {
+  display: none;
+}
+
+.burger {
+  margin: 11px 5px 0 0;
+  height: 28px;
+  width: 28px;
+}
+
+.mobile-links .link {
+  display: block;
+  font-size: 20px;
+  margin: 12px;
+  color: #181818;
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    align-items: initial;
+    justify-content: unset;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  #menu {
+    position: absolute;
+    background-color: white;
+    left: 15px;
+    right: 15px;
+    border-radius: 5px;
+    box-shadow: -2px 2px 5px -2px;
+  }
+
+  .burger {
+    display: inline;
+  }
+
+  .links {
+    font-size: 16px;
+    position: absolute;
+    right: 15px;
+  }
+
+  .links .home, .links .about {
+    display: none;
+  }
+
+  .logo {
+    width: 134px;
+  }
 }
 
 *,
