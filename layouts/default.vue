@@ -136,6 +136,7 @@ body {
   .header {
     align-items: initial;
     justify-content: unset;
+    margin-bottom: 10px;
   }
 
   .mobile-menu {

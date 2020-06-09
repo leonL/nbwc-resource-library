@@ -278,4 +278,15 @@ mark {
   color: #000000;
   margin-bottom: 15px;
 }
+
+@media screen and (max-width: 767px) {
+  .page-title {
+    font-size: 25px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+}
 </style>
