@@ -6,7 +6,7 @@
         <b-icon-list v-b-toggle="'menu'" class="burger"></b-icon-list>
 
         <b-collapse id="menu">
-          <div class='mobile-links'>
+          <div class='mobile-links' v-on:click="collapse">
             <nuxt-link :to="localePath('/')" class="link">{{ $t('home') }}</nuxt-link>
             <nuxt-link :to="localePath('about')" class="link">{{ $t('about') }}</nuxt-link>
           </div>
@@ -34,6 +34,13 @@ export default {
     return {
       htmlAttrs: { lang: this.$i18n.locale },
       title: this.$t('homeTitle')
+    }
+  },
+  methods: {
+    collapse: function (event) {
+      let toggleIcon = document.getElementsByClassName('burger')[0]
+      toggleIcon.dispatchEvent(new Event('click'))
+      return false
     }
   },
   components: {
@@ -133,6 +140,10 @@ body {
 
   .mobile-menu {
     display: block;
+  }
+
+  .mobile-menu svg:focus {
+    outline: none;
   }
 
   #menu {
