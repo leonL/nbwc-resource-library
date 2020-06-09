@@ -227,4 +227,15 @@ li.resource h5 {
     font-size: 14px;
 }
 
+@media screen and (max-width: 767px) {
+    .pills .label {
+        margin-right: 0px;
+        margin-left: 8px;
+    }
+
+    .rTitle {
+        font-size: 25px;
+    }
+}
+
 </style>

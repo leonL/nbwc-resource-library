@@ -288,5 +288,15 @@ mark {
     font-size: 13px;
     margin-bottom: 10px;
   }
+
+  .filter-controls .b-dropdown {
+    margin-bottom: 10px;
+    margin-right: 5px;
+  }
+
+  .clear-filters {
+    margin-left: 0;
+    display: block;
+  }
 }
 </style>
