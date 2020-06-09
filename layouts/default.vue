@@ -72,7 +72,7 @@ body {
 }
 
 .main-frame {
-  width: 95%;
+  width: 90%;
   max-width: 960px;
   margin: 10px auto;
 }
@@ -173,6 +173,15 @@ body {
   .logo {
     width: 134px;
   }
+
+  h1, h3 {
+    font-size: 25px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+
 }
 
 *,

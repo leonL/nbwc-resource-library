@@ -44,10 +44,6 @@ export default {
 
 <style scoped>
 
-.about-library {
-  margin-bottom: 50px;
-}
-
 .double-pane {
   display: flex;
   align-items: flex-start;
@@ -71,5 +67,14 @@ export default {
   margin-right: 15px;
 }
 
+@media screen and (max-width: 767px) {
+  .double-pane {
+    display: block;
+    margin: 10px 0 20px 0;
+  }
 
+  .about-open-call {
+    margin-left: 0;
+  }
+}
 </style>
