@@ -77,7 +77,7 @@ export default {
         },
         fr: {
           home: 'Accueil',
-          homeTitle: 'Bibliothèque de COVID-19',
+          homeTitle: 'Bibliothèque sur la COVID-19',
           enAvailable: 'Disponible aussi en anglais',
           language: 'Langue',
           geoScopesFilter: 'Portées géographiques',
