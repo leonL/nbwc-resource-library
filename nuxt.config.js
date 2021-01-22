@@ -112,5 +112,8 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  router: {
+    middleware: 'redirect-heroku-url'
   }
 }
