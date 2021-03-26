@@ -46,6 +46,17 @@ export default {
     'nuxt-i18n',
     '@nuxtjs/markdownit'
   ],
+  bootstrapVue: {
+    componentPlugins: [
+      'DropdownPlugin',
+      'FormPlugin',
+      'FormCheckboxPlugin',
+      'FormInputPlugin',
+      'FormRadioPlugin',
+      'CollapsePlugin'
+    ],
+    components: ['BIconList']
+  },
   i18n: {
     locales: ['en', 'fr'],
     defaultLocale: 'en',
