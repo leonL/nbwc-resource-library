@@ -49,7 +49,6 @@ export default {
   bootstrapVue: {
     componentPlugins: [
       'DropdownPlugin',
-      'FormPlugin',
       'FormCheckboxPlugin',
       'FormInputPlugin',
       'FormRadioPlugin',
