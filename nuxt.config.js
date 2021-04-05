@@ -1,10 +1,11 @@
 
 export default {
+  target: 'static',
   /*
   ** Headers of the page
   */
   head: {
-    title: 'NBWC',
+    title: 'NBWC COVID19 Resource Library',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
