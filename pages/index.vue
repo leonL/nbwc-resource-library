@@ -264,16 +264,6 @@ export default {
       this.checkedContentTypeIds = []
       this.checkedIssueIds = []
       return true
-    },
-    srollToTopOfPage() {
-      if (process.browser) {
-        const element = document.getElementsByClassName('filter-controls')
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: 'smooth'
-        });
-      }
     }
   },
   computed: {
