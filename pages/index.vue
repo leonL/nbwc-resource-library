@@ -41,12 +41,14 @@
           class="search" :aria-label="$t('searchPlaceholder')"></b-form-input>
       </div>
       
-      <span class="resource-count">
-        Showing {{ currentPageIndexRange[0] + 1 }} 
-        to {{ currentPageIndexRange[0] + pageResorcesCount }}
-        of {{ totalResourcesCount }} Results
-      </span>
-      <!-- <span class="resource-count">{{ totalResourcesCount }} {{ $t('resultsShowing') }}</span> -->
+      <client-only>
+        <span class="resource-count">
+          Showing {{ currentPageIndexRange[0] + 1 }} 
+          to {{ currentPageIndexRange[0] + pageResorcesCount }}
+          of {{ totalResourcesCount }} Results
+        </span>
+        <!-- <span class="resource-count">{{ totalResourcesCount }} {{ $t('resultsShowing') }}</span> -->
+      </client-only>
 
       <ul id="resources-list" class="resources">
         <Resource
@@ -69,18 +71,20 @@
           :notes="{en: getNotes(resource, 'en'), fr: getNotes(resource, 'fr')}"
         />
       </ul>
-
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="totalResourcesCount"
-        :per-page="resourcesPerPage"
-        :hide-goto-end-buttons="true"
-        :hide-ellipsis="true"
-        :pills="true"
-        :input="logCurrentPageNumber()"
-        align="center"
-        aria-controls="resources-list"
-      ></b-pagination>
+    </div>
+    <div class="pagination-controls">
+      <client-only>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalResourcesCount"
+          :per-page="resourcesPerPage"
+          :hide-goto-end-buttons="true"
+          :hide-ellipsis="true"
+          :pills="true"
+          align="center"
+          aria-controls="resources-list"
+        ></b-pagination>
+      </client-only>
     </div>
   </div>
 </template>
@@ -107,7 +111,7 @@ export default {
       upperCaseLocale: this.$i18n.locale.toUpperCase(),
       paywallTexts: { en: data.text[0]['HELP:PAYWALL'], fr: data.text[1]['HELP:PAYWALL'] },
       subtitleTexts: { en: data.text[0]['HOME:SUBTITLE'], fr: data.text[1]['HOME:SUBTITLE'] },
-      currentPage: 0,
+      currentPage: 1,
       resourcesPerPage: 10
     }
   },
@@ -261,8 +265,9 @@ export default {
       this.checkedIssueIds = []
       return true
     },
-    logCurrentPageNumber() {
+    srollToTopOfPage() {
       if (process.browser) {
+        const element = document.getElementsByClassName('filter-controls')
         window.scrollTo({
           top: 0,
           left: 0,
