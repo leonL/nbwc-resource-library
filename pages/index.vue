@@ -11,28 +11,28 @@
           :label="$t('language')"
           :options="allLanguages.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
           :defaultSelectedOptionId="checkedLanguageId"
-          v-on:selectedOptionsChanged="checkedLanguageId=$event"
+          v-on:selectedOptionsChanged="updateFilters('language', $event)"
         />
 
         <CheckboxFilter 
           :label="$t('geoScopesFilter')"
           :options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
           :defaultSelectedOptionIds="checkedScopeIds"
-          v-on:selectedOptionsChanged="checkedScopeIds = $event"
+          v-on:selectedOptionsChanged="updateFilters('scopes', $event)"
         />
 
         <CheckboxFilter 
           :label="$t('contentTypesFilter')"
           :options="allContentTypes.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
           :defaultSelectedOptionIds="checkedContentTypeIds"
-          v-on:selectedOptionsChanged="checkedContentTypeIds = $event"
+          v-on:selectedOptionsChanged="updateFilters('content types', $event)"
         />
 
         <CheckboxFilter 
           :label="$t('issuesFilter')"
           :options="allIssues.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
           :defaultSelectedOptionIds="checkedIssueIds"
-          v-on:selectedOptionsChanged="checkedIssueIds = $event"
+          v-on:selectedOptionsChanged="updateFilters('issues', $event)"
         />
 
         <span v-on:click="clearFilters" class="clear-filters">{{ $t('clearFilters') }}</span>
@@ -41,11 +41,23 @@
           class="search" :aria-label="$t('searchPlaceholder')"></b-form-input>
       </div>
       
-      <span class="resource-count">{{ filterResources().length }} {{ $t('resultsShowing') }} </span>
+      <span class="resource-count">
+        Showing {{ currentPageIndexRange()[0] + 1 }} 
+        to {{ currentPageIndexRange()[0] + pageResources().length }}
+        of {{ filterResources().length }}
+      </span>
+      
+      <!-- <span class="resource-count">{{ filterResources().length }} {{ $t('resultsShowing') }}</span> -->
+
+      <div class="pagination-controls">
+        <button v-on:click="currentPage -= 1">prev</button>
+        {{ currentPage }}
+        <button v-on:click="currentPage += 1">next</button>
+      </div>
 
       <ul class="resources">
         <Resource
-          v-for="(resource, index) in filterResources()"
+          v-for="(resource, index) in pageResources()"
           :index="index"
           :key="resource.id"
           :language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
@@ -89,7 +101,9 @@ export default {
       searchInputText: "",
       upperCaseLocale: this.$i18n.locale.toUpperCase(),
       paywallTexts: { en: data.text[0]['HELP:PAYWALL'], fr: data.text[1]['HELP:PAYWALL'] },
-      subtitleTexts: { en: data.text[0]['HOME:SUBTITLE'], fr: data.text[1]['HOME:SUBTITLE'] }
+      subtitleTexts: { en: data.text[0]['HOME:SUBTITLE'], fr: data.text[1]['HOME:SUBTITLE'] },
+      currentPage: 1,
+      resourcesPerPage: 10
     }
   },
   methods: {
@@ -166,6 +180,9 @@ export default {
 
       return filteredResources
     },
+    pageResources() {
+      return this.filterResources().slice(...this.currentPageIndexRange())
+    },
     getSearchRegx() {
       return new RegExp(this.searchInputText.trim(), 'gi')
     },
@@ -212,12 +229,37 @@ export default {
     isTextSearching() {
       return this.searchInputText.trim() ? true : false
     },
+    updateFilters(filterType, newfilterValue) {
+      switch (filterType) {
+        case 'language':
+          this.checkedLanguageId = newfilterValue
+          break;
+        case 'scopes':
+          this.checkedScopeIds = newfilterValue
+          break;
+        case 'content types':
+          this.checkedContentTypeIds = newfilterValue
+          break;
+        case 'issues':
+          this.checkedIssueIds = newfilterValue
+          break;
+        default:
+          console.log('unknown filter type')
+      }
+      this.currentPage = 1;
+      return true;
+    },
     clearFilters() {
       this.checkedLanguageId = "BOTH"
       this.checkedScopeIds = []
       this.checkedContentTypeIds = []
       this.checkedIssueIds = []
       return true
+    },
+    currentPageIndexRange() {
+      let rangeEnd = this.resourcesPerPage * this.currentPage,
+      rangeStart = rangeEnd - 10;
+      return [rangeStart, rangeEnd]
     } 
   },
   components: {
