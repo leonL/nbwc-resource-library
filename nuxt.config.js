@@ -53,7 +53,8 @@ export default {
       'FormCheckboxPlugin',
       'FormInputPlugin',
       'FormRadioPlugin',
-      'CollapsePlugin'
+      'CollapsePlugin',
+      'PaginationPlugin'
     ],
     components: ['BIconList']
   },

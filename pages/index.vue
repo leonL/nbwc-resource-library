@@ -42,20 +42,13 @@
       </div>
       
       <span class="resource-count">
-        Showing {{ currentPageIndexRange()[0] + 1 }} 
-        to {{ currentPageIndexRange()[0] + pageResources().length }}
-        of {{ filterResources().length }}
+        Showing {{ currentPageIndexRange[0] + 1 }} 
+        to {{ currentPageIndexRange[0] + pageResorcesCount }}
+        of {{ totalResourcesCount }} Results
       </span>
-      
-      <!-- <span class="resource-count">{{ filterResources().length }} {{ $t('resultsShowing') }}</span> -->
+      <!-- <span class="resource-count">{{ totalResourcesCount }} {{ $t('resultsShowing') }}</span> -->
 
-      <div class="pagination-controls">
-        <button v-on:click="currentPage -= 1">prev</button>
-        {{ currentPage }}
-        <button v-on:click="currentPage += 1">next</button>
-      </div>
-
-      <ul class="resources">
+      <ul id="resources-list" class="resources">
         <Resource
           v-for="(resource, index) in pageResources()"
           :index="index"
@@ -76,6 +69,18 @@
           :notes="{en: getNotes(resource, 'en'), fr: getNotes(resource, 'fr')}"
         />
       </ul>
+
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="totalResourcesCount"
+        :per-page="resourcesPerPage"
+        :hide-goto-end-buttons="true"
+        :hide-ellipsis="true"
+        :pills="true"
+        :input="logCurrentPageNumber()"
+        align="center"
+        aria-controls="resources-list"
+      ></b-pagination>
     </div>
   </div>
 </template>
@@ -102,7 +107,7 @@ export default {
       upperCaseLocale: this.$i18n.locale.toUpperCase(),
       paywallTexts: { en: data.text[0]['HELP:PAYWALL'], fr: data.text[1]['HELP:PAYWALL'] },
       subtitleTexts: { en: data.text[0]['HOME:SUBTITLE'], fr: data.text[1]['HOME:SUBTITLE'] },
-      currentPage: 1,
+      currentPage: 0,
       resourcesPerPage: 10
     }
   },
@@ -181,7 +186,7 @@ export default {
       return filteredResources
     },
     pageResources() {
-      return this.filterResources().slice(...this.currentPageIndexRange())
+      return this.filterResources().slice(...this.currentPageIndexRange)
     },
     getSearchRegx() {
       return new RegExp(this.searchInputText.trim(), 'gi')
@@ -256,11 +261,28 @@ export default {
       this.checkedIssueIds = []
       return true
     },
+    logCurrentPageNumber() {
+      if (process.browser) {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        });
+      }
+    }
+  },
+  computed: {
     currentPageIndexRange() {
       let rangeEnd = this.resourcesPerPage * this.currentPage,
-      rangeStart = rangeEnd - 10;
-      return [rangeStart, rangeEnd]
-    } 
+        rangeStart = rangeEnd - this.resourcesPerPage;
+      return [rangeStart, rangeEnd];
+    },
+    totalResourcesCount() {
+      return this.filterResources().length;
+    },
+    pageResorcesCount() {
+      return this.pageResources().length;
+    }
   },
   components: {
     Resource,
