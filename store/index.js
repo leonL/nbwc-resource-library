@@ -14,7 +14,14 @@ export const actions = {
 
         let offsetToken = '', allResourcesFetched = false
         while (allResourcesFetched === false) {
-            let fetchedResourcesJson = await httpAirtableNbwcBase.$get('RESOURCES', {searchParams: [['view', 'STAGING'], ['offset', offsetToken]]}),
+            let fetchedResourcesJson = await httpAirtableNbwcBase.$get('RESOURCES', 
+                {searchParams: [
+                    ['view', 'STAGING'], 
+                    ['offset', offsetToken],
+                    ['sort[0][field]', 'RECORD_CREATED_DATE'],
+                    ['sort[0][direction]', 'desc']
+                ]}
+            ),
             fetchedResources = fetchedResourcesJson.records.map(record => record.fields),
             validFetchedResources = fetchedResources.filter(r => {
                 return (r['LANGUAGE ID'] && (r['TITLE EN'] && ['LINK EN']) || (r['TITLE FR'] && ['LINK FR'])) ? true : false
