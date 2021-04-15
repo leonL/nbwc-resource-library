@@ -193,7 +193,7 @@ export default {
       return this.filterResources().slice(...this.currentPageIndexRange)
     },
     getSearchRegx() {
-      return new RegExp(this.searchInputText.trim(), 'gi')
+      return new RegExp(this.$removeDiacritics(this.searchInputText.trim()), 'gi')
     },
     getTitle(resource, locale = this.upperCaseLocale) {
       let title = '',
