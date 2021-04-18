@@ -42,10 +42,16 @@
       </div>
       
       <client-only>
-        <span class="resource-count">
+        <span v-if="totalResourcesCount > resourcesPerPage" class="resource-count">
           {{ currentPageIndexRange[0] + 1 }} 
           &#8211; {{ currentPageIndexRange[0] + pageResorcesCount }}
           {{ $t('of') }} {{ totalResourcesCount }} {{ $t('results') }}
+        </span>
+        <span v-else-if="totalResourcesCount === 0" class="resource-count zero">
+          {{ $t('noResult') }}
+        </span>
+        <span v-else class="resource-count one-pager">
+          {{ totalResourcesCount }} {{ $t('singlePageResults') }}
         </span>
       </client-only>
 
@@ -71,7 +77,7 @@
         />
       </ul>
     </div>
-    <div class="pagination-controls">
+    <div v-if="totalResourcesCount > resourcesPerPage" class="pagination-controls">
       <client-only>
         <b-pagination
           v-model="currentPage"
