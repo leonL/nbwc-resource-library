@@ -78,13 +78,14 @@ export default {
           searchPlaceholder: 'Search by title, author, organization, publication',
           about: 'About',
           aboutTitle: 'About this library',
-          resultsShowing: 'results showing',
+          results: 'results',
           clearFilters: 'Clear Filters',
           paywall: 'Paywall',
           nbwcURL: 'https://www.nbwomenscouncil.ca/',
           facebookURL: 'https://www.facebook.com/NBWomensCouncil/',
           twitterURL: 'https://twitter.com/nbwomenscouncil',
-          altTextlogo: "New Brunswick Women's Council logo"
+          altTextlogo: "New Brunswick Women's Council logo",
+          of: 'of'
         },
         fr: {
           home: 'Accueil',
@@ -100,13 +101,14 @@ export default {
           searchPlaceholder: 'Recherche par titres, auteurs-es, organisations, publication',
           about: 'À propos',
           aboutTitle: 'À propos de cette bibliothèque',
-          resultsShowing: 'résultats obtenus',          
+          results: 'résultats',          
           clearFilters: 'Effacer les filtres',
           paywall: 'Contenu payant',
           nbwcURL: 'https://www.nbwomenscouncil.ca/content/vnbw-vfnb/fr.html',
           facebookURL: 'https://www.facebook.com/ConseilfemmesNB/?ref=br_rs',
           twitterURL: 'https://twitter.com/conseilfemmesnb',
-          altTextlogo: "Logo du Conseil des femmes du Nouveau-Brunswick"
+          altTextlogo: "Logo du Conseil des femmes du Nouveau-Brunswick",
+          of: 'de'
         }
       }
     }

@@ -43,11 +43,10 @@
       
       <client-only>
         <span class="resource-count">
-          Showing {{ currentPageIndexRange[0] + 1 }} 
-          to {{ currentPageIndexRange[0] + pageResorcesCount }}
-          of {{ totalResourcesCount }} Results
+          {{ currentPageIndexRange[0] + 1 }} 
+          &#8211; {{ currentPageIndexRange[0] + pageResorcesCount }}
+          {{ $t('of') }} {{ totalResourcesCount }} {{ $t('results') }}
         </span>
-        <!-- <span class="resource-count">{{ totalResourcesCount }} {{ $t('resultsShowing') }}</span> -->
       </client-only>
 
       <ul id="resources-list" class="resources">
