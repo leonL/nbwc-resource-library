@@ -16,7 +16,7 @@ export const actions = {
         while (allResourcesFetched === false) {
             let fetchedResourcesJson = await httpAirtableNbwcBase.$get('RESOURCES', 
                 {searchParams: [
-                    ['view', 'STAGING'], 
+                    ['view', 'POST'], 
                     ['offset', offsetToken],
                     ['sort[0][field]', 'RECORD_CREATED_DATE'],
                     ['sort[0][direction]', 'desc']
