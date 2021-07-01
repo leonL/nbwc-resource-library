@@ -8,7 +8,7 @@ export const actions = {
     async nuxtServerInit ({ state }, { req }) {
         this.$http.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer')
         const httpAirtableNbwcBase = this.$http.create({ 
-            prefixUrl: 'https://api.airtable.com/v0/app393cel1ZJ5Wi13',
+            prefixUrl: 'https://api.airtable.com/v0/appxlBEhiWnssKkbm',
             searchParams: [['view', 'ALL RECORDS']]
         })
 
