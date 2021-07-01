@@ -5,7 +5,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: 'NBWC COVID19 Resource Library',
+    title: 'NBWC Resource Library',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -66,7 +66,7 @@ export default {
       messages: {
         en: {
           home: 'Home',
-          homeTitle: 'COVID-19 library',
+          homeTitle: 'Resource library',
           frAvailable: 'Also available in French',
           language: 'Language',
           geoScopesFilter: 'Geographic Scopes',
@@ -91,7 +91,7 @@ export default {
         },
         fr: {
           home: 'Accueil',
-          homeTitle: 'Bibliothèque sur la COVID-19',
+          homeTitle: 'Bibliothèque de ressources',
           enAvailable: 'Disponible aussi en anglais',
           language: 'Langue',
           geoScopesFilter: 'Portées géographiques',
