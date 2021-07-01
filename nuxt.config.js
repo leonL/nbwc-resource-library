@@ -130,8 +130,5 @@ export default {
     extend (config, ctx) {
     },
     extractCSS: true
-  },
-  router: {
-    middleware: 'redirect-heroku-url'
   }
 }
