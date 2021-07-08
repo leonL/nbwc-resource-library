@@ -24,7 +24,7 @@ export const actions = {
             ),
             fetchedResources = fetchedResourcesJson.records.map(record => record.fields),
             validFetchedResources = fetchedResources.filter(r => {
-                return (r['LANGUAGE ID'] && (r['TITLE EN'] && ['LINK EN']) || (r['TITLE FR'] && ['LINK FR'])) ? true : false
+                return (r['LANGUAGE ID'] && (r['TITLE EN'] && ['LINK EN']) || (r['TITLE FR'] && ['LINK FR']))
             })
 
             state.data['resources'] = [...state.data['resources'], ...validFetchedResources]
