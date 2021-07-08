@@ -62,7 +62,7 @@
           :key="resource.id"
           :language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
           :titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
-          :links="{en: resource['LINK EN'], fr: resource['LINK FR']}"
+          :links="{en: getLink(resource, 'EN'), fr: getLink(resource, 'FR')}"
           :author="getAuthor(resource)"
           :organization="getOrganization(resource)"
           :publication="getPublication(resource)"
@@ -187,6 +187,19 @@ export default {
         title = resource[propertyName]
       }
       return title
+    },
+    getLink(resource, locale) {
+      let link = '',
+        pdfPropertyName = `DOCUMENT ${locale}`,
+        linkPropertyName = `LINK ${locale}`
+
+      if (resource.hasOwnProperty(pdfPropertyName)) {
+        link = resource[pdfPropertyName][0].url
+      } else {
+        link = resource[linkPropertyName]
+      }
+
+      return link
     },
     getOrganization(resource, locale = this.upperCaseLocale) {
       let organization = '',
