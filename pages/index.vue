@@ -1,117 +1,90 @@
 <template>
-  <div>
-    <div class='b'>
+  <div class='library'>
+    <div class='titles'>
       <h2 class="page-title">
-        {{ $t('homeTitle') }} 
+          {{ $t('homeTitle') }} 
       </h2>
       <h3 class="subtitle" v-html="$md.render(subtitleTexts[$i18n.locale])" ></h3>
+    </div>
 
-      <div class="filter-controls">
-        <RadioButtonFilter 
-          :label="$t('language')"
-          :options="allLanguages.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
-          :defaultSelectedOptionId="checkedLanguageId"
-          v-on:selectedOptionsChanged="updateFilters('language', $event)"
-        />
+    <div class='ui'>
+      <Filters v-on:newFilterValue="updateFilterModel($event.field, $event.value)" />
 
-        <CheckboxFilter 
-          :label="$t('geoScopesFilter')"
-          :options="allGeographicScopes.map(scope => { return {text: scope[`${upperCaseLocale}`], value: scope.ID}})"
-          :defaultSelectedOptionIds="checkedScopeIds"
-          v-on:selectedOptionsChanged="updateFilters('scopes', $event)"
-        />
-
-        <CheckboxFilter 
-          :label="$t('contentTypesFilter')"
-          :options="allContentTypes.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
-          :defaultSelectedOptionIds="checkedContentTypeIds"
-          v-on:selectedOptionsChanged="updateFilters('content types', $event)"
-        />
-
-        <CheckboxFilter 
-          :label="$t('issuesFilter')"
-          :options="allIssues.map(type => { return {text: type[`${upperCaseLocale}`], value: type.ID}})"
-          :defaultSelectedOptionIds="checkedIssueIds"
-          v-on:selectedOptionsChanged="updateFilters('issues', $event)"
-        />
-
-        <span v-on:click="clearFilters" class="clear-filters">{{ $t('clearFilters') }}</span>
-
+      <div class='index'>
         <b-form-input v-model="searchInputText" :placeholder="$t('searchPlaceholder')" debounce="500" 
           class="search" :aria-label="$t('searchPlaceholder')"></b-form-input>
-      </div>
-      
-      <client-only>
-        <span v-if="totalResourcesCount > resourcesPerPage" class="resource-count">
-          {{ currentPageIndexRange[0] + 1 }} 
-          &#8211; {{ currentPageIndexRange[0] + pageResorcesCount }}
-          {{ $t('of') }} {{ totalResourcesCount }} {{ $t('results') }}
-        </span>
-        <span v-else-if="totalResourcesCount === 0" class="resource-count zero">
-          {{ $t('noResult') }}
-        </span>
-        <span v-else class="resource-count one-pager">
-          {{ totalResourcesCount }} {{ $t('singlePageResults') }}
-        </span>
-      </client-only>
 
-      <ul id="resources-list" class="resources">
-        <Resource
-          v-for="(resource, index) in pageResources()"
-          :index="index"
-          :key="resource.id"
-          :language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
-          :titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
-          :links="{en: getLink(resource, 'EN'), fr: getLink(resource, 'FR')}"
-          :author="getAuthor(resource)"
-          :organization="getOrganization(resource)"
-          :publication="getPublication(resource)"
-          :contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
-          :geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
-          :issues="resource[`ISSUES ${upperCaseLocale}`]"
-          :paywall="getPaywall(resource)"
-          :paywallHelpText="getPaywallText()"
-          :searchRegx="getSearchRegx()"
-          :isTextSearching="isTextSearching()"
-          :notes="{en: getNotes(resource, 'en'), fr: getNotes(resource, 'fr')}"
-        />
-      </ul>
-    </div>
-    <div v-if="totalResourcesCount > resourcesPerPage" class="pagination-controls">
-      <client-only>
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="totalResourcesCount"
-          :per-page="resourcesPerPage"
-          :hide-goto-end-buttons="true"
-          :hide-ellipsis="true"
-          :pills="true"
-          align="center"
-          aria-controls="resources-list"
-        ></b-pagination>
-      </client-only>
+        <client-only>
+          <span v-if="totalResourcesCount > resourcesPerPage" class="resource-count">
+            {{ currentPageIndexRange[0] + 1 }} 
+            &#8211; {{ currentPageIndexRange[0] + pageResorcesCount }}
+            {{ $t('of') }} {{ totalResourcesCount }} {{ $t('results') }}
+          </span>
+          <span v-else-if="totalResourcesCount === 0" class="resource-count zero">
+            {{ $t('noResult') }}
+          </span>
+          <span v-else class="resource-count one-pager">
+            {{ totalResourcesCount }} {{ $t('singlePageResults') }}
+          </span>
+        </client-only>
+
+        <ul id="resources-list" class="resources">
+          <Resource
+            v-for="(resource, index) in pageResources()"
+            :index="index"
+            :key="resource.id"
+            :language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
+            :titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
+            :links="{en: getLink(resource, 'EN'), fr: getLink(resource, 'FR')}"
+            :author="getAuthor(resource)"
+            :organization="getOrganization(resource)"
+            :publication="getPublication(resource)"
+            :contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
+            :geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
+            :issues="resource[`ISSUES ${upperCaseLocale}`]"
+            :paywall="getPaywall(resource)"
+            :paywallHelpText="getPaywallText()"
+            :searchRegx="getSearchRegx()"
+            :isTextSearching="isTextSearching()"
+            :notes="{en: getNotes(resource, 'en'), fr: getNotes(resource, 'fr')}"
+          />
+        </ul>
+
+        <div v-if="totalResourcesCount > resourcesPerPage" class="pagination-controls">
+          <client-only>
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="totalResourcesCount"
+              :per-page="resourcesPerPage"
+              :hide-goto-end-buttons="true"
+              :hide-ellipsis="true"
+              :pills="true"
+              align="center"
+              aria-controls="resources-list">
+            </b-pagination>
+          </client-only>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Resource from '@/components/Resource'
-import CheckboxFilter from '@/components/FilterControls/CheckboxFilter.vue'
-import RadioButtonFilter from '@/components/FilterControls/RadioButtonFilter.vue'
+import Filters from '@/components/Filters.vue';
+import Resource from '@/components/Resource.vue';
 
 export default {
   data () {
     const data = this.$store.state.data
     return {
-      allLanguages: data.allLanguages,
-      checkedLanguageId: "BOTH",
-      allGeographicScopes: data.allGeographicScopes,
-      checkedScopeIds: [],
-      allContentTypes: data.allContentTypes,
-      checkedContentTypeIds: [],
-      allIssues: data.allIssues,
-      checkedIssueIds: [],
       resources: data.resources,
+      filterModelDefaults: {
+        languageId: "BOTH",
+        scopeIds: [],
+        contentTypeIds: [],
+        issueIds: [],
+      },
+      filterModel: {},
       searchInputText: "",
       upperCaseLocale: this.$i18n.locale.toUpperCase(),
       paywallTexts: { en: data.text[0]['HELP:PAYWALL'], fr: data.text[1]['HELP:PAYWALL'] },
@@ -120,36 +93,38 @@ export default {
       resourcesPerPage: 10
     }
   },
+
   methods: {
     filterResources() {
-      let filteredResources = [...this.resources]
+      const model = this.filterModel;
+      let filteredResources = [...this.resources];
 
-      if (this.checkedLanguageId !== "BOTH") {
+      if (model.languageId !== "BOTH") {
         filteredResources = filteredResources.filter(r => {
           const rLangId = r['LANGUAGE ID'][0]
-          return rLangId === "BOTH" || rLangId === this.checkedLanguageId 
+          return rLangId === "BOTH" || rLangId === model.languageId 
         })
       }
 
-      if (this.checkedScopeIds.length) {
+      if (model.scopeIds.length) {
         filteredResources = filteredResources.filter(r => {
           const rGeoScopeId = r['GEOGRAPHIC SCOPE ID'][0]
-          return this.checkedScopeIds.includes(rGeoScopeId)
+          return model.scopeIds.includes(rGeoScopeId)
         }) 
       }
 
-      if (this.checkedContentTypeIds.length) {
+      if (model.contentTypeIds.length) {
         filteredResources = filteredResources.filter(r => {
           return r['CONTENT TYPE IDS'].some(id => {
-            return this.checkedContentTypeIds.includes(id)
+            return model.contentTypeIds.includes(id)
           })
         })
       }
 
-      if (this.checkedIssueIds.length) {
+      if (model.issueIds.length) {
         filteredResources = filteredResources.filter(r => {
           return r['ISSUE IDS'].some(id => {
-            return this.checkedIssueIds.includes(id)
+            return model.issueIds.includes(id)
           })
         })
       }
@@ -235,34 +210,18 @@ export default {
     isTextSearching() {
       return this.searchInputText.trim() ? true : false
     },
-    updateFilters(filterType, newfilterValue) {
-      switch (filterType) {
-        case 'language':
-          this.checkedLanguageId = newfilterValue
-          break;
-        case 'scopes':
-          this.checkedScopeIds = newfilterValue
-          break;
-        case 'content types':
-          this.checkedContentTypeIds = newfilterValue
-          break;
-        case 'issues':
-          this.checkedIssueIds = newfilterValue
-          break;
-        default:
-          console.log('unknown filter type')
-      }
+    updateFilterModel(filterType, newfilterValue) {
+      let model = this.filterModel;
+      model[filterType] = newfilterValue;
       this.currentPage = 1;
       return true;
     },
-    clearFilters() {
-      this.checkedLanguageId = "BOTH"
-      this.checkedScopeIds = []
-      this.checkedContentTypeIds = []
-      this.checkedIssueIds = []
+    resetFilterModel() {
+      this.filterModel = this.filterModelDefaults;
       return true
     }
   },
+
   computed: {
     currentPageIndexRange() {
       let rangeEnd = this.resourcesPerPage * this.currentPage,
@@ -276,15 +235,28 @@ export default {
       return this.pageResources().length;
     }
   },
+
+  created: function() {
+    this.resetFilterModel();
+  },
+
   components: {
-    Resource,
-    CheckboxFilter,
-    RadioButtonFilter
+    Filters,
+    Resource
   }
 }
 </script>
 
 <style>
+.ui {
+  display: flex;
+}
+
+.index {
+  width: 70%;
+  /* border: 1px solid red; */
+}
+
 .subtitle {
   font-size: 24px;
   color: #767676;
@@ -343,16 +315,6 @@ mark {
   .subtitle {
     font-size: 13px;
     margin-bottom: 10px;
-  }
-
-  .filter-controls .b-dropdown {
-    margin-bottom: 10px;
-    margin-right: 5px;
-  }
-
-  .clear-filters {
-    margin-left: 0;
-    display: block;
   }
 }
 </style>

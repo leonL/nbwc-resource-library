@@ -49,12 +49,13 @@ export default {
   ],
   bootstrapVue: {
     componentPlugins: [
-      'DropdownPlugin',
+      'ButtonPlugin',
       'FormCheckboxPlugin',
       'FormInputPlugin',
       'FormRadioPlugin',
       'CollapsePlugin',
-      'PaginationPlugin'
+      'PaginationPlugin',
+      'IconsPlugin'
     ],
     components: ['BIconList']
   },
@@ -69,6 +70,7 @@ export default {
           homeTitle: 'Resource library',
           frAvailable: 'Also available in French',
           language: 'Language',
+          filters: 'Filters',
           geoScopesFilter: 'Geographic Scopes',
           geoScope: 'Geographic scope',
           contentTypesFilter: 'Types of content',
@@ -94,6 +96,7 @@ export default {
           homeTitle: 'Bibliothèque de ressources',
           enAvailable: 'Disponible aussi en anglais',
           language: 'Langue',
+          filters: 'Filtres',
           geoScopesFilter: 'Portées géographiques',
           geoScope: 'Portée géographique',
           contentTypesFilter: 'Types de contenu',
