@@ -5,8 +5,8 @@
     <div class="language filter">
       <div v-b-toggle.languageOptions class='toggle'>
         <h5>Language</h5>
+        <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
-          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         </client-only>
       </div>
@@ -22,8 +22,8 @@
     <div class="geographic-scopes filter">
       <div v-b-toggle.geographicScopeOptions class='toggle'>
         <h5>Geographic Scope</h5>
+        <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
-          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         </client-only>
       </div>
@@ -39,8 +39,8 @@
     <div class="content-types filter">
       <div v-b-toggle.contentTypeOptions class='toggle'>
         <h5>Content Type</h5>
+        <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
-          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         </client-only>
       </div>
@@ -56,8 +56,8 @@
     <div class="issues filter">
       <div v-b-toggle.issuesOptions class='toggle'>
         <h5>Issues</h5>
+        <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
-          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         </client-only>
       </div>
