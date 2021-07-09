@@ -2,12 +2,74 @@
   <div class='filters'>
     <h5>{{ $t('filters') }}</h5>
 
-    <RadioButtonFilter 
-      :label="$t('language')"
-      :options="allLanguages.map(type => { return {text: type[locale.toUpperCase()], value: type.ID}})"
-      :defaultOptionId="checkedLanguageId"
-      v-on:newValue="newFilterValue('languageId', $event)"
-    />
+    <div class="language filter">
+      <div v-b-toggle.languageOptions class='toggle'>
+        <h5>Language</h5>
+        <client-only>
+          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
+          <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
+        </client-only>
+      </div>
+      <b-collapse id="languageOptions">
+        <RadioButtonFilter 
+          :options="optionsHtmlAttrsByFilterType('languages')"
+          :defaultOptionId="defaultValues.languageId"
+          v-on:newValue="newFilterValue('languageId', $event)"
+        />
+      </b-collapse>
+    </div>
+
+    <div class="geographic-scopes filter">
+      <div v-b-toggle.geographicScopeOptions class='toggle'>
+        <h5>Geographic Scope</h5>
+        <client-only>
+          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
+          <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
+        </client-only>
+      </div>
+      <b-collapse id="geographicScopeOptions">
+        <CheckboxFilter 
+          :options="optionsHtmlAttrsByFilterType('geographicScopes')"
+          :defaultOptionIds="defaultValues.geographicScopeIds"
+          v-on:newValue="newFilterValue('geographicScopeIds', $event)"
+        />
+      </b-collapse>
+    </div>
+
+    <div class="content-types filter">
+      <div v-b-toggle.contentTypeOptions class='toggle'>
+        <h5>Content Type</h5>
+        <client-only>
+          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
+          <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
+        </client-only>
+      </div>
+      <b-collapse id="contentTypeOptions">
+        <CheckboxFilter 
+          :options="optionsHtmlAttrsByFilterType('contentTypes')"
+          :defaultOptionIds="defaultValues.contentTypeIds"
+          v-on:newValue="newFilterValue('contentTypeIds', $event)"
+        />
+      </b-collapse>
+    </div>
+
+    <div class="issues filter">
+      <div v-b-toggle.issuesOptions class='toggle'>
+        <h5>Issues</h5>
+        <client-only>
+          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
+          <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
+        </client-only>
+      </div>
+      <b-collapse id="issuesOptions">
+        <CheckboxFilter 
+          :options="optionsHtmlAttrsByFilterType('issues')"
+          :defaultOptionIds="defaultValues.issueIds"
+          v-on:newValue="newFilterValue('issueIds', $event)"
+        />
+      </b-collapse>
+    </div>
+
   </div>
 </template>
 
@@ -17,27 +79,29 @@
 
   export default {
     name: 'filters',
+
+    props: {
+      defaultValues: Object
+    },
     
     data () {
-      const data = this.$store.state.data;
       return {
-        allLanguages: data.allLanguages,
-        checkedLanguageId: "BOTH"
+        data: this.$store.state.data
       }
     },
 
     methods: {
       newFilterValue(filterField, newValue) {
         this.$emit('newFilterValue', {field: filterField, value: newValue} );
+      },
+      optionsHtmlAttrsByFilterType(type) {
+        return this.data[type].map(type => { return {text: type[this.locale.toUpperCase()], value: type.ID}});
       }
     },
     
     computed: {
       locale: function() {
         return this.$i18n.locale;
-      },
-      upperCaseLocale: function() {
-        return this.$i18n.locale.toUpperCase();
       }
     },
 
@@ -53,4 +117,23 @@
     width: 30%;
     /* border: 1px dotted black; */
   }
+
+  .toggle {
+    position: relative;
+    /* border: 1px dotted orange; */
+  }
+
+  .chevron {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    /* border: 1px dotted blue; */
+  }
+
+  .collapsed > .chevron.down,
+  .not-collapsed > .chevron.up {
+    display: none;
+  }
+
+
 </style>

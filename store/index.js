@@ -30,16 +30,16 @@ export const actions = {
     }
 
     const allGeographicScopes = await httpAirtableNbwcBase.$get('GEOGRAPHIC%20SCOPES')
-    state.data['allGeographicScopes'] = allGeographicScopes.records.map(record => record.fields) 
+    state.data['geographicScopes'] = allGeographicScopes.records.map(record => record.fields) 
 
     const allContentTypes = await httpAirtableNbwcBase.$get('CONTENT%20TYPES')
-    state.data['allContentTypes'] = allContentTypes.records.map(record => record.fields) 
+    state.data['contentTypes'] = allContentTypes.records.map(record => record.fields) 
 
     const allIssues = await httpAirtableNbwcBase.$get('ISSUES')
-    state.data['allIssues'] = allIssues.records.map(record => record.fields) 
+    state.data['issues'] = allIssues.records.map(record => record.fields) 
 
     const allLanguages = await httpAirtableNbwcBase.$get('LANGUAGES')
-    state.data['allLanguages'] = allLanguages.records.map(record => record.fields)
+    state.data['languages'] = allLanguages.records.map(record => record.fields)
 
     const text = await httpAirtableNbwcBase.$get('TEXT')
     state.data['text'] = text.records.map(record => record.fields)

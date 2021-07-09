@@ -8,7 +8,10 @@
     </div>
 
     <div class='ui'>
-      <Filters v-on:newFilterValue="updateFilterModel($event.field, $event.value)" />
+      <Filters 
+        :defaultValues="filterModelDefaults"
+        v-on:newFilterValue="updateFilterModel($event.field, $event.value)" 
+      />
 
       <div class='index'>
         <b-form-input v-model="searchInputText" :placeholder="$t('searchPlaceholder')" debounce="500" 
@@ -80,7 +83,7 @@ export default {
       resources: data.resources,
       filterModelDefaults: {
         languageId: "BOTH",
-        scopeIds: [],
+        geographicScopeIds: [],
         contentTypeIds: [],
         issueIds: [],
       },
@@ -106,10 +109,10 @@ export default {
         })
       }
 
-      if (model.scopeIds.length) {
+      if (model.geographicScopeIds.length) {
         filteredResources = filteredResources.filter(r => {
           const rGeoScopeId = r['GEOGRAPHIC SCOPE ID'][0]
-          return model.scopeIds.includes(rGeoScopeId)
+          return model.geographicScopeIds.includes(rGeoScopeId)
         }) 
       }
 

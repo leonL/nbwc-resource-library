@@ -1,42 +1,40 @@
 <template>
-    <b-dropdown :text="label" ref="dropdown">
-        <b-dropdown-form>
-            <b-form-checkbox v-for="(option) in options" :key="option.value" :value="option.value" v-model="selectedOptionIds" class="mb-3">
-                {{ option.text }}
-            </b-form-checkbox>
-        </b-dropdown-form>
-    </b-dropdown>
+  <div>
+    <b-form-checkbox v-for="(option) in options" :key="option.value" :value="option.value" v-model="selectedOptionIds" class="mb-3">
+      {{ option.text }}
+    </b-form-checkbox>  
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'CheckboxFilter',
-    data () {
-        return {
-            selectedOptionIds: []
-        }
-    },
-    props: {
-        label: {
-            type: String,
-            required: true
-        },
-        options: {
-            type: Array,
-            required: true
-        },
-        defaultSelectedOptionIds: {
-            type: Array,
-            required: true
-        }
-    },
-    watch: {
-        selectedOptionIds: function (val, oldVal) {
-            this.$emit('selectedOptionsChanged', val)
-        }
-    },
-    beforeUpdate: function() {
-        this.selectedOptionIds = this.defaultSelectedOptionIds
+  name: 'CheckboxFilter',
+
+  props: {
+    label: String,
+    options: Array,
+    defaultOptionIds: Array
+  },
+
+  data () {
+    return {
+      selectedOptionIds: [],
+      caretRotation: 0
     }
+  },
+
+  created: function() {
+    this.selectedOptionIds = this.defaultOptionIds;
+  },
+
+  watch: {
+    selectedOptionIds: function (val, oldVal) {
+      this.$emit('newValue', val);
+    }
+  }
 }
 </script>
+
+<style scoped>
+
+</style>
