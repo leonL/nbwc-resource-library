@@ -94,9 +94,9 @@
 </template>
 
 <script>
-  import CheckboxFilter from './FilterControls/CheckboxFilter.vue';
-  import RadioButtonFilter from './FilterControls/RadioButtonFilter.vue';
-  import MonthAndYearSelector from './FilterControls/MonthAndYearSelector.vue'
+  import CheckboxFilter from './Filters/CheckboxFilter.vue';
+  import RadioButtonFilter from './Filters/RadioButtonFilter.vue';
+  import MonthAndYearSelector from './Filters/MonthAndYearSelector.vue'
 
   export default {
     name: 'filters',
