@@ -1,8 +1,8 @@
 <template>
-  <div class="date-range">
+  <div>
     <span class='label'>{{ label }}</span>
-    <b-form-select v-model="month.selected" :options="month.options"></b-form-select>
-    <b-form-select v-model="year.selected" :options="year.options"></b-form-select>
+    <b-form-select v-model="monthSelected" :options="monthOptions"></b-form-select>
+    <b-form-select v-model="yearSelected" :options="yearOptions"></b-form-select>
   </div>
 </template>
 
@@ -16,40 +16,60 @@
 
     data() {
       return {
-        month: {
-          selected: null, 
-          options: [
-            { value: null, text: 'Month' },
-            { value: 1, text: 'Jan' },
-            { value: 2, text: 'Feb' },
-            { value: 3, text: 'Mar' },
-            { value: 4, text: 'Apr' },
-            { value: 5, text: 'May' },
-            { value: 6, text: 'June' },
-            { value: 7, text: 'July' },
-            { value: 8, text: 'Aug' },
-            { value: 9, text: 'Sep' },
-            { value: 10, text: 'Oct' },
-            { value: 11, text: 'Nov' },
-            { value: 12, text: 'Dec' },
-          ]
-        },
-        year: {
-          selected: null,
-          options: [
-            { value: null, text: 'Year' },
-            { value: 2014, text: '2014' },
-            { value: 2015, text: '2015' },
-            { value: 2016, text: '2016' },
-            { value: 2017, text: '2017' },
-            { value: 2018, text: '2018' },
-            { value: 2019, text: '2019' },
-            { value: 2020, text: '2020' },
-            { value: 2021, text: '2021' }
-          ]
-        }
+        monthSelected: null, 
+        monthOptions: [
+          { value: null, text: 'Month' },
+          { value: 1, text: 'Jan' },
+          { value: 2, text: 'Feb' },
+          { value: 3, text: 'Mar' },
+          { value: 4, text: 'Apr' },
+          { value: 5, text: 'May' },
+          { value: 6, text: 'June' },
+          { value: 7, text: 'July' },
+          { value: 8, text: 'Aug' },
+          { value: 9, text: 'Sep' },
+          { value: 10, text: 'Oct' },
+          { value: 11, text: 'Nov' },
+          { value: 12, text: 'Dec' },
+        ],
+        yearSelected: null,
+        yearOptions: [
+          { value: null, text: 'Year' },
+          { value: 2014, text: '2014' },
+          { value: 2015, text: '2015' },
+          { value: 2016, text: '2016' },
+          { value: 2017, text: '2017' },
+          { value: 2018, text: '2018' },
+          { value: 2019, text: '2019' },
+          { value: 2020, text: '2020' },
+          { value: 2021, text: '2021' }
+        ]
       }
-    }  
+    },
+
+    methods: {
+      isValidDate() {
+        let isValid = false;
+        if (this.monthSelected === null || this.yearSelected === null) {
+          isValid = false;
+        } else {
+          isValid = true;
+        }
+        return isValid;
+      },
+      newValidDate() {
+        this.$emit('newDate', { month: this.monthSelected, year: this.yearSelected });
+      }
+    },
+    
+    watch: {
+      monthSelected: function (val, oldVal) {
+        if (this.isValidDate()) this.newValidDate();
+      },
+      yearSelected: function (val, oldVal) {
+        if (this.isValidDate()) this.newValidDate();
+      }
+    }
   }
 </script>
 

@@ -11,12 +11,7 @@
         </client-only>
       </div>
       <b-collapse id="datePublishedOptions">
-        <MonthAndYearSelector 
-          :label="'From'"
-          v-on:newValue="newFilterValue('datePublished', $event)"
-        />
-        <MonthAndYearSelector 
-          :label="'To'"
+        <MonthRangeFilter 
           v-on:newValue="newFilterValue('datePublished', $event)"
         />
       </b-collapse>
@@ -96,7 +91,7 @@
 <script>
   import CheckboxFilter from './Filters/CheckboxFilter.vue';
   import RadioButtonFilter from './Filters/RadioButtonFilter.vue';
-  import MonthAndYearSelector from './Filters/MonthAndYearSelector.vue'
+  import MonthRangeFilter from './Filters/MonthRangeFilter.vue'
 
   export default {
     name: 'filters',
@@ -129,7 +124,7 @@
     components: {
       CheckboxFilter,
       RadioButtonFilter,
-      MonthAndYearSelector
+      MonthRangeFilter
     }
   };
 </script>
