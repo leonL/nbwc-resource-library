@@ -2,6 +2,26 @@
   <div class='filters'>
     <h5>{{ $t('filters') }}</h5>
 
+    <div class='date-published filter'>
+      <div v-b-toggle.datePublishedOptions class='toggle'>
+        <h5>Date Published</h5>
+        <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
+        <client-only>
+          <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
+        </client-only>
+      </div>
+      <b-collapse id="datePublishedOptions">
+        <MonthAndYearSelector 
+          :label="'From'"
+          v-on:newValue="newFilterValue('datePublished', $event)"
+        />
+        <MonthAndYearSelector 
+          :label="'To'"
+          v-on:newValue="newFilterValue('datePublished', $event)"
+        />
+      </b-collapse>
+    </div>
+
     <div class="language filter">
       <div v-b-toggle.languageOptions class='toggle'>
         <h5>Language</h5>
@@ -76,6 +96,7 @@
 <script>
   import CheckboxFilter from './FilterControls/CheckboxFilter.vue';
   import RadioButtonFilter from './FilterControls/RadioButtonFilter.vue';
+  import MonthAndYearSelector from './FilterControls/MonthAndYearSelector.vue'
 
   export default {
     name: 'filters',
@@ -107,7 +128,8 @@
 
     components: {
       CheckboxFilter,
-      RadioButtonFilter
+      RadioButtonFilter,
+      MonthAndYearSelector
     }
   };
 </script>

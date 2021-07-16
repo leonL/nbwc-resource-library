@@ -54,6 +54,7 @@ export default {
       'FormInputPlugin',
       'FormRadioPlugin',
       'CollapsePlugin',
+      'FormSelectPlugin',
       'PaginationPlugin',
       'IconsPlugin'
     ],
