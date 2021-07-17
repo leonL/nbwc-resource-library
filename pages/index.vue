@@ -42,6 +42,7 @@
             :author="getAuthor(resource)"
             :organization="getOrganization(resource)"
             :publication="getPublication(resource)"
+            :publicationDateValues="getPublicationDateValues(resource)"
             :contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
             :geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
             :issues="resource[`ISSUES ${upperCaseLocale}`]"
@@ -85,7 +86,7 @@ export default {
         languageId: "BOTH",
         geographicScopeIds: [],
         contentTypeIds: [],
-        datePublishedRange: null,
+        monthPublishedRange: null,
         issueIds: [],
       },
       filterModel: {},
@@ -133,12 +134,12 @@ export default {
         })
       }
 
-      if (model.datePublishedRange !== null) {
-        let range = model.datePublishedRange,
+      if (model.monthPublishedRange !== null) {
+        let range = model.monthPublishedRange,
           fromDate = new Date(range.from.year, range.from.month),
           toDate = new Date(range.to.year, range.to.month);
         filteredResources = filteredResources.filter(r => {
-          let publicationDate = new Date(r['PUBLICATION YEAR'], (r['PUBLICATION MONTH'] - 1) || 1);
+          let publicationDate = this.getPublicationDate(r);
           return (publicationDate >= fromDate && publicationDate <= toDate);
         })
       }
@@ -207,6 +208,18 @@ export default {
         publication = resource[propertyName][0]
       }
       return publication
+    },
+    getPublicationDate(resrouce) {
+      return new Date(resource['PUBLICATION YEAR'], (resource['PUBLICATION MONTH'] - 1) || 0);
+    },
+    getPublicationDateValues(resource) {
+      let dayPropName = 'PUBLICATION DAY',
+        values = { 
+          year: resource['PUBLICATION YEAR'],
+          month: (resource['PUBLICATION MONTH'] - 1 || 0),
+        };
+      if (resource.hasOwnProperty(dayPropName)) values.day = resource[dayPropName];
+      return values;
     },
     getAuthor(resource) {
       return resource['AUTHOR'] || ""
