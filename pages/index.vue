@@ -85,6 +85,7 @@ export default {
         languageId: "BOTH",
         geographicScopeIds: [],
         contentTypeIds: [],
+        datePublishedRange: null,
         issueIds: [],
       },
       filterModel: {},
@@ -129,6 +130,16 @@ export default {
           return r['ISSUE IDS'].some(id => {
             return model.issueIds.includes(id)
           })
+        })
+      }
+
+      if (model.datePublishedRange !== null) {
+        let range = model.datePublishedRange,
+          fromDate = new Date(range.from.year, range.from.month),
+          toDate = new Date(range.to.year, range.to.month);
+        filteredResources = filteredResources.filter(r => {
+          let publicationDate = new Date(r['PUBLICATION YEAR'], (r['PUBLICATION MONTH'] - 1) || 1);
+          return (publicationDate >= fromDate && publicationDate <= toDate);
         })
       }
 
@@ -217,6 +228,7 @@ export default {
       let model = this.filterModel;
       model[filterType] = newfilterValue;
       this.currentPage = 1;
+      this.$forceUpdate();
       return true;
     },
     resetFilterModel() {

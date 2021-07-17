@@ -12,7 +12,7 @@
       </div>
       <b-collapse id="datePublishedOptions">
         <MonthRangeFilter 
-          v-on:newValue="newFilterValue('datePublished', $event)"
+          v-on:newValue="newFilterValue('datePublishedRange', $event)"
         />
       </b-collapse>
     </div>

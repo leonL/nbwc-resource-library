@@ -2,11 +2,11 @@
   <div class="month-range">
     <MonthAndYearSelector 
       :label="'From'"
-      v-on:newDate="newDateValue('fromDate', $event)"
+      v-on:newDate="newDateValue('from', $event)"
     />
     <MonthAndYearSelector 
       :label="'To'"
-      v-on:newDate="newDateValue('toDate', $event)"
+      v-on:newDate="newDateValue('to', $event)"
     />
   </div>
 </template>
@@ -20,8 +20,8 @@
     data() {
       return {
         monthRange: {
-          fromDate: null,
-          toDate: null
+          from: null,
+          to: null
         }
       };
     },
@@ -38,9 +38,9 @@
       isRangeValid() {
         const r = this.monthRange;
         let isValid = false;
-        if (r.fromDate === null || r.toDate === null) {
+        if (r.from === null || r.to === null) {
           isValid = false;
-        } else if ( new Date(r.fromDate.year, r.fromDate.month) > new Date(r.toDate.year, r.toDate.month) ) {
+        } else if ( new Date(r.from.year, r.from.month) > new Date(r.to.year, r.to.month) ) {
           isValid = false;
         } else {
           isValid = true;
