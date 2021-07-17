@@ -139,7 +139,7 @@ export default {
           fromDate = new Date(range.from.year, range.from.month),
           toDate = new Date(range.to.year, range.to.month);
         filteredResources = filteredResources.filter(r => {
-          let publicationDate = this.getPublicationDate(r);
+          let publicationDate = this.getPublicationMonth(r);
           return (publicationDate >= fromDate && publicationDate <= toDate);
         })
       }
@@ -209,7 +209,7 @@ export default {
       }
       return publication
     },
-    getPublicationDate(resrouce) {
+    getPublicationMonth(resource) {
       return new Date(resource['PUBLICATION YEAR'], (resource['PUBLICATION MONTH'] - 1) || 0);
     },
     getPublicationDateValues(resource) {
