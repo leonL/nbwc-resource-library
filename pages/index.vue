@@ -84,7 +84,7 @@ export default {
       resources: data.resources,
       filterModelDefaults: {
         datePublishedRangePreset: "anyDate",
-        monthPublishedRange: null,
+        customDatePublishedRange: null,
         languageId: "BOTH",
         geographicScopeIds: [],
         contentTypeIds: [],
@@ -106,26 +106,32 @@ export default {
       let filteredResources = [...this.resources];
 
       if (model.datePublishedRangePreset !== "anyDate") {
-        console.log(model.datePublishedRangePreset);
-      }
 
-      // if (model.monthPublishedRange !== null) {
-      //   let range = model.monthPublishedRange,
-      //     fromDate = new Date(range.from.year, range.from.month),
-      //     toDate = new Date(range.to.year, range.to.month);
-      //   filteredResources = filteredResources.filter(r => {
-      //     let publicationDate = this.getPublicationMonth(r);
-      //     return (publicationDate >= fromDate && publicationDate <= toDate);
-      //   })
-      // }
+        const currentDate = new Date,
+          currentMonth = currentDate.getMonth(),
+          currentYear = currentDate.getYear() + 1900;
 
-      // let currentDate = new Date,
-          //   currentMonth = currentDate.getMonth(),
-          //   currentYear = currentDate.getYear() + 1900;
-          // htmlAttrs = [
-          //   {text: 'Past Month', value: { from: { year: currentYear, month: currentMonth - 1 }, to: { year: currentYear, month: currentMonth } } },
-          //   {text: 'Past Year', value: { from: { year: currentYear - 1, month: currentMonth }, to: { year: currentYear, month: currentMonth } } }
-          // ];
+        let presetRange = model.datePublishedRangePreset,
+          customRange = model.customDatePublishedRange,
+          fromDate = null, 
+          toDate = currentDate;        
+
+        if (presetRange === "customDateRange" && customRange !== null) {
+            fromDate = new Date(customRange.from.year, customRange.from.month);
+            toDate = new Date(customRange.to.year, customRange.to.month);
+        } else if (presetRange === "pastMonth") {
+          fromDate = new Date(currentYear, currentMonth - 1);
+        } else if (presetRange === "pastYear") {
+          fromDate = new Date(currentYear - 1, currentMonth)
+        }
+
+        if (fromDate !== null) { // isNull when presetRange == "customDateRange" && customRange === null
+          filteredResources = filteredResources.filter(r => {
+            let publicationDate = this.getPublicationMonth(r);
+            return (publicationDate >= fromDate && publicationDate <= toDate);
+          })
+        }
+      }    
 
       if (model.languageId !== "BOTH") {
         filteredResources = filteredResources.filter(r => {
