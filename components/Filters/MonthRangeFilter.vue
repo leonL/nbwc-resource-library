@@ -31,9 +31,13 @@
         this.monthRange[rangeSegment] = value; 
 
         if (this.isRangeValid()) {
-          this.$emit('newValue', this.monthRange );
+          this.emitNewValue(this.monthRange);
+        } else {
+          this.emitNewValue(null);
         }
-        return true;
+      },
+      emitNewValue(value) {
+        this.$emit('newValue', value);
       },
       isRangeValid() {
         const r = this.monthRange;

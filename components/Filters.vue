@@ -14,10 +14,10 @@
         <RadioButtonFilter 
           :options="optionsHtmlAttrsByFilterType('datePublishedRanges')"
           :defaultOptionId="'anyDate'"
-          v-on:newValue="newFilterValue('datePublishedRangePreset', $event)"
+          v-on:newValue="newPresetDateRange('datePublishedRangePreset', $event)"
         />
         <MonthRangeFilter 
-          v-on:newValue="newFilterValue('customDatePublishedRange', $event)"
+          v-on:newValue="newCustomDateRange('customDatePublishedRange', $event)"
         />
       </b-collapse>
     </div>
@@ -119,13 +119,31 @@
           geographicScopes: dataStore['geographicScopes'],
           contentTypes: dataStore['contentTypes'],
           issues: dataStore['issues']
-        }
+        },
+        customDateRangeSelected: false,
+        customDateRangeIsValid: false,
       }
     },
 
     methods: {
       newFilterValue(filterField, newValue) {
-        this.$emit('newFilterValue', {field: filterField, value: newValue} );
+        this.emitNewFilterValueEvent(filterField, newValue);
+      },
+      newPresetDateRange(filterField, newValue) {
+        this.customDateRangeSelected = (newValue === "customDateRange" ? true : false);
+        this.emitNewFilterValueEvent(filterField, newValue);
+      },
+      newCustomDateRange(filterField, newValue) {
+        if (newValue === null) {
+          this.customDateRangeIsValid = false;
+          this.emitNewFilterValueEvent(filterField, null);
+        } else {
+          this.customDateRangeIsValid = true;
+          this.emitNewFilterValueEvent(filterField, newValue);
+        }
+      },
+      emitNewFilterValueEvent(field, value) {
+        this.$emit('newFilterValue', {field: field, value: value} );
       },
       optionsHtmlAttrsByFilterType(type) {
         return this.options[type].map(type => { 

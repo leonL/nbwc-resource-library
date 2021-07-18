@@ -57,17 +57,22 @@
         }
         return isValid;
       },
-      newValidDate() {
-        this.$emit('newDate', { month: this.monthSelected, year: this.yearSelected });
+      newDate() {
+        let value = null;
+        if (this.isValidDate()) value = { month: this.monthSelected, year: this.yearSelected };
+        this.emitNewDate(value); 
+      },
+      emitNewDate(date) {
+        this.$emit('newDate', date); 
       }
     },
     
     watch: {
       monthSelected: function (val, oldVal) {
-        if (this.isValidDate()) this.newValidDate();
+        this.newDate();
       },
       yearSelected: function (val, oldVal) {
-        if (this.isValidDate()) this.newValidDate();
+        this.newDate();
       }
     }
   }
