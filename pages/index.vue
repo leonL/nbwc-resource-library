@@ -83,10 +83,11 @@ export default {
     return {
       resources: data.resources,
       filterModelDefaults: {
+        datePublishedRangePreset: "anyDate",
+        monthPublishedRange: null,
         languageId: "BOTH",
         geographicScopeIds: [],
         contentTypeIds: [],
-        monthPublishedRange: null,
         issueIds: [],
       },
       filterModel: {},
@@ -103,6 +104,28 @@ export default {
     filterResources() {
       const model = this.filterModel;
       let filteredResources = [...this.resources];
+
+      if (model.datePublishedRangePreset !== "anyDate") {
+        console.log(model.datePublishedRangePreset);
+      }
+
+      // if (model.monthPublishedRange !== null) {
+      //   let range = model.monthPublishedRange,
+      //     fromDate = new Date(range.from.year, range.from.month),
+      //     toDate = new Date(range.to.year, range.to.month);
+      //   filteredResources = filteredResources.filter(r => {
+      //     let publicationDate = this.getPublicationMonth(r);
+      //     return (publicationDate >= fromDate && publicationDate <= toDate);
+      //   })
+      // }
+
+      // let currentDate = new Date,
+          //   currentMonth = currentDate.getMonth(),
+          //   currentYear = currentDate.getYear() + 1900;
+          // htmlAttrs = [
+          //   {text: 'Past Month', value: { from: { year: currentYear, month: currentMonth - 1 }, to: { year: currentYear, month: currentMonth } } },
+          //   {text: 'Past Year', value: { from: { year: currentYear - 1, month: currentMonth }, to: { year: currentYear, month: currentMonth } } }
+          // ];
 
       if (model.languageId !== "BOTH") {
         filteredResources = filteredResources.filter(r => {
@@ -131,16 +154,6 @@ export default {
           return r['ISSUE IDS'].some(id => {
             return model.issueIds.includes(id)
           })
-        })
-      }
-
-      if (model.monthPublishedRange !== null) {
-        let range = model.monthPublishedRange,
-          fromDate = new Date(range.from.year, range.from.month),
-          toDate = new Date(range.to.year, range.to.month);
-        filteredResources = filteredResources.filter(r => {
-          let publicationDate = this.getPublicationMonth(r);
-          return (publicationDate >= fromDate && publicationDate <= toDate);
         })
       }
 

@@ -4,22 +4,27 @@
 
     <div class='date-published filter'>
       <div v-b-toggle.datePublishedOptions class='toggle'>
-        <h5>Date Published</h5>
+        <h5>{{ $t('datePublished') }}</h5>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         </client-only>
       </div>
       <b-collapse id="datePublishedOptions">
+        <RadioButtonFilter 
+          :options="optionsHtmlAttrsByFilterType('datePublishedRanges')"
+          :defaultOptionId="'anyDate'"
+          v-on:newValue="newFilterValue('datePublishedRangePreset', $event)"
+        />
         <MonthRangeFilter 
-          v-on:newValue="newFilterValue('monthPublishedRange', $event)"
+          v-on:newValue="newFilterValue('customDatePublishedRange', $event)"
         />
       </b-collapse>
     </div>
 
     <div class="language filter">
       <div v-b-toggle.languageOptions class='toggle'>
-        <h5>Language</h5>
+        <h5>{{ $t('language') }}</h5>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -36,7 +41,7 @@
 
     <div class="geographic-scopes filter">
       <div v-b-toggle.geographicScopeOptions class='toggle'>
-        <h5>Geographic Scope</h5>
+        <h5>{{ $t('geographicScope') }}</h5>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -53,7 +58,7 @@
 
     <div class="content-types filter">
       <div v-b-toggle.contentTypeOptions class='toggle'>
-        <h5>Content Type</h5>
+        <h5>{{ $t('contentTypesFilter')}}</h5>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -70,7 +75,7 @@
 
     <div class="issues filter">
       <div v-b-toggle.issuesOptions class='toggle'>
-        <h5>Issues</h5>
+        <h5>{{ $t('issuesFilter') }}</h5>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -101,8 +106,20 @@
     },
     
     data () {
+      const dataStore = this.$store.state.data;
       return {
-        data: this.$store.state.data
+        options: {
+          datePublishedRanges: [
+            { ID: 'anyDate', EN:  'Any', FR: 'Quelconque' },
+            { ID: 'pastMonth', EN:  'Past month', FR: 'Mois passé' },
+            { ID: 'pastYear', EN:  'Any', FR: "L'année passée" },
+            { ID: 'customDateRange', EN:  'Custom date range', FR: 'Plage de dates personnalisée' }
+          ],
+          languages: dataStore['languages'],
+          geographicScopes: dataStore['geographicScopes'],
+          contentTypes: dataStore['contentTypes'],
+          issues: dataStore['issues']
+        }
       }
     },
 
@@ -111,7 +128,9 @@
         this.$emit('newFilterValue', {field: filterField, value: newValue} );
       },
       optionsHtmlAttrsByFilterType(type) {
-        return this.data[type].map(type => { return {text: type[this.locale.toUpperCase()], value: type.ID}});
+        return this.options[type].map(type => { 
+          return { text: type[this.locale.toUpperCase()], value: type.ID } 
+        });
       }
     },
     

@@ -18,7 +18,7 @@
       return {
         monthSelected: null, 
         monthOptions: [
-          { value: null, text: 'Month' },
+          { value: null, text: this.$t('month') },
           { value: 0, text: 'Jan' },
           { value: 1, text: 'Feb' },
           { value: 2, text: 'Mar' },
@@ -34,7 +34,7 @@
         ],
         yearSelected: null,
         yearOptions: [
-          { value: null, text: 'Year' },
+          { value: null, text: this.$t('year') },
           { value: 2014, text: '2014' },
           { value: 2015, text: '2015' },
           { value: 2016, text: '2016' },

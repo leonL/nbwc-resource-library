@@ -1,11 +1,11 @@
 <template>
   <div class="month-range">
     <MonthAndYearSelector 
-      :label="'From'"
+      :label="$t('from')"
       v-on:newDate="newDateValue('from', $event)"
     />
     <MonthAndYearSelector 
-      :label="'To'"
+      :label="$t('to')"
       v-on:newDate="newDateValue('to', $event)"
     />
   </div>

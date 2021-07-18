@@ -17,7 +17,7 @@
     <span v-if="paywall" v-html="$md.render(paywallHelpText)" class="notes pw"></span>
     <div class="tags">
       <div class="geo-scopes pills">
-        <h5 class="label">{{ $t('geoScope') }}:</h5>
+        <h5 class="label">{{ $t('geographicScope') }}:</h5>
         <h6 v-for="(gs, index) in geographicScopes" :key="gs">
           <span v-if="index > 0"> / </span>
           {{ gs }} 
