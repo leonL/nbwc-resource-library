@@ -109,7 +109,7 @@ export default {
 
         const currentDate = new Date,
           currentMonth = currentDate.getMonth(),
-          currentYear = currentDate.getYear() + 1900;
+          currentYear = currentDate.getFullYear();
 
         let presetRange = model.datePublishedRangePreset,
           customRange = model.customDatePublishedRange,
