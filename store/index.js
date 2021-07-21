@@ -1,82 +1,96 @@
 export const state = () => ({
-  data: {
-      resources: []
-  }
+  library: [],
+  filterOptions: {
+    languages: [],
+    geographicScopes: [],
+    contentTypes: [],
+    issues: []
+  },
+  copy: []
 })
 
-export const actions = {
-  async nuxtServerInit ({ state }, { req }) {
-    this.$http.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer')
-    const httpAirtableNbwcBase = this.$http.create({ 
-        prefixUrl: 'https://api.airtable.com/v0/appxlBEhiWnssKkbm',
-        searchParams: [['view', 'ALL RECORDS']]
-    })
-
-    let offsetToken = '', allResourcesFetched = false
-    while (allResourcesFetched === false) {
-      let fetchedResourcesJson = await httpAirtableNbwcBase.$get('RESOURCES', 
-        {searchParams: [
-          ['view', 'POST'], 
-          ['offset', offsetToken],
-          ['sort[0][field]', 'RECORD_CREATED_DATE'],
-          ['sort[0][direction]', 'desc']
-        ]}
-      ),
-      fetchedResources = fetchedResourcesJson.records.map(record => record.fields),
-      validFetchedResources = validResourcesFilter(fetchedResources)
-
-      state.data['resources'] = [...state.data['resources'], ...validFetchedResources]
-      fetchedResourcesJson['offset'] ? (offsetToken = fetchedResourcesJson['offset']) : (allResourcesFetched = true)
-    }
-
-    const allGeographicScopes = await httpAirtableNbwcBase.$get('GEOGRAPHIC%20SCOPES')
-    state.data['geographicScopes'] = allGeographicScopes.records.map(record => record.fields) 
-
-    const allContentTypes = await httpAirtableNbwcBase.$get('CONTENT%20TYPES')
-    state.data['contentTypes'] = allContentTypes.records.map(record => record.fields) 
-
-    const allIssues = await httpAirtableNbwcBase.$get('ISSUES')
-    state.data['issues'] = allIssues.records.map(record => record.fields) 
-
-    const allLanguages = await httpAirtableNbwcBase.$get('LANGUAGES')
-    state.data['languages'] = allLanguages.records.map(record => record.fields)
-
-    const text = await httpAirtableNbwcBase.$get('TEXT')
-    state.data['text'] = text.records.map(record => record.fields)
+const apiData = {
+  url: 'https://api.airtable.com/v0/appxlBEhiWnssKkbm',
+  defaultSearchParams: [['view', 'ALL RECORDS']],
+  filterTypeTableNames: { 
+    languages: 'LANGUAGES',
+    geographicScopes: 'GEOGRAPHIC%20SCOPES',
+    contentTypes: 'CONTENT%20TYPES',
+    issues: 'ISSUES'
   }
 }
 
-const validResourcesFilter = (resources) => {
-  let validResources = resources.filter(r => {
-    let isValid = true;
-
-    if (hasLanguage(r)) {
-      let langId = r['LANGUAGE ID'][0];
-
-      if (langId === 'BOTH') {
-        isValid = hasTitle(r, "EN") && hasLink(r, "EN") && hasTitle(r, "FR") && hasLink(r, "FR");
-      } else {
-        isValid = hasTitle(r, langId) && hasLink(r, langId);
-      };
-
-    } else {
-      isValid = false;
-    };
-
-    return isValid;
-  })
-
-  return validResources
+export const mutations = {
+  addResourcesToLibrary (state, resources) {
+    state.library = [...state.library, ...resources];
+  },
+  setFilterOptions (state, filter) {
+    state.filterOptions[filter.type] = filter.options;
+  },
+  setCopy (state, copy) {
+    state.copy = copy;
+  }
 }
 
-const hasLanguage = (resource) => {
-  return resource.hasOwnProperty('LANGUAGE ID');
-};
+export const actions = {
+  async fetchLibraryResources ({commit}) {
+    
+    let offsetToken = '', 
+      allResourcesFetched = false, 
+      searchParams = [
+        ['view', 'POST'], 
+        ['offset', offsetToken],
+        ['sort[0][field]', 'RECORD_CREATED_DATE'],
+        ['sort[0][direction]', 'desc']
+      ]; 
+      
+    while (allResourcesFetched === false) {
+      let fetchedResourcesJson = await this.api.$get('RESOURCES', { searchParams }),
+        fetchedResources = fetchedResourcesJson.records.map(r => r.fields);
 
-const hasTitle = (resource, langId) => {
-  return resource.hasOwnProperty(`TITLE ${langId}`);
-};
+      fetchedResourcesJson['offset'] ? (offsetToken = fetchedResourcesJson['offset']) : (allResourcesFetched = true);
+      commit('addResourcesToLibrary', fetchedResources);
+    }
+  }, 
 
-const hasLink = (resource, langId) => {
-  return resource.hasOwnProperty(`DOCUMENT ${langId}`) || resource.hasOwnProperty(`LINK ${langId}`);
-};
+  async fetchOptionsForFilterType ({commit}, filterType) {
+
+    let tableName = apiData.filterTypeTableNames[filterType],
+      searchParams = apiData.defaultSearchParams,
+      optionsJson = await this.api.$get(tableName, { searchParams }),
+      options = optionsJson.records.map(r => r.fields);
+
+    commit('setFilterOptions', {type: filterType, options});
+  },
+  
+  async fetchCopy ({commit}) {
+    let tableName = 'TEXT',
+      searchParams = apiData.defaultSearchParams,
+      copyJson = await this.api.$get(tableName, {searchParams}),
+      copy = copyJson.records.map(r => r.fields);
+
+    commit('setCopy', copy);
+  },
+
+  async fetchFilterOptions (context) {
+
+    await Promise.all([
+      context.dispatch('fetchOptionsForFilterType', 'languages'),
+      context.dispatch('fetchOptionsForFilterType', 'geographicScopes'),
+      context.dispatch('fetchOptionsForFilterType', 'contentTypes'),
+      context.dispatch('fetchOptionsForFilterType', 'issues')
+    ]);
+  },
+
+  async nuxtServerInit (context, _) {
+
+    this.$http.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer');
+    this.api = this.$http.create({ prefixUrl: apiData.url });
+  
+    await Promise.all([
+      context.dispatch('fetchLibraryResources'),
+      context.dispatch('fetchFilterOptions'),
+      context.dispatch('fetchCopy')
+    ]);
+  }
+}

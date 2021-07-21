@@ -79,9 +79,9 @@ import Resource from '@/components/Resource.vue';
 
 export default {
   data () {
-    const data = this.$store.state.data
+    const state = this.$store.state
     return {
-      resources: data.resources,
+      resources: state.library,
       filterModelDefaults: {
         datePublishedRangePreset: "anyDate",
         customDatePublishedRange: null,
@@ -93,8 +93,8 @@ export default {
       filterModel: {},
       searchInputText: "",
       upperCaseLocale: this.$i18n.locale.toUpperCase(),
-      paywallTexts: { en: data.text[0]['HELP:PAYWALL'], fr: data.text[1]['HELP:PAYWALL'] },
-      subtitleTexts: { en: data.text[0]['HOME:SUBTITLE'], fr: data.text[1]['HOME:SUBTITLE'] },
+      paywallTexts: { en: state.copy[0]['HELP:PAYWALL'], fr: state.copy[1]['HELP:PAYWALL'] },
+      subtitleTexts: { en: state.copy[0]['HOME:SUBTITLE'], fr: state.copy[1]['HOME:SUBTITLE'] },
       currentPage: 1,
       resourcesPerPage: 10
     }

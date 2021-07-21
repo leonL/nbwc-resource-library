@@ -106,7 +106,7 @@
     },
     
     data () {
-      const dataStore = this.$store.state.data;
+      const filterOptions = this.$store.state.filterOptions;
       return {
         options: {
           datePublishedRanges: [
@@ -115,10 +115,10 @@
             { ID: 'pastYear', EN:  'Past Year', FR: "L'année passée" },
             { ID: 'customDateRange', EN:  'Custom date range', FR: 'Plage de dates personnalisée' }
           ],
-          languages: dataStore['languages'],
-          geographicScopes: dataStore['geographicScopes'],
-          contentTypes: dataStore['contentTypes'],
-          issues: dataStore['issues']
+          languages: filterOptions['languages'],
+          geographicScopes: filterOptions['geographicScopes'],
+          contentTypes: filterOptions['contentTypes'],
+          issues: filterOptions['issues']
         },
         customDateRangeSelected: false,
         customDateRangeIsValid: false,
