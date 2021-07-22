@@ -76,12 +76,12 @@
 <script>
 import Filters from '@/components/Filters.vue';
 import Resource from '@/components/Resource.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   data () {
     const state = this.$store.state
     return {
-      resources: state.library,
       filterModelDefaults: {
         datePublishedRangePreset: "anyDate",
         customDatePublishedRange: null,
@@ -270,6 +270,9 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      resources: 'validResources'
+    }),
     currentPageIndexRange() {
       let rangeEnd = this.resourcesPerPage * this.currentPage,
         rangeStart = rangeEnd - this.resourcesPerPage;

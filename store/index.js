@@ -6,10 +6,11 @@ export const state = () => ({
     contentTypes: [],
     issues: []
   },
-  copy: []
+  copy: [],
+  apiConsts: apiConsts
 })
 
-const apiData = {
+const apiConsts = {
   url: 'https://api.airtable.com/v0/appxlBEhiWnssKkbm',
   defaultSearchParams: [['view', 'ALL RECORDS']],
   filterTypeTableNames: { 
@@ -17,6 +18,15 @@ const apiData = {
     geographicScopes: 'GEOGRAPHIC SCOPES',
     contentTypes: 'CONTENT TYPES',
     issues: 'ISSUES'
+  },
+  resourceFieldNames: {
+    languageId: 'LANGUAGE ID',
+    titleEn: 'TITLE EN',
+    titleFr: 'TITLE FR',
+    documentEnUrl: 'DOCUMENT EN',
+    documentFrUrl: 'DOCUMENT FR',
+    linkEnUrl: 'LINK EN',
+    linkFrUrl: 'LINK FR'
   }
 }
 
@@ -55,8 +65,8 @@ export const actions = {
 
   async fetchOptionsForFilterType ({commit}, filterType) {
 
-    let tableName = encodeURI(apiData.filterTypeTableNames[filterType]),
-      searchParams = apiData.defaultSearchParams,
+    let tableName = encodeURI(apiConsts.filterTypeTableNames[filterType]),
+      searchParams = apiConsts.defaultSearchParams,
       optionsJson = await this.api.$get(tableName, { searchParams }),
       options = optionsJson.records.map(r => r.fields);
 
@@ -65,7 +75,7 @@ export const actions = {
   
   async fetchCopy ({commit}) {
     let tableName = 'TEXT',
-      searchParams = apiData.defaultSearchParams,
+      searchParams = apiConsts.defaultSearchParams,
       copyJson = await this.api.$get(tableName, {searchParams}),
       copy = copyJson.records.map(r => r.fields);
 
@@ -82,15 +92,55 @@ export const actions = {
     ]);
   },
 
-  async nuxtServerInit (context, _) {
+  async nuxtServerInit ({dispatch}, _) {
 
     this.$http.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer');
-    this.api = this.$http.create({ prefixUrl: apiData.url });
+    this.api = this.$http.create({ prefixUrl: apiConsts.url });
   
     await Promise.all([
-      context.dispatch('fetchLibraryResources'),
-      context.dispatch('fetchFilterOptions'),
-      context.dispatch('fetchCopy')
+      dispatch('fetchLibraryResources'),
+      dispatch('fetchFilterOptions'),
+      dispatch('fetchCopy')
     ]);
   }
 }
+
+export const getters = {
+  validResources (state) {
+    let resources = state.library.filter(r => {
+      let isValid = true;
+
+      if (hasLanguage(r)) {
+        let langIdFieldName = apiConsts.resourceFieldNames.languageId,
+          langId = r[langIdFieldName]['0'];
+
+        if (langId === 'BOTH') {
+          isValid = hasTitle(r, "EN") && hasLink(r, "EN") && hasTitle(r, "FR") && hasLink(r, "FR");
+        } else {
+          isValid = hasTitle(r, langId) && hasLink(r, langId);
+        }
+      } else {
+        isValid = false;
+      }
+      return isValid;
+    });
+    return resources;
+  }
+}
+
+const hasLanguage = (resource) => {
+  return resource.hasOwnProperty(apiConsts.resourceFieldNames.languageId);
+};
+
+const hasTitle = (resource, langId) => {
+  let resourceFieldNames = apiConsts.resourceFieldNames,
+    titleFieldName = (langId === 'EN' ? resourceFieldNames.titleEn : resourceFieldNames.titleFr ); 
+  return resource.hasOwnProperty(titleFieldName);
+};
+
+const hasLink = (resource, langId) => {
+  let resourceFieldNames = apiConsts.resourceFieldNames,
+    documentFieldName = (langId === 'EN' ? resourceFieldNames.documentEnUrl : resourceFieldNames.documentFrUrl),
+    linkFieldName = (langId === 'EN' ? resourceFieldNames.linkEnUrl : resourceFieldNames.linkFrUrl ); 
+  return resource.hasOwnProperty(documentFieldName) || resource.hasOwnProperty(linkFieldName);
+};
