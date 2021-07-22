@@ -14,8 +14,8 @@ const apiData = {
   defaultSearchParams: [['view', 'ALL RECORDS']],
   filterTypeTableNames: { 
     languages: 'LANGUAGES',
-    geographicScopes: 'GEOGRAPHIC%20SCOPES',
-    contentTypes: 'CONTENT%20TYPES',
+    geographicScopes: 'GEOGRAPHIC SCOPES',
+    contentTypes: 'CONTENT TYPES',
     issues: 'ISSUES'
   }
 }
@@ -55,7 +55,7 @@ export const actions = {
 
   async fetchOptionsForFilterType ({commit}, filterType) {
 
-    let tableName = apiData.filterTypeTableNames[filterType],
+    let tableName = encodeURI(apiData.filterTypeTableNames[filterType]),
       searchParams = apiData.defaultSearchParams,
       optionsJson = await this.api.$get(tableName, { searchParams }),
       options = optionsJson.records.map(r => r.fields);
