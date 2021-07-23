@@ -6,6 +6,11 @@
         target="_blank">
       </a>
     </h2>
+    <h5 v-if="translationLanguageId" class="translation-available">
+      <a :href="translationUrl" target="_blank">
+        {{ translationTitle }}
+      </a>
+    </h5>
     <h5>{{ author }}</h5>
     <h5>{{ organizations }}</h5>
     <h5>{{ publication }}</h5>
@@ -37,7 +42,7 @@ export default {
       let id = this.languageId === "BOTH" ? this.locale : this.languageId;
       return id.toUpperCase();
     },
-    secondaryLanguageId() {
+    translationLanguageId() {
       let id = false;
       if (this.languageId === "BOTH") {
         id = this.primaryLanguageId === "EN" ? "FR" : "EN";
@@ -47,16 +52,30 @@ export default {
     primaryTitle() {
       return this.resource[this.fieldNames.title(this.primaryLanguageId)]
     },
-    isDocument() {
+    translationTitle() {
+      let title = false;
+      if (this.translationLanguageId) title = this.resource[this.fieldNames.title(this.translationLanguageId)];
+      return title;
+    },
+    isPdf() {
       let documentFieldName = this.fieldNames.document(this.primaryLanguageId), 
         isDoc = false;
       if (this.resource[documentFieldName]) isDoc = true;
       return isDoc;
     },
     primaryUrl() {
-      let documentUrlField = this.fieldNames.document(this.primaryLanguageId),
+      let documentField = this.fieldNames.document(this.primaryLanguageId),
         linkUrlField = this.fieldNames.link(this.primaryLanguageId);
-      return this.isDocument ? this.resource[documentUrlField][0].url : this.resource[linkUrlField];
+      return this.isPdf ? this.resource[documentField][0].url : this.resource[linkUrlField];
+    },
+    translationUrl() {
+      let url = false;
+      if (this.translationLanguageId) {
+        let documentField = this.fieldNames.document(this.translationLanguageId),
+          linkUrlField = this.fieldNames.link(this.translationLanguageId);
+        url = this.isPdf ? this.resource[documentField][0].url : this.resource[linkUrlField];
+      } 
+      return url;
     },
     author() {
       return this.resource[this.fieldNames.author];
