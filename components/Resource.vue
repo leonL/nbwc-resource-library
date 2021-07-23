@@ -15,6 +15,8 @@
     <h5>{{ organizations }}</h5>
     <h5>{{ publication }}</h5>
     <h5>{{ publicationDateString }}</h5>
+    <span v-if="notes" v-html="$md.render(notes)" class="notes"></span>
+
   </li>
 </template>
 
@@ -113,8 +115,14 @@ export default {
         dateFormat.day = 'numeric';
         publicationDate.setDate(this.publicationDay);
       }
-
       return new Intl.DateTimeFormat('en-US', dateFormat).format(publicationDate);
+    },
+    notes() {
+      let notes = false,
+        fieldName = this.fieldNames.notes(this.primaryLanguageId);
+
+      if (this.hasField(fieldName) && this.resource[fieldName].length > 0) notes = this.resource[fieldName];
+      return notes;
     }
   },
 

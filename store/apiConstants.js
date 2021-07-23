@@ -17,6 +17,7 @@ export default {
     publication: locale => `PUBLICATION ${locale}`,
     publicationDay: 'PUBLICATION DAY',
     publicationMonth: 'PUBLICATION MONTH',
-    publicationYear: 'PUBLICATION YEAR' 
+    publicationYear: 'PUBLICATION YEAR',
+    notes: locale => `NOTES ${locale}`,
   }
 }

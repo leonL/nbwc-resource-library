@@ -167,46 +167,6 @@ export default {
     getSearchRegx() {
       return new RegExp(this.$removeDiacritics(this.searchInputText.trim()), 'gi')
     },
-    getTitle(resource, locale = this.upperCaseLocale) {
-      let title = '',
-      propertyName = `TITLE ${locale}`
-
-      if (resource.hasOwnProperty(propertyName)) {
-        title = resource[propertyName]
-      }
-      return title
-    },
-    getOrganization(resource, locale = this.upperCaseLocale) {
-      let organization = '',
-      propertyName = `ORGANIZATION ${locale}` 
-
-      if (resource.hasOwnProperty(propertyName)) {
-        organization = resource[propertyName][0]
-      }
-      return organization
-    },
-    getPublication(resource, locale = this.upperCaseLocale) {
-      let publication = '',
-      propertyName = `PUBLICATION ${locale}` 
-
-      if (resource.hasOwnProperty(propertyName)) {
-        publication = resource[propertyName][0]
-      }
-      return publication
-    },
-    getPublicationMonth(resource) {
-      return new Date(resource['PUBLICATION YEAR'], (resource['PUBLICATION MONTH'] - 1) || 0);
-    },
-    getAuthor(resource) {
-      return resource['AUTHOR'] || ""
-    },
-    getPaywallText() {
-      return this.paywallTexts[this.$i18n.locale]
-    },
-    getNotes(resource, lang) {
-      const upperCaseLang = lang.toUpperCase()
-      return resource[`NOTES ${upperCaseLang}`] || "" 
-    },
     isTextSearching() {
       return this.searchInputText.trim() ? true : false
     },
