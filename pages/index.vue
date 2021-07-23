@@ -9,6 +9,7 @@
 
     <div class='ui'>
       <Filters 
+        :defaulstValues="filterModelDefaults"
         :defaultValues="filterModelDefaults"
         v-on:newFilterValue="updateFilterModel($event.field, $event.value)" 
       />
@@ -16,6 +17,8 @@
       <div class='index'>
         <b-form-input v-model="searchInputText" :placeholder="$t('searchPlaceholder')" debounce="500" 
           class="search" :aria-label="$t('searchPlaceholder')"></b-form-input>
+
+        <ResourceList :resources="resources" />
 
         <client-only>
           <span v-if="totalResourcesCount > resourcesPerPage" class="resource-count">
@@ -30,30 +33,6 @@
             {{ totalResourcesCount }} {{ $t('singlePageResults') }}
           </span>
         </client-only>
-
-        <ul id="resources-list" class="resources">
-          <Resource
-            v-for="(resource, index) in pageResources()"
-            :index="index"
-            :key="resource.id"
-            :language="{id: resource['LANGUAGE ID'][0].toLowerCase(), label: resource[`LANGUAGE ${upperCaseLocale}`][0]}" 
-            :titles="{en: resource['TITLE EN'], fr: resource['TITLE FR']}"
-            :links="{en: getLink(resource, 'EN'), fr: getLink(resource, 'FR')}"
-            :author="getAuthor(resource)"
-            :organization="getOrganization(resource)"
-            :publication="getPublication(resource)"
-            :publicationDateValues="getPublicationDateValues(resource)"
-            :contentTypes="resource[`CONTENT TYPES ${upperCaseLocale}`]" 
-            :geographicScopes="resource[`GEOGRAPHIC SCOPE ${upperCaseLocale}`]" 
-            :issues="resource[`ISSUES ${upperCaseLocale}`]"
-            :paywall="getPaywall(resource)"
-            :paywallHelpText="getPaywallText()"
-            :searchRegx="getSearchRegx()"
-            :isTextSearching="isTextSearching()"
-            :notes="{en: getNotes(resource, 'en'), fr: getNotes(resource, 'fr')}"
-          />
-        </ul>
-
         <div v-if="totalResourcesCount > resourcesPerPage" class="pagination-controls">
           <client-only>
             <b-pagination
@@ -75,7 +54,7 @@
 
 <script>
 import Filters from '@/components/Filters.vue';
-import Resource from '@/components/Resource.vue';
+import ResourceList from '@/components/ResourceList.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -197,19 +176,6 @@ export default {
       }
       return title
     },
-    getLink(resource, locale) {
-      let link = '',
-        pdfPropertyName = `DOCUMENT ${locale}`,
-        linkPropertyName = `LINK ${locale}`
-
-      if (resource.hasOwnProperty(pdfPropertyName)) {
-        link = resource[pdfPropertyName][0].url
-      } else {
-        link = resource[linkPropertyName]
-      }
-
-      return link
-    },
     getOrganization(resource, locale = this.upperCaseLocale) {
       let organization = '',
       propertyName = `ORGANIZATION ${locale}` 
@@ -231,20 +197,8 @@ export default {
     getPublicationMonth(resource) {
       return new Date(resource['PUBLICATION YEAR'], (resource['PUBLICATION MONTH'] - 1) || 0);
     },
-    getPublicationDateValues(resource) {
-      let dayPropName = 'PUBLICATION DAY',
-        values = { 
-          year: resource['PUBLICATION YEAR'],
-          month: (resource['PUBLICATION MONTH'] - 1 || 0),
-        };
-      if (resource.hasOwnProperty(dayPropName)) values.day = resource[dayPropName];
-      return values;
-    },
     getAuthor(resource) {
       return resource['AUTHOR'] || ""
-    },
-    getPaywall(resource) {
-      return resource['PAYWALL'] || false
     },
     getPaywallText() {
       return this.paywallTexts[this.$i18n.locale]
@@ -292,7 +246,7 @@ export default {
 
   components: {
     Filters,
-    Resource
+    ResourceList
   }
 }
 </script>

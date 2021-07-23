@@ -1,5 +1,3 @@
-import apiConsts from "./apiConstants";
-
 export default () => ({
   library: [],
   filterOptions: {
@@ -8,6 +6,5 @@ export default () => ({
     contentTypes: [],
     issues: []
   },
-  copy: [],
-  apiConsts: apiConsts
+  copy: []
 })

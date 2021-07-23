@@ -9,11 +9,14 @@ export default {
   },
   resourceFieldNames: {
     languageId: 'LANGUAGE ID',
-    titleEn: 'TITLE EN',
-    titleFr: 'TITLE FR',
-    documentEnUrl: 'DOCUMENT EN',
-    documentFrUrl: 'DOCUMENT FR',
-    linkEnUrl: 'LINK EN',
-    linkFrUrl: 'LINK FR'
+    title: locale => `TITLE ${locale}`, 
+    document: locale => `DOCUMENT ${locale}`, 
+    link: locale => `LINK ${locale}`,
+    author: 'AUTHOR',
+    organizations: locale => `ORGANIZATIONS ${locale}`,
+    publication: locale => `PUBLICATION ${locale}`,
+    publicationDay: 'PUBLICATION DAY',
+    publicationMonth: 'PUBLICATION MONTH',
+    publicationYear: 'PUBLICATION YEAR' 
   }
 }

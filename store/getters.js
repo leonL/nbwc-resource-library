@@ -1,12 +1,16 @@
-import apiConsts from "./apiConstants";
+import apiConstants from "./apiConstants";
+
+const resourceFieldNames = apiConstants.resourceFieldNames;
 
 export default {
   validResources (state) {
     let resources = state.library.filter(r => {
       let isValid = true;
 
+      if (!hasPublishedDate(r)) return isValid = false;
+
       if (hasLanguage(r)) {
-        let langIdFieldName = apiConsts.resourceFieldNames.languageId,
+        let langIdFieldName = resourceFieldNames.languageId,
           langId = r[langIdFieldName]['0'];
 
         if (langId === 'BOTH') {
@@ -15,8 +19,9 @@ export default {
           isValid = hasTitle(r, langId) && hasLink(r, langId);
         }
       } else {
-        isValid = false;
+        return isValid = false;
       }
+
       return isValid;
     });
     return resources;
@@ -24,18 +29,17 @@ export default {
 }
 
 const hasLanguage = (resource) => {
-  return resource.hasOwnProperty(apiConsts.resourceFieldNames.languageId);
+  return resource.hasOwnProperty(resourceFieldNames.languageId);
 };
 
 const hasTitle = (resource, langId) => {
-  let resourceFieldNames = apiConsts.resourceFieldNames,
-    titleFieldName = (langId === 'EN' ? resourceFieldNames.titleEn : resourceFieldNames.titleFr ); 
-  return resource.hasOwnProperty(titleFieldName);
+  return resource.hasOwnProperty(resourceFieldNames.title(langId));
 };
 
 const hasLink = (resource, langId) => {
-  let resourceFieldNames = apiConsts.resourceFieldNames,
-    documentFieldName = (langId === 'EN' ? resourceFieldNames.documentEnUrl : resourceFieldNames.documentFrUrl),
-    linkFieldName = (langId === 'EN' ? resourceFieldNames.linkEnUrl : resourceFieldNames.linkFrUrl ); 
-  return resource.hasOwnProperty(documentFieldName) || resource.hasOwnProperty(linkFieldName);
+  return resource.hasOwnProperty(resourceFieldNames.document(langId)) || resource.hasOwnProperty(resourceFieldNames.link(langId));
+};
+
+const hasPublishedDate = (resource) => {
+  return resource.hasOwnProperty(resourceFieldNames.publicationMonth) && resource.hasOwnProperty(resourceFieldNames.publicationYear); 
 };

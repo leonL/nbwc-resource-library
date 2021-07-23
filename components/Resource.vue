@@ -1,179 +1,109 @@
 <template>
   <li class="resource">
-    <h6 v-if="paywall" class="paywall">{{ $t('paywall').toUpperCase() }}</h6>
     <h2 class="rTitle">
-      <a :href="links[this.getPrimaryLanguageId()]" 
-        v-html="getTitleMarked()"
-        target="_blank"></a>
-    </h2>
-    <h5 v-html="getAccreditationHtml()" class="accreditation"></h5>
-    <h5 class='publication-date'>{{ publicationDateString }}</h5>
-    <h5 v-if="language.id === 'both'" class="translation-available">
-      <a :href="links[`${otherLocale()}`]" target="_blank">
-        {{ translationAvailableText() }}
+      <a :href="primaryUrl" 
+        v-html="primaryTitle"
+        target="_blank">
       </a>
-    </h5>
-    <span v-if="notes[$i18n.locale].length > 0" v-html="$md.render(notes[$i18n.locale])" class="notes"></span>
-    <span v-if="paywall" v-html="$md.render(paywallHelpText)" class="notes pw"></span>
-    <div class="tags">
-      <div class="geo-scopes pills">
-        <h5 class="label">{{ $t('geographicScope') }}:</h5>
-        <h6 v-for="(gs, index) in geographicScopes" :key="gs">
-          <span v-if="index > 0"> / </span>
-          {{ gs }} 
-        </h6>
-      </div>
-      <div class="content-types pills">
-        <h5 class="label">{{ $t('contentTypes') }}:</h5>
-        <h6 v-for="(ct) in contentTypes" :key="ct">
-          {{ ct }} 
-        </h6>
-      </div>
-      <div class="issues pills">
-        <h5 class="label">{{ $t('issues') }}:</h5>
-        <h6 v-for="(issue) in issues" :key="issue">
-          {{ issue }} 
-        </h6>
-      </div>
-    </div>
+    </h2>
+    <h5>{{ author }}</h5>
+    <h5>{{ organizations }}</h5>
+    <h5>{{ publication }}</h5>
+    <h5>{{ publicationDateString }}</h5>
   </li>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import apiConsts from '@/store/apiConstants.js'
 export default {
   name: 'Resource',
+
   props: {
-    titles: {
-        type: Object,
-        required: true
-    },
-    links: {
-      type: Object,
-      required: true
-    },
-    author: {
-      type: String,
-      required: true
-    },
-    organization: {
-      type: String,
-      required: true
-    },
-    publication: {
-      type: String,
-      required: true
-    },
-    publicationDateValues: Object, 
-    notes: Object,
-    contentTypes: {
-      type: Array,
-      required: true
-    },
-    geographicScopes: {
-      type: Array,
-      required: true
-    },
-    language: {
-      type: Object,
-      required: true
-    },
-    issues: {
-      type: Array,
-      required: true
-    },
-    paywall: {
-      type: Boolean,
-      required: true
-    },
-    paywallHelpText: {
-      type: String,
-      required: true
-    },
-    searchRegx: {
-      type: RegExp,
-      required: true
-    },
-    isTextSearching: {
-      type: Boolean,
-      required: true
-    }
+    resource: Object
   },
-  methods: {
-    otherLocale: function() {
-      return (this.$i18n.locale === "en") ? "fr" : "en"
-    },
-    getPrimaryLanguageId: function() {
-      return (this.language.id === "both") ? this.$i18n.locale : this.language.id
-    },
-    getTitle: function () {
-      return this.titles[this.getPrimaryLanguageId()]
-    },
-    translationAvailableText: function () {
-      return (this.$i18n.locale === 'en') ? this.$t('frAvailable') : this.$t('enAvailable')
-    },
-    getTitleMarked: function () {
-      return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.getTitle()) : this.getTitle()   
-    },
-    getAuthorMarked: function() {
-      return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.author) : this.author   
-    },
-    getOrganizationMarked: function() {
-      return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.organization) : this.organization   
-    },
-    getPublicationMarked: function() {
-      return (this.isTextSearching) ? this.wrapMatchedWithMarkTag(this.publication) : this.publication   
-    },
-    wrapMatchedWithMarkTag: function(text, search = this.searchRegx) {
-      const ot = "<mark>", ct = "</mark>"
-      let textMarked = text, counter = 0, markTagsOffset = (ot + ct).length
-      const textWithoutDiacritics = this.$removeDiacritics(text)
-      
-      textWithoutDiacritics.replace(search, (match, offset) => {
-        let totalOffset = offset + markTagsOffset * counter
-        textMarked = textMarked.substr(0, totalOffset) + ot + 
-          textMarked.substr(totalOffset, match.length) + ct + 
-          textMarked.substr(totalOffset + match.length, textMarked.length -1)
-        counter++
-        return match
-      })
-      
-      return textMarked
-    },
-    getAccreditationHtml: function() {
-      const possibleAccreditations = [this.getAuthorMarked(), this.getOrganizationMarked(), this.getPublicationMarked()],
-      bulletHtml = " <span>&#8226;</span> "
-      let actualAccreditations = [],
-      html = ""
 
-      possibleAccreditations.forEach(pa => {
-        if(pa) actualAccreditations.push(pa)
-        return false
-      })
-
-      actualAccreditations.forEach((aa, index) => {
-        if (index > 0) html += bulletHtml
-        html += aa 
-      })
-
-      return html
-    }
-  },
   computed: {
+    fieldNames() {
+      return apiConsts.resourceFieldNames;
+    },
+    locale() {
+      return this.$i18n.locale;
+    },
+    languageId() {
+      return this.resource[this.fieldNames.languageId][0];
+    },
+    primaryLanguageId() {
+      let id = this.languageId === "BOTH" ? this.locale : this.languageId;
+      return id.toUpperCase();
+    },
+    secondaryLanguageId() {
+      let id = false;
+      if (this.languageId === "BOTH") {
+        id = this.primaryLanguageId === "EN" ? "FR" : "EN";
+      }
+      return id;
+    },
+    primaryTitle() {
+      return this.resource[this.fieldNames.title(this.primaryLanguageId)]
+    },
+    isDocument() {
+      let documentFieldName = this.fieldNames.document(this.primaryLanguageId), 
+        isDoc = false;
+      if (this.resource[documentFieldName]) isDoc = true;
+      return isDoc;
+    },
+    primaryUrl() {
+      let documentUrlField = this.fieldNames.document(this.primaryLanguageId),
+        linkUrlField = this.fieldNames.link(this.primaryLanguageId);
+      return this.isDocument ? this.resource[documentUrlField][0].url : this.resource[linkUrlField];
+    },
+    author() {
+      return this.resource[this.fieldNames.author];
+    },
+    organizations() {
+      let fieldName = this.fieldNames.organizations(this.primaryLanguageId),
+        organizations = [];
+      if (this.hasField(fieldName)) organizations = this.resource[fieldName];
+      return organizations.join(', ');
+    },
+    publication() {
+      let fieldName = this.fieldNames.publication(this.primaryLanguageId),
+        publication = "";
+      if (this.hasField(fieldName)) publication = this.resource[fieldName][0];
+      return publication;
+    },
+    publicationDay() {
+      let fieldName = this.fieldNames.publicationDay,
+        day = false;
+      if (this.hasField(fieldName)) day = this.resource[fieldName];
+      return day;
+    },
+    publicationMonthYear() {
+      return {
+        month: this.resource[this.fieldNames.publicationMonth] - 1,
+        year: this.resource[this.fieldNames.publicationYear]
+      }
+    },
     publicationDateString() {
-      const values = this.publicationDateValues;
-      let isPublicaitonDay = values.hasOwnProperty('day'),
-        dateFormat = { month: 'long', year: 'numeric' },
-        publicationDate = new Date(values.year, values.month);
+      let {year, month} = this.publicationMonthYear, 
+        publicationDate = new Date(year, month),
+        dateFormat = { month: 'long', year: 'numeric' };
 
-      if (isPublicaitonDay) {
+      if (this.publicationDay) {
         dateFormat.day = 'numeric';
-        publicationDate.setDate(values.day);
+        publicationDate.setDate(this.publicationDay);
       }
 
       return new Intl.DateTimeFormat('en-US', dateFormat).format(publicationDate);
     }
-  }
+  },
 
+  methods: {
+    hasField(fieldName) {
+      return this.resource.hasOwnProperty(fieldName);
+    }
+  }
 }
 </script>
 
@@ -190,7 +120,7 @@ li.resource h5 {
   font-size: 18px;
 }
 
-.rTitle {
+.title {
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 5px;
@@ -248,7 +178,7 @@ li.resource h5 {
     margin-left: 8px;
   }
 
-  .rTitle {
+  .title {
     font-size: 25px;
   }
 }
