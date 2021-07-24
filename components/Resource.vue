@@ -16,6 +16,16 @@
     <h5>{{ publication }}</h5>
     <h5>{{ publicationDateString }}</h5>
     <span v-if="notes" v-html="$md.render(notes)" class="notes"></span>
+    <h5>Geographic Scopes</h5>
+    <h5>{{ geographicScope }}</h5>
+    <h5>Content Types</h5>
+    <h6 v-for="contentType in contentTypes" :key="contentType">
+      {{ contentType }} 
+    </h6>
+    <h5>Issues</h5>
+    <h6 v-for="issue in issues" :key="issue">
+      {{ issue }} 
+    </h6>
 
   </li>
 </template>
@@ -123,6 +133,24 @@ export default {
 
       if (this.hasField(fieldName) && this.resource[fieldName].length > 0) notes = this.resource[fieldName];
       return notes;
+    },
+    geographicScope() {
+      let fieldName = this.fieldNames.geographicScope(this.primaryLanguageId),
+        geographicScope = this.resource[fieldName][0];
+
+      return geographicScope;
+    },
+    contentTypes() {
+      let fieldName = this.fieldNames.contentTypes(this.primaryLanguageId),
+        contentTypes = this.resource[fieldName];
+
+      return contentTypes;
+    },
+    issues() {
+      let fieldName = this.fieldNames.issues(this.primaryLanguageId),
+        issues = this.resource[fieldName];
+
+      return issues;
     }
   },
 

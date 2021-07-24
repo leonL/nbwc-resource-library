@@ -19,5 +19,8 @@ export default {
     publicationMonth: 'PUBLICATION MONTH',
     publicationYear: 'PUBLICATION YEAR',
     notes: locale => `NOTES ${locale}`,
+    geographicScope: locale =>  `GEOGRAPHIC SCOPE ${locale}`,
+    contentTypes: locale =>  `CONTENT TYPES ${locale}`,
+    issues: locale =>  `ISSUES ${locale}`
   }
 }
