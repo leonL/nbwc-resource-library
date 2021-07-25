@@ -8,7 +8,8 @@ export default () => ({
   },
   copy: [],
   filters: {
-    searchString: ""
+    searchString: "",
+    searchFields: ['title', 'author', 'organizations', 'publication']
   },
   locale: ''
 })

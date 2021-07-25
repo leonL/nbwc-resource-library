@@ -67,7 +67,7 @@ const resourceFieldParsers = {
     let fieldName = resourceFieldNames.organizations(locale),
       organizations = [];
     if (resource.hasOwnProperty(fieldName)) organizations = resource[fieldName];
-    return organizations;
+    return organizations.join(', ');
   },
   publication: (resource, locale) => {
     let fieldName = resourceFieldNames.publication(locale),

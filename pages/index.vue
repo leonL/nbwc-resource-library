@@ -55,7 +55,7 @@
 <script>
 import Filters from '@/components/Filters.vue';
 import ResourceList from '@/components/ResourceList.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   data () {
@@ -77,6 +77,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(['searchLibrary']),
     pageResources() {
       return this.resources.slice(...this.currentPageIndexRange)
     },
@@ -90,7 +91,7 @@ export default {
     resetFilterModel() {
       this.filterModel = this.filterModelDefaults;
       return true
-    }
+    },
   },
 
   computed: {

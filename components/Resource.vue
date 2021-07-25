@@ -68,7 +68,7 @@ export default {
       return data;
     },
     organizations() {
-      return this.resource[`${this.primaryLanguageId}Organizations`].join(', ');
+      return this.resource[`${this.primaryLanguageId}Organizations`];
     },
     publicationMonthYear() {
       return {
