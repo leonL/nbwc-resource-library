@@ -1,29 +1,29 @@
 <template>
   <li class="resource">
     <h2 class="rTitle">
-      <a :href="primaryUrl" 
-        v-html="primaryTitle"
+      <a :href="linkData.primaryUrl" 
+        v-html="linkData.primaryTitle"
         target="_blank">
       </a>
     </h2>
-    <h5 v-if="translationLanguageId" class="translation-available">
-      <a :href="translationUrl" target="_blank">
-        {{ translationTitle }}
+    <h5 v-if="isTranslation" class="translation-available">
+      <a :href="linkData.translationUrl" target="_blank">
+        {{ linkData.translationTitle }}
       </a>
     </h5>
-    <h5>{{ author }}</h5>
+    <h5>{{ resource.author }}</h5>
     <h5>{{ organizations }}</h5>
-    <h5>{{ publication }}</h5>
+    <h5>{{ resource.publication }}</h5>
     <h5>{{ publicationDateString }}</h5>
     <span v-if="notes" v-html="$md.render(notes)" class="notes"></span>
     <h5>Geographic Scopes</h5>
-    <h5>{{ geographicScope }}</h5>
+    <h5>{{ tags.geographicScope }}</h5>
     <h5>Content Types</h5>
-    <h6 v-for="contentType in contentTypes" :key="contentType">
+    <h6 v-for="contentType in tags.contentTypes" :key="contentType">
       {{ contentType }} 
     </h6>
     <h5>Issues</h5>
-    <h6 v-for="issue in issues" :key="issue">
+    <h6 v-for="issue in tags.issues" :key="issue">
       {{ issue }} 
     </h6>
 
@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import apiConsts from '@/store/apiConstants.js'
 export default {
   name: 'Resource',
 
@@ -41,79 +39,41 @@ export default {
   },
 
   computed: {
-    fieldNames() {
-      return apiConsts.resourceFieldNames;
-    },
     locale() {
       return this.$i18n.locale;
     },
-    languageId() {
-      return this.resource[this.fieldNames.languageId][0];
+    isTranslation() {
+      return this.resource.languageId === 'BOTH';
     },
     primaryLanguageId() {
-      let id = this.languageId === "BOTH" ? this.locale : this.languageId;
-      return id.toUpperCase();
+      let id = this.isTranslation ? this.locale : this.resource.languageId;
+      return id.toLowerCase();
     },
     translationLanguageId() {
-      let id = false;
-      if (this.languageId === "BOTH") {
-        id = this.primaryLanguageId === "EN" ? "FR" : "EN";
+      let id = "";
+      if (this.isTranslation) {
+        id = this.primaryLanguageId === "en" ? "fr" : "en";
       }
       return id;
     },
-    primaryTitle() {
-      return this.resource[this.fieldNames.title(this.primaryLanguageId)]
-    },
-    translationTitle() {
-      let title = false;
-      if (this.translationLanguageId) title = this.resource[this.fieldNames.title(this.translationLanguageId)];
-      return title;
-    },
-    isPdf() {
-      let documentFieldName = this.fieldNames.document(this.primaryLanguageId), 
-        isDoc = false;
-      if (this.resource[documentFieldName]) isDoc = true;
-      return isDoc;
-    },
-    primaryUrl() {
-      let documentField = this.fieldNames.document(this.primaryLanguageId),
-        linkUrlField = this.fieldNames.link(this.primaryLanguageId);
-      return this.isPdf ? this.resource[documentField][0].url : this.resource[linkUrlField];
-    },
-    translationUrl() {
-      let url = false;
-      if (this.translationLanguageId) {
-        let documentField = this.fieldNames.document(this.translationLanguageId),
-          linkUrlField = this.fieldNames.link(this.translationLanguageId);
-        url = this.isPdf ? this.resource[documentField][0].url : this.resource[linkUrlField];
-      } 
-      return url;
-    },
-    author() {
-      return this.resource[this.fieldNames.author];
+    linkData() {
+      let data = {
+        primaryTitle: this.resource[`${this.primaryLanguageId}Title`],
+        primaryUrl: this.resource[`${this.primaryLanguageId}Url`] 
+      }
+      if (this.isTranslation) {
+        data.translationTitle = this.resource[`${this.translationLanguageId}Title`];
+        data.translationUrl = this.resource[`${this.translationLanguageId}Url`];
+      }
+      return data;
     },
     organizations() {
-      let fieldName = this.fieldNames.organizations(this.primaryLanguageId),
-        organizations = [];
-      if (this.hasField(fieldName)) organizations = this.resource[fieldName];
-      return organizations.join(', ');
-    },
-    publication() {
-      let fieldName = this.fieldNames.publication(this.primaryLanguageId),
-        publication = "";
-      if (this.hasField(fieldName)) publication = this.resource[fieldName][0];
-      return publication;
-    },
-    publicationDay() {
-      let fieldName = this.fieldNames.publicationDay,
-        day = false;
-      if (this.hasField(fieldName)) day = this.resource[fieldName];
-      return day;
+      return this.resource[`${this.primaryLanguageId}Organizations`].join(', ');
     },
     publicationMonthYear() {
       return {
-        month: this.resource[this.fieldNames.publicationMonth] - 1,
-        year: this.resource[this.fieldNames.publicationYear]
+        month: this.resource.publicationMonth,
+        year: this.resource.publicationYear
       }
     },
     publicationDateString() {
@@ -121,42 +81,21 @@ export default {
         publicationDate = new Date(year, month),
         dateFormat = { month: 'long', year: 'numeric' };
 
-      if (this.publicationDay) {
+      if (this.resource.publicationDay !== null) {
         dateFormat.day = 'numeric';
-        publicationDate.setDate(this.publicationDay);
+        publicationDate.setDate(this.resource.publicationDay);
       }
       return new Intl.DateTimeFormat('en-US', dateFormat).format(publicationDate);
     },
     notes() {
-      let notes = false,
-        fieldName = this.fieldNames.notes(this.primaryLanguageId);
-
-      if (this.hasField(fieldName) && this.resource[fieldName].length > 0) notes = this.resource[fieldName];
-      return notes;
+      return this.resource[`${this.primaryLanguageId}Notes`];
     },
-    geographicScope() {
-      let fieldName = this.fieldNames.geographicScope(this.primaryLanguageId),
-        geographicScope = this.resource[fieldName][0];
-
-      return geographicScope;
-    },
-    contentTypes() {
-      let fieldName = this.fieldNames.contentTypes(this.primaryLanguageId),
-        contentTypes = this.resource[fieldName];
-
-      return contentTypes;
-    },
-    issues() {
-      let fieldName = this.fieldNames.issues(this.primaryLanguageId),
-        issues = this.resource[fieldName];
-
-      return issues;
-    }
-  },
-
-  methods: {
-    hasField(fieldName) {
-      return this.resource.hasOwnProperty(fieldName);
+    tags() {
+      return {
+        geographicScope: this.resource[`${this.primaryLanguageId}GeographicScope`],
+        contentTypes: this.resource[`${this.primaryLanguageId}ContentTypes`],
+        issues: this.resource[`${this.primaryLanguageId}Issues`]
+      }
     }
   }
 }

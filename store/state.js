@@ -6,5 +6,9 @@ export default () => ({
     contentTypes: [],
     issues: []
   },
-  copy: []
+  copy: [],
+  filters: {
+    searchString: ""
+  },
+  locale: ''
 })

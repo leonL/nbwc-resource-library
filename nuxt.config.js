@@ -29,7 +29,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/helpers.js'
+    '~/plugins/helpers.js',
+    { src: '~/plugins/i18n.js' }
   ],
   /*
   ** Nuxt.js dev-modules

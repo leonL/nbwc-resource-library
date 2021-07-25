@@ -15,8 +15,8 @@
       />
 
       <div class='index'>
-        <b-form-input v-model="searchInputText" :placeholder="$t('searchPlaceholder')" debounce="500" 
-          class="search" :aria-label="$t('searchPlaceholder')"></b-form-input>
+        <b-form-input v-bind:value="searchString" v-on:input="searchLibrary($event)" debounce="500"
+          :placeholder="$t('searchPlaceholder')" class="search" :aria-label="$t('searchPlaceholder')"></b-form-input>
 
         <ResourceList :resources="resources" />
 
@@ -70,9 +70,6 @@ export default {
         issueIds: [],
       },
       filterModel: {},
-      searchInputText: "",
-      upperCaseLocale: this.$i18n.locale.toUpperCase(),
-      paywallTexts: { en: state.copy[0]['HELP:PAYWALL'], fr: state.copy[1]['HELP:PAYWALL'] },
       subtitleTexts: { en: state.copy[0]['HOME:SUBTITLE'], fr: state.copy[1]['HOME:SUBTITLE'] },
       currentPage: 1,
       resourcesPerPage: 10
@@ -80,95 +77,8 @@ export default {
   },
 
   methods: {
-    filterResources() {
-      const model = this.filterModel;
-      let filteredResources = [...this.resources];
-
-      if (model.datePublishedRangePreset !== "anyDate") {
-
-        const currentDate = new Date,
-          currentMonth = currentDate.getMonth(),
-          currentYear = currentDate.getFullYear();
-
-        let presetRange = model.datePublishedRangePreset,
-          customRange = model.customDatePublishedRange,
-          fromDate = null, 
-          toDate = currentDate;        
-
-        if (presetRange === "customDateRange" && customRange !== null) {
-            fromDate = new Date(customRange.from.year, customRange.from.month);
-            toDate = new Date(customRange.to.year, customRange.to.month);
-        } else if (presetRange === "pastMonth") {
-          fromDate = new Date(currentYear, currentMonth - 1);
-        } else if (presetRange === "pastYear") {
-          fromDate = new Date(currentYear - 1, currentMonth)
-        }
-
-        if (fromDate !== null) { // isNull when presetRange == "customDateRange" && customRange === null
-          filteredResources = filteredResources.filter(r => {
-            let publicationDate = this.getPublicationMonth(r);
-            return (publicationDate >= fromDate && publicationDate <= toDate);
-          })
-        }
-      }    
-
-      if (model.languageId !== "BOTH") {
-        filteredResources = filteredResources.filter(r => {
-          const rLangId = r['LANGUAGE ID'][0]
-          return rLangId === "BOTH" || rLangId === model.languageId 
-        })
-      }
-
-      if (model.geographicScopeIds.length) {
-        filteredResources = filteredResources.filter(r => {
-          const rGeoScopeId = r['GEOGRAPHIC SCOPE ID'][0]
-          return model.geographicScopeIds.includes(rGeoScopeId)
-        }) 
-      }
-
-      if (model.contentTypeIds.length) {
-        filteredResources = filteredResources.filter(r => {
-          return r['CONTENT TYPE IDS'].some(id => {
-            return model.contentTypeIds.includes(id)
-          })
-        })
-      }
-
-      if (model.issueIds.length) {
-        filteredResources = filteredResources.filter(r => {
-          return r['ISSUE IDS'].some(id => {
-            return model.issueIds.includes(id)
-          })
-        })
-      }
-
-      if(this.isTextSearching()) {
-        let searchRegx = this.getSearchRegx()
-
-        filteredResources = filteredResources.filter(r => {
-          let titleLanguage = r['LANGUAGE ID'][0]
-          if (titleLanguage === 'BOTH') titleLanguage = this.upperCaseLocale 
-
-          let titleWithoutDiacritics = this.$removeDiacritics(this.getTitle(r, titleLanguage)), 
-          authorWithoutDiacritics = this.$removeDiacritics(this.getAuthor(r)),
-          organizationWithoutDiacritics = this.$removeDiacritics(this.getOrganization(r)),
-          publicationWithoutDiacritics = this.$removeDiacritics(this.getPublication(r)),
-          keyWords = `${titleWithoutDiacritics} ${authorWithoutDiacritics} ${organizationWithoutDiacritics} ${publicationWithoutDiacritics}`
-
-          return searchRegx.test(keyWords)
-        })
-      }     
-
-      return filteredResources
-    },
     pageResources() {
-      return this.filterResources().slice(...this.currentPageIndexRange)
-    },
-    getSearchRegx() {
-      return new RegExp(this.$removeDiacritics(this.searchInputText.trim()), 'gi')
-    },
-    isTextSearching() {
-      return this.searchInputText.trim() ? true : false
+      return this.resources.slice(...this.currentPageIndexRange)
     },
     updateFilterModel(filterType, newfilterValue) {
       let model = this.filterModel;
@@ -184,16 +94,16 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      resources: 'validResources'
-    }),
+    ...mapGetters([
+      'resources', 'searchString', 'searchRegExp'
+    ]),
     currentPageIndexRange() {
       let rangeEnd = this.resourcesPerPage * this.currentPage,
         rangeStart = rangeEnd - this.resourcesPerPage;
       return [rangeStart, rangeEnd];
     },
     totalResourcesCount() {
-      return this.filterResources().length;
+      return this.resources.length;
     },
     pageResorcesCount() {
       return this.pageResources().length;

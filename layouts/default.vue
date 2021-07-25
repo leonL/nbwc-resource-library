@@ -29,6 +29,7 @@
 
 <script>
 import { BIconList } from 'bootstrap-vue'
+
 export default {
   head () {
     return {
@@ -43,6 +44,11 @@ export default {
       return false
     }
   },
+
+  created: function() {
+    this.$store.dispatch('updateLocale', this.$i18n.locale);
+  },
+
   components: {
     BIconList
   }

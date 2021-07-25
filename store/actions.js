@@ -1,4 +1,4 @@
-import apiConsts from "./apiConstants";
+import { url as apiUrl, defaultSearchParams, filterTypeTableNames } from "./apiUtilities";
 
 export default {
   async fetchLibraryResources ({commit}) {
@@ -23,8 +23,8 @@ export default {
 
   async fetchOptionsForFilterType ({commit}, filterType) {
 
-    let tableName = encodeURI(apiConsts.filterTypeTableNames[filterType]),
-      searchParams = apiConsts.defaultSearchParams,
+    let tableName = encodeURI(filterTypeTableNames[filterType]),
+      searchParams = defaultSearchParams,
       optionsJson = await this.api.$get(tableName, { searchParams }),
       options = optionsJson.records.map(r => r.fields);
 
@@ -33,32 +33,40 @@ export default {
   
   async fetchCopy ({commit}) {
     let tableName = 'TEXT',
-      searchParams = apiConsts.defaultSearchParams,
+      searchParams = defaultSearchParams,
       copyJson = await this.api.$get(tableName, {searchParams}),
       copy = copyJson.records.map(r => r.fields);
 
     commit('setCopy', copy);
   },
 
-  async fetchFilterOptions (context) {
+  async fetchFilterOptions ({dispatch}) {
 
     await Promise.all([
-      context.dispatch('fetchOptionsForFilterType', 'languages'),
-      context.dispatch('fetchOptionsForFilterType', 'geographicScopes'),
-      context.dispatch('fetchOptionsForFilterType', 'contentTypes'),
-      context.dispatch('fetchOptionsForFilterType', 'issues')
+      dispatch('fetchOptionsForFilterType', 'languages'),
+      dispatch('fetchOptionsForFilterType', 'geographicScopes'),
+      dispatch('fetchOptionsForFilterType', 'contentTypes'),
+      dispatch('fetchOptionsForFilterType', 'issues')
     ]);
   },
 
   async nuxtServerInit ({dispatch}, _) {
 
     this.$http.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer');
-    this.api = this.$http.create({ prefixUrl: apiConsts.url });
+    this.api = this.$http.create({ prefixUrl: apiUrl });
   
     await Promise.all([
       dispatch('fetchLibraryResources'),
       dispatch('fetchFilterOptions'),
       dispatch('fetchCopy')
     ]);
+  },
+
+  updateLocale ({commit}, locale) {
+    commit('setLocale', locale);
+  },
+
+  searchLibrary ({commit}, searchString) {
+    commit('setSearchString', searchString.trim());
   }
 }
