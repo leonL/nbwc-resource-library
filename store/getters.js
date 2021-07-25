@@ -27,9 +27,17 @@ export default {
 
     return resources;
   },
+
+  filterOptions: state => {
+    return state.filterOptions;
+  },
+
+  filter: state => {
+    return state.filter;
+  },
   
   searchString: state => {
-    return state.filters.searchString;
+    return state.filter.searchString;
   },
 
   searchRegExp: (state, getters) => {
@@ -37,8 +45,8 @@ export default {
     return new RegExp(removeDiacritics(searchString), 'gi');
   },
 
-  searchFields: state => {
-    return state.filters.searchFields;
+  searchFields: _ => {
+    return ['title', 'author', 'organizations', 'publication'];
   },
 
   locale: (state) => {

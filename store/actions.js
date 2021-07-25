@@ -50,10 +50,12 @@ export default {
     ]);
   },
 
-  async nuxtServerInit ({dispatch}, _) {
+  async nuxtServerInit ({dispatch, commit}, _) {
 
     this.$http.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer');
     this.api = this.$http.create({ prefixUrl: apiUrl });
+
+    commit('resetFilterState');
   
     await Promise.all([
       dispatch('fetchLibraryResources'),
@@ -68,5 +70,9 @@ export default {
 
   searchLibrary ({commit}, searchString) {
     commit('setSearchString', searchString.trim());
+  },
+
+  updateFilter ({commit}, {type, value}) {
+    commit('setFilter', {type, value});
   }
 }

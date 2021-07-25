@@ -8,11 +8,7 @@
     </div>
 
     <div class='ui'>
-      <Filters 
-        :defaulstValues="filterModelDefaults"
-        :defaultValues="filterModelDefaults"
-        v-on:newFilterValue="updateFilterModel($event.field, $event.value)" 
-      />
+      <Filters />
 
       <div class='index'>
         <b-form-input v-bind:value="searchString" v-on:input="searchLibrary($event)" debounce="500"
@@ -61,15 +57,6 @@ export default {
   data () {
     const state = this.$store.state
     return {
-      filterModelDefaults: {
-        datePublishedRangePreset: "anyDate",
-        customDatePublishedRange: null,
-        languageId: "BOTH",
-        geographicScopeIds: [],
-        contentTypeIds: [],
-        issueIds: [],
-      },
-      filterModel: {},
       subtitleTexts: { en: state.copy[0]['HOME:SUBTITLE'], fr: state.copy[1]['HOME:SUBTITLE'] },
       currentPage: 1,
       resourcesPerPage: 10
@@ -80,18 +67,7 @@ export default {
     ...mapActions(['searchLibrary']),
     pageResources() {
       return this.resources.slice(...this.currentPageIndexRange)
-    },
-    updateFilterModel(filterType, newfilterValue) {
-      let model = this.filterModel;
-      model[filterType] = newfilterValue;
-      this.currentPage = 1;
-      this.$forceUpdate();
-      return true;
-    },
-    resetFilterModel() {
-      this.filterModel = this.filterModelDefaults;
-      return true
-    },
+    }
   },
 
   computed: {
@@ -109,10 +85,6 @@ export default {
     pageResorcesCount() {
       return this.pageResources().length;
     }
-  },
-
-  created: function() {
-    this.resetFilterModel();
   },
 
   components: {

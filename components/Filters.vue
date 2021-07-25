@@ -13,11 +13,11 @@
       <b-collapse id="datePublishedOptions">
         <RadioButtonFilter 
           :options="optionsHtmlAttrsByFilterType('datePublishedRanges')"
-          :defaultOptionId="'anyDate'"
-          v-on:newValue="newPresetDateRange('datePublishedRangePreset', $event)"
+          :defaultOptionId="filter.datePublishedRangePreset"
+          v-on:newValue="updateFilter({type: 'datePublishedRangePreset', value: $event})"
         />
         <MonthRangeFilter 
-          v-on:newValue="newCustomDateRange('customDatePublishedRange', $event)"
+          v-on:newValue="updateFilter({type: 'customDatePublishedRange', value: $event})"
         />
       </b-collapse>
     </div>
@@ -33,8 +33,8 @@
       <b-collapse id="languageOptions">
         <RadioButtonFilter 
           :options="optionsHtmlAttrsByFilterType('languages')"
-          :defaultOptionId="defaultValues.languageId"
-          v-on:newValue="newFilterValue('languageId', $event)"
+          :defaultOptionId="filter.languageId"
+          v-on:newValue="updateFilter({type: 'languageId', value: $event})"
         />
       </b-collapse>
     </div>
@@ -50,8 +50,8 @@
       <b-collapse id="geographicScopeOptions">
         <CheckboxFilter 
           :options="optionsHtmlAttrsByFilterType('geographicScopes')"
-          :defaultOptionIds="defaultValues.geographicScopeIds"
-          v-on:newValue="newFilterValue('geographicScopeIds', $event)"
+          :defaultOptionIds="filter.geographicScopeIds"
+          v-on:newValue="updateFilter({type: 'geographicScopeIds', value: $event})"
         />
       </b-collapse>
     </div>
@@ -67,8 +67,8 @@
       <b-collapse id="contentTypeOptions">
         <CheckboxFilter 
           :options="optionsHtmlAttrsByFilterType('contentTypes')"
-          :defaultOptionIds="defaultValues.contentTypeIds"
-          v-on:newValue="newFilterValue('contentTypeIds', $event)"
+          :defaultOptionIds="filter.contentTypeIds"
+          v-on:newValue="updateFilter({type: 'contentTypeIds', value: $event})"
         />
       </b-collapse>
     </div>
@@ -84,8 +84,8 @@
       <b-collapse id="issuesOptions">
         <CheckboxFilter 
           :options="optionsHtmlAttrsByFilterType('issues')"
-          :defaultOptionIds="defaultValues.issueIds"
-          v-on:newValue="newFilterValue('issueIds', $event)"
+          :defaultOptionIds="filter.issueIds"
+          v-on:newValue="updateFilter({type: 'issueIds', value: $event})"
         />
       </b-collapse>
     </div>
@@ -94,76 +94,42 @@
 </template>
 
 <script>
-  import CheckboxFilter from './Filters/CheckboxFilter.vue';
-  import RadioButtonFilter from './Filters/RadioButtonFilter.vue';
-  import MonthRangeFilter from './Filters/MonthRangeFilter.vue'
+import CheckboxFilter from './Filters/CheckboxFilter.vue';
+import RadioButtonFilter from './Filters/RadioButtonFilter.vue';
+import MonthRangeFilter from './Filters/MonthRangeFilter.vue';
+import { mapGetters, mapActions } from 'vuex';
 
-  export default {
-    name: 'filters',
-
-    props: {
-      defaultValues: Object
-    },
-    
-    data () {
-      const filterOptions = this.$store.state.filterOptions;
-      return {
-        options: {
-          datePublishedRanges: [
-            { ID: 'anyDate', EN:  'Any', FR: 'Quelconque' },
-            { ID: 'pastMonth', EN:  'Past month', FR: 'Mois passé' },
-            { ID: 'pastYear', EN:  'Past Year', FR: "L'année passée" },
-            { ID: 'customDateRange', EN:  'Custom date range', FR: 'Plage de dates personnalisée' }
-          ],
-          languages: filterOptions['languages'],
-          geographicScopes: filterOptions['geographicScopes'],
-          contentTypes: filterOptions['contentTypes'],
-          issues: filterOptions['issues']
-        },
-        customDateRangeSelected: false,
-        customDateRangeIsValid: false,
-      }
-    },
-
-    methods: {
-      newFilterValue(filterField, newValue) {
-        this.emitNewFilterValueEvent(filterField, newValue);
-      },
-      newPresetDateRange(filterField, newValue) {
-        this.customDateRangeSelected = (newValue === "customDateRange" ? true : false);
-        this.emitNewFilterValueEvent(filterField, newValue);
-      },
-      newCustomDateRange(filterField, newValue) {
-        if (newValue === null) {
-          this.customDateRangeIsValid = false;
-          this.emitNewFilterValueEvent(filterField, null);
-        } else {
-          this.customDateRangeIsValid = true;
-          this.emitNewFilterValueEvent(filterField, newValue);
-        }
-      },
-      emitNewFilterValueEvent(field, value) {
-        this.$emit('newFilterValue', {field: field, value: value} );
-      },
-      optionsHtmlAttrsByFilterType(type) {
-        return this.options[type].map(type => { 
-          return { text: type[this.locale.toUpperCase()], value: type.ID } 
-        });
-      }
-    },
-    
-    computed: {
-      locale: function() {
-        return this.$i18n.locale;
-      }
-    },
-
-    components: {
-      CheckboxFilter,
-      RadioButtonFilter,
-      MonthRangeFilter
+export default {
+  name: 'filters',
+  
+  data () {
+    return {
+      customDateRangeIsValid: false
     }
-  };
+  },
+
+  computed: {
+    ...mapGetters(['filterOptions', 'filter']),
+    locale: function() {
+      return this.$i18n.locale;
+    }
+  },
+
+  methods: {
+    ...mapActions(['updateFilter']),
+    optionsHtmlAttrsByFilterType(type) {
+      return this.filterOptions[type].map(type => { 
+        return { text: type[this.locale.toUpperCase()], value: type.ID } 
+      });
+    }
+  },
+
+  components: {
+    CheckboxFilter,
+    RadioButtonFilter,
+    MonthRangeFilter
+  }
+};
 </script>
 
 <style scoped>
@@ -188,6 +154,4 @@
   .not-collapsed > .chevron.up {
     display: none;
   }
-
-
 </style>

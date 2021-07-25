@@ -62,9 +62,23 @@ export default {
     state.copy = copy;
   },
   setSearchString (state, string) {
-    state.filters.searchString = string;
+    state.filter.searchString = string;
   },
   setLocale (state, locale) {
     state.locale = locale;
+  },
+  resetFilterState (state) {
+    state.filter = {
+      languageId: "BOTH",
+      datePublishedRangePreset: "anyDate",
+      customDatePublishedRange: null,
+      geographicScopeIds: [],
+      contentTypeIds: [],
+      issueIds: [],
+      searchString: ""
+    }
+  },
+  setFilter (state, {type, options}) {
+    state.filter[type] = options;
   }
 }
