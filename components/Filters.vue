@@ -134,6 +134,7 @@ export default {
 
 <style scoped>
   .filters {
+    padding-right: 30px;
     width: 30%;
     /* border: 1px dotted black; */
   }

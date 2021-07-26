@@ -1,20 +1,21 @@
 <template>
   <li class="resource">
-    <h2 class="rTitle">
-      <a :href="linkData.primaryUrl" 
-        v-html="linkData.primaryTitle"
-        target="_blank">
-      </a>
-    </h2>
-    <h5 v-if="isTranslation" class="translation-available">
+    <h1 class="title">
+      <a :href="linkData.primaryUrl" v-html="linkData.primaryTitle" target="_blank"></a>
+    </h1>
+    <div class="accreditation">
+      <div><span v-if="isAuthor">{{ resource.author }} &#8226;</span> {{ organizations }}</div>
+      <div>
+        <span class="publication">{{ publication }}</span> Published {{ publicationDateString }}
+      </div>
+    </div>
+
+
+    <!-- <h5 v-if="isTranslation" class="translation-available">
       <a :href="linkData.translationUrl" target="_blank">
         {{ linkData.translationTitle }}
       </a>
     </h5>
-    <h5>{{ resource.author }}</h5>
-    <h5>{{ organizations }}</h5>
-    <h5>{{ resource.publication }}</h5>
-    <h5>{{ publicationDateString }}</h5>
     <span v-if="notes" v-html="$md.render(notes)" class="notes"></span>
     <h5>Geographic Scopes</h5>
     <h5>{{ tags.geographicScope }}</h5>
@@ -25,7 +26,7 @@
     <h5>Issues</h5>
     <h6 v-for="issue in tags.issues" :key="issue">
       {{ issue }} 
-    </h6>
+    </h6> -->
 
   </li>
 </template>
@@ -96,6 +97,13 @@ export default {
         contentTypes: this.resource[`${this.primaryLanguageId}ContentTypes`],
         issues: this.resource[`${this.primaryLanguageId}Issues`]
       }
+    },
+    publication() {
+      let publication = this.resource[`${this.locale}Publication`];
+      return publication;
+    },
+    isAuthor() {
+      return this.resource.author.length > 0;
     }
   }
 }
@@ -110,15 +118,27 @@ li.resource {
   padding-bottom: 28px;
 }
 
-li.resource h5 {
+.title {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 24px;
+}
+
+.title a {
+  color: var(--primary-color);
+}
+
+.accreditation {
+  color: #767676;
   font-size: 18px;
 }
 
-.title {
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 5px;
-  max-width: 85%;
+.publication {
+  font-style: italic;
+}
+
+li.resource h5 {
+  font-size: 18px;
 }
 
 .notes {
