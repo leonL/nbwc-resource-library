@@ -1,8 +1,10 @@
 <template>
   <li class="resource">
+
     <h1 class="title">
       <a :href="linkData.primaryUrl" v-html="linkData.primaryTitle" target="_blank"></a>
     </h1>
+
     <div class="accreditation">
       <div><span v-if="isAuthor">{{ resource.author }} &#8226;</span> {{ organizations }}</div>
       <div>
@@ -10,24 +12,27 @@
       </div>
     </div>
 
+    <div class="notes" v-if="notes" v-html="$md.render(notes)"></div>
 
-    <!-- <h5 v-if="isTranslation" class="translation-available">
-      <a :href="linkData.translationUrl" target="_blank">
-        {{ linkData.translationTitle }}
-      </a>
-    </h5>
-    <span v-if="notes" v-html="$md.render(notes)" class="notes"></span>
-    <h5>Geographic Scopes</h5>
-    <h5>{{ tags.geographicScope }}</h5>
-    <h5>Content Types</h5>
-    <h6 v-for="contentType in tags.contentTypes" :key="contentType">
-      {{ contentType }} 
-    </h6>
-    <h5>Issues</h5>
-    <h6 v-for="issue in tags.issues" :key="issue">
-      {{ issue }} 
-    </h6> -->
+    <div v-if="isTranslation" class="translation">
+      <span class="available">Available in</span> 
+      <a :href="linkData.translationUrl" target="_blank">{{ translationLanguage }}</a>
+    </div>
 
+    <div class='tags'>
+      <div class='tag-list'>
+        <img class="icon" src="~/assets/globe.png">
+        <div>{{ tags.geographicScope }}</div>
+      </div>
+      <div class='tag-list' v-if="tags.contentTypes.length > 0">
+        <img class="icon" src="~/assets/content-type.png">
+        <div>{{ tags.contentTypes }}</div>
+      </div>
+      <div class='tag-list' v-if="tags.issues.length > 0">
+        <img class="icon" src="~/assets/issues.png">
+        <div>{{ tags.issues }}</div>
+      </div>
+    </div>
   </li>
 </template>
 
@@ -56,6 +61,9 @@ export default {
         id = this.primaryLanguageId === "en" ? "fr" : "en";
       }
       return id;
+    },
+    translationLanguage() {
+      return this.translationLanguageId === "en" ? "English" : "French"; 
     },
     linkData() {
       let data = {
@@ -94,8 +102,8 @@ export default {
     tags() {
       return {
         geographicScope: this.resource[`${this.primaryLanguageId}GeographicScope`],
-        contentTypes: this.resource[`${this.primaryLanguageId}ContentTypes`],
-        issues: this.resource[`${this.primaryLanguageId}Issues`]
+        contentTypes: this.resource[`${this.primaryLanguageId}ContentTypes`].join(', '),
+        issues: this.resource[`${this.primaryLanguageId}Issues`].join(', ')
       }
     },
     publication() {
@@ -115,7 +123,7 @@ li.resource {
   list-style: none;
   border-bottom: 0.9px #979797 solid;
   margin-top: 25px;
-  padding-bottom: 28px;
+  padding-bottom: 10px;
 }
 
 .title {
@@ -126,6 +134,7 @@ li.resource {
 
 .title a {
   color: var(--primary-color);
+  text-decoration: none;
 }
 
 .accreditation {
@@ -137,64 +146,39 @@ li.resource {
   font-style: italic;
 }
 
-li.resource h5 {
+.notes {
+  margin-top: 20px;
   font-size: 18px;
+  color: #000000
 }
 
-.notes {
+.translation {
+  margin-top: 25px;
   font-size: 16px;
-  color: #767676;
+  color: #000000;
+  font-weight: bold;
 }
 
 .tags {
-  margin-top: 18px;
-}
-
-.pills {
-  position: relative;
-  left: -5px;
-  margin-bottom: 5px;
-}
-
-.pills .label {
-  display: inline;
-  margin-right: 20px;
-  color: #767676;
-}
-
-.pills h6 {
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 24.4px;
-  background-color: #e8f8ff;
-  padding: 0 10px;
-  text-align: center;
-  display: inline;
-  margin-right: 10px;
-  line-height: 25px;
+  margin-top: 16px;
   color: #000000;
-  display: inline-block;
 }
 
-.paywall {
-  position: absolute;
-  right: 0;
-  font-weight: bold;
-  background-color: #fed8b1;
-  padding: 5px;
-  color: black;
-  font-size: 14px;
+.tags .icon {
+  width: 17px;
+  height: 17px;
+  margin-right: 5px;
+  position: relative;
+  top: 4px;
+}
+
+.tag-list {
+  display: flex;
 }
 
 @media screen and (max-width: 767px) {
-  .pills .label {
-    margin-right: 0px;
-    margin-left: 8px;
-  }
-
   .title {
-    font-size: 25px;
+    font-size: 20px;
   }
 }
-
 </style>

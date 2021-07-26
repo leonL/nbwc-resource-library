@@ -74,6 +74,7 @@ html {
 
 a {
   color: #3366FF;
+  text-decoration: underline;
 }
 
 body {
