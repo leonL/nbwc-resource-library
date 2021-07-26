@@ -4,7 +4,7 @@
       <h2 class="page-title">
           {{ $t('homeTitle') }} 
       </h2>
-      <h3 class="subtitle" v-html="$md.render(subtitleTexts[$i18n.locale])"></h3>
+      <h3 class="subtitle" v-html="$md.render(subtitle)"></h3>
     </div>
 
     <div class='ui'>
@@ -26,21 +26,15 @@ import ResourceList from '@/components/ResourceList.vue';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  data () {
-    const state = this.$store.state
-    return {
-      subtitleTexts: { en: state.copy[0]['HOME:SUBTITLE'], fr: state.copy[1]['HOME:SUBTITLE'] }
-    }
-  },
-
   methods: {
     ...mapActions(['searchLibrary'])
   },
 
   computed: {
-    ...mapGetters([
-      'resources', 'searchString', 'searchRegExp'
-    ])
+    ...mapGetters(['resources', 'searchString', 'searchRegExp', 'copy']),
+    subtitle() {
+      return this.copy[`${this.$i18n.locale.toLowerCase()}Subtitle`];
+    }
   },
 
   components: {

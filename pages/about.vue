@@ -1,9 +1,9 @@
 <template>
     <div>
-      <div v-html="$md.render(aboutLibrary[$i18n.locale])" class="about library"></div>
+      <div v-html="$md.render(aboutLibrary)" class="about library"></div>
       <div class='double-pane'>
-        <div v-html="$md.render(aboutNBWC[$i18n.locale])" class="about-nbwc"></div>
-        <div v-html="$md.render(aboutOpenCall[$i18n.locale])" class="about-open-call"></div>
+        <div v-html="$md.render(aboutNBWC)" class="about-nbwc"></div>
+        <div v-html="$md.render(aboutOpenCall)" class="about-open-call"></div>
       </div>
       <div class="logos">
         <a :href="$t('nbwcURL')" target="_blank">
@@ -23,16 +23,22 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-  data () {
-    const text = this.$store.state.data.text,
-      enText = text[0], frText = text[1]
-    return {
-      aboutLibrary: { en: enText['ABOUT:LIBRARY'], fr: frText['ABOUT:LIBRARY'] },
-      aboutNBWC: { en: enText['ABOUT:NBWC'], fr: frText['ABOUT:NBWC'] },
-      aboutOpenCall: { en: enText['ABOUT:OPEN CALL'], fr: frText['ABOUT:OPEN CALL'] }
+  computed: {
+    ...mapGetters(['copy']),
+    aboutLibrary() {
+      return this.copy[`${this.$i18n.locale.toLowerCase()}AboutLibrary`];
+    },
+    aboutNBWC() {
+      return this.copy[`${this.$i18n.locale.toLowerCase()}AboutNBWC`];
+    },
+    aboutOpenCall() {
+      return this.copy[`${this.$i18n.locale.toLowerCase()}AboutOpenCall`];
     }
   },
+
   nuxtI18n: {
     paths: {
       en: '/about',

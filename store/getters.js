@@ -34,5 +34,9 @@ export default {
 
   locale: (state) => {
     return state.locale;
-  } 
+  },
+
+  copy: state => {
+    return state.copy;
+  }
 }

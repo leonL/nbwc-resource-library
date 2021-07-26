@@ -56,20 +56,33 @@ export default {
     });
 
     state.library = [...state.library, ...parsedResources];
-
   },
+
   setFilterOptions (state, filter) {
     state.filterOptions[filter.type] = filter.options;
   },
+
   setCopy (state, copy) {
-    state.copy = copy;
+    state.copy = { 
+      enSubtitle: copy[0]['HOME:SUBTITLE'],
+      frSubtitle: copy[1]['HOME:SUBTITLE'],
+      enAboutLibrary: copy[0]['ABOUT:LIBRARY'],
+      frAboutLibrary: copy[1]['ABOUT:LIBRARY'],
+      enAboutNBWC: copy[0]['ABOUT:NBWC'],
+      frAboutNBWC: copy[1]['ABOUT:NBWC'],
+      enAboutOpenCall: copy[0]['ABOUT:OPEN CALL'],
+      frAboutOpenCall: copy[1]['ABOUT:OPEN CALL']
+    }
   },
+
   setSearchString (state, string) {
     state.filter.searchString = string;
   },
+
   setLocale (state, locale) {
     state.locale = locale;
   },
+
   resetFilterState (state) {
     state.filter = {
       languageId: "BOTH",
@@ -81,6 +94,7 @@ export default {
       searchString: ""
     }
   },
+
   setFilter (state, {type, value}) {
     state.filter[type] = value;
   }
