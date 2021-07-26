@@ -4,7 +4,7 @@
       <h2 class="page-title">
           {{ $t('homeTitle') }} 
       </h2>
-      <h3 class="subtitle" v-html="$md.render(subtitleTexts[$i18n.locale])" ></h3>
+      <h3 class="subtitle" v-html="$md.render(subtitleTexts[$i18n.locale])"></h3>
     </div>
 
     <div class='ui'>
@@ -14,35 +14,7 @@
         <b-form-input v-bind:value="searchString" v-on:input="searchLibrary($event)" debounce="500"
           :placeholder="$t('searchPlaceholder')" class="search" :aria-label="$t('searchPlaceholder')"></b-form-input>
 
-        <ResourceList :resources="resources" />
-
-        <client-only>
-          <span v-if="totalResourcesCount > resourcesPerPage" class="resource-count">
-            {{ currentPageIndexRange[0] + 1 }} 
-            &#8211; {{ currentPageIndexRange[0] + pageResorcesCount }}
-            {{ $t('of') }} {{ totalResourcesCount }} {{ $t('results') }}
-          </span>
-          <span v-else-if="totalResourcesCount === 0" class="resource-count zero">
-            {{ $t('noResult') }}
-          </span>
-          <span v-else class="resource-count one-pager">
-            {{ totalResourcesCount }} {{ $t('singlePageResults') }}
-          </span>
-        </client-only>
-        <div v-if="totalResourcesCount > resourcesPerPage" class="pagination-controls">
-          <client-only>
-            <b-pagination
-              v-model="currentPage"
-              :total-rows="totalResourcesCount"
-              :per-page="resourcesPerPage"
-              :hide-goto-end-buttons="true"
-              :hide-ellipsis="true"
-              :pills="true"
-              align="center"
-              aria-controls="resources-list">
-            </b-pagination>
-          </client-only>
-        </div>
+        <ResourceList />
       </div>
     </div>
   </div>
@@ -57,34 +29,18 @@ export default {
   data () {
     const state = this.$store.state
     return {
-      subtitleTexts: { en: state.copy[0]['HOME:SUBTITLE'], fr: state.copy[1]['HOME:SUBTITLE'] },
-      currentPage: 1,
-      resourcesPerPage: 10
+      subtitleTexts: { en: state.copy[0]['HOME:SUBTITLE'], fr: state.copy[1]['HOME:SUBTITLE'] }
     }
   },
 
   methods: {
-    ...mapActions(['searchLibrary']),
-    pageResources() {
-      return this.resources.slice(...this.currentPageIndexRange)
-    }
+    ...mapActions(['searchLibrary'])
   },
 
   computed: {
     ...mapGetters([
       'resources', 'searchString', 'searchRegExp'
-    ]),
-    currentPageIndexRange() {
-      let rangeEnd = this.resourcesPerPage * this.currentPage,
-        rangeStart = rangeEnd - this.resourcesPerPage;
-      return [rangeStart, rangeEnd];
-    },
-    totalResourcesCount() {
-      return this.resources.length;
-    },
-    pageResorcesCount() {
-      return this.pageResources().length;
-    }
+    ])
   },
 
   components: {

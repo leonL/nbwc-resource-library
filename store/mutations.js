@@ -25,7 +25,7 @@ export default {
       return isValid;
     });
 
-    let transformedResources = validResources.map(r => {
+    let parsedResources = validResources.map(r => {
       return {
         languageId: parsers.languageId(r),
         isPdf: isResourcePdf(r),
@@ -55,7 +55,7 @@ export default {
       }
     });
 
-    state.library = [...state.library, ...transformedResources];
+    state.library = [...state.library, ...parsedResources];
 
   },
   setFilterOptions (state, filter) {
