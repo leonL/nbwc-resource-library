@@ -3,6 +3,7 @@
 
     <h1 class="title">
       <a :href="linkData.primaryUrl" v-html="linkData.primaryTitle" target="_blank"></a>
+      <span class="pdf" v-if="resource.isPdf">PDF</span>
     </h1>
 
     <div class="accreditation">
@@ -130,6 +131,17 @@ li.resource {
   font-weight: bold;
   margin-bottom: 5px;
   font-size: 24px;
+}
+
+.title .pdf {
+  font-size: 11px;
+  font-weight: 600;
+  color: #5f5f5f;
+  padding: 2px 5px;
+  border-radius: 11px;
+  background-color: #e2e2e2;
+  position: relative;
+  bottom: 4px;
 }
 
 .title a {
