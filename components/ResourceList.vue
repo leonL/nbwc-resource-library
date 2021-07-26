@@ -74,7 +74,13 @@ export default {
 
   components: {
     Resource
-  }
+  },
+
+  watch: {
+    resources: function () {
+      this.currentPage = 1;
+    }
+  },
 }
 </script>
 
