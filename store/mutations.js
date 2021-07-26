@@ -45,10 +45,13 @@ export default {
         frNotes: parsers.notes(r, 'FR'),
         enGeographicScope: parsers.geographicScope(r, 'EN'),
         frGeographicScope: parsers.geographicScope(r, 'FR'),
+        geographicScopeId: r[fields.geographicScopeId][0],
         enContentTypes: parsers.contentTypes(r, 'EN'),
         frContentTypes: parsers.contentTypes(r, 'FR'),
+        contentTypeIds: r[fields.contentTypeIds],
         enIssues: parsers.issues(r, 'EN'),
-        frIssues: parsers.issues(r, 'FR')
+        frIssues: parsers.issues(r, 'FR'),
+        issueIds: r[fields.issueIds]
       }
     });
 
@@ -78,7 +81,7 @@ export default {
       searchString: ""
     }
   },
-  setFilter (state, {type, options}) {
-    state.filter[type] = options;
+  setFilter (state, {type, value}) {
+    state.filter[type] = value;
   }
 }

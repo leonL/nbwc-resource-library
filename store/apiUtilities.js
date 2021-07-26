@@ -22,8 +22,11 @@ const resourceFieldNames = {
   publicationYear: 'PUBLICATION YEAR',
   notes: locale => `NOTES ${locale}`,
   geographicScope: locale =>  `GEOGRAPHIC SCOPE ${locale}`,
+  geographicScopeId: 'GEOGRAPHIC SCOPE ID',
   contentTypes: locale =>  `CONTENT TYPES ${locale}`,
-  issues: locale =>  `ISSUES ${locale}`
+  contentTypeIds: 'CONTENT TYPE IDS',
+  issues: locale =>  `ISSUES ${locale}`,
+  issueIds: 'ISSUE IDS'
 };
 
 const resourceValidators = {

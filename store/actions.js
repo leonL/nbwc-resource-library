@@ -73,6 +73,9 @@ export default {
   },
 
   updateFilter ({commit}, {type, value}) {
+    if (type === 'customDatePublishedRange' && value !== null) {
+      value = { from: value.from, to: value.to }
+    }
     commit('setFilter', {type, value});
   }
 }

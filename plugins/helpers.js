@@ -6,7 +6,7 @@ const removeDiacritics = str => {
 
 const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1);
 
-const tagMatchedText = (text, regEx) => {
+const tagMatchingSubstrs = (text, regEx) => {
   const ot = "<mark>", ct = "</mark>", 
     textWithoutDiacritics = removeDiacritics(text)
   let textMarked = text, counter = 0, markTagsOffset = (ot + ct).length;
@@ -25,4 +25,4 @@ const tagMatchedText = (text, regEx) => {
 
 Vue.prototype.$removeDiacritics = removeDiacritics;
 
-export { removeDiacritics, capitalize, tagMatchedText };
+export { removeDiacritics, capitalize, tagMatchingSubstrs };
