@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class='titles'>
-      <h2 class="title">
+      <h1 class="title">
           {{ $t('homeTitle') }} 
-      </h2>
+      </h1>
       <h3 class="subtitle" v-html="$md.render(subtitle)"></h3>
     </div>
 

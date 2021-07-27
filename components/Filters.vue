@@ -1,10 +1,11 @@
 <template>
-  <div class='filters'>
-    <h5>{{ $t('filters') }}</h5>
+  <div class="filters">
+    <h1 class="title main">{{ $t('filters') }}</h1>
 
     <div class='date-published filter'>
       <div v-b-toggle.datePublishedOptions class='toggle'>
-        <h5>{{ $t('datePublished') }}</h5>
+        <img class="icon calendar" src="~/assets/calendar.png">
+        <h2 class='title'>{{ $t('datePublished') }}</h2>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -24,7 +25,8 @@
 
     <div class="language filter">
       <div v-b-toggle.languageOptions class='toggle'>
-        <h5>{{ $t('language') }}</h5>
+        <img class="icon" src="~/assets/language.png">
+        <h2 class='title'>{{ $t('language') }}</h2>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -41,7 +43,8 @@
 
     <div class="geographic-scopes filter">
       <div v-b-toggle.geographicScopeOptions class='toggle'>
-        <h5>{{ $t('geographicScope') }}</h5>
+        <img class="globe icon" src="~/assets/globe.png">
+        <h2 class='title'>{{ $t('geographicScope') }}</h2>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -58,7 +61,8 @@
 
     <div class="content-types filter">
       <div v-b-toggle.contentTypeOptions class='toggle'>
-        <h5>{{ $t('contentTypesFilter')}}</h5>
+        <img class="icon" src="~/assets/content-type.png">
+        <h2 class='title'>{{ $t('contentTypesFilter')}}</h2>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -75,7 +79,8 @@
 
     <div class="issues filter">
       <div v-b-toggle.issuesOptions class='toggle'>
-        <h5>{{ $t('issuesFilter') }}</h5>
+        <img class="icon" src="~/assets/issues.png">
+        <h2 class='title'>{{ $t('issuesFilter') }}</h2>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -133,26 +138,55 @@ export default {
 </script>
 
 <style scoped>
-  .filters {
-    padding-right: 30px;
-    width: 30%;
-    /* border: 1px dotted black; */
-  }
+.filters {
+  padding-right: 30px;
+  width: 30%;
+}
 
-  .toggle {
-    position: relative;
-    /* border: 1px dotted orange; */
-  }
+.title {
+  font-weight: bold;
+  color: #000000;
+}
 
-  .chevron {
-    position: absolute;
-    top: 0;
-    right: 10px;
-    /* border: 1px dotted blue; */
-  }
+.title.main {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
 
-  .collapsed > .chevron.down,
-  .not-collapsed > .chevron.up {
-    display: none;
-  }
+.filter .title {
+  font-size: 18px;
+}
+
+.toggle {
+  position: relative;
+  /* border: 1px solid red; */
+}
+
+.toggle .icon {
+  float: left;
+  margin-right: 5px;
+  position: relative;
+  top: 2px;
+}
+
+.icon.calendar {
+  top: 0;
+}
+
+.icon.globe {
+  width: 19px;
+  height: 19px;
+  top: 1px;
+}
+
+.chevron {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+
+.collapsed > .chevron.down,
+.not-collapsed > .chevron.up {
+  display: none;
+}
 </style>
