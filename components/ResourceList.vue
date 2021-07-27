@@ -85,5 +85,13 @@ export default {
 </script>
 
 <style scoped>
+.resource-count {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.resources {
+  padding: 0;
+}
 
 </style>

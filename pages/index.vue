@@ -1,13 +1,13 @@
 <template>
-  <div class='library'>
+  <div>
     <div class='titles'>
-      <h2 class="page-title">
+      <h2 class="title">
           {{ $t('homeTitle') }} 
       </h2>
       <h3 class="subtitle" v-html="$md.render(subtitle)"></h3>
     </div>
 
-    <div class='ui'>
+    <div class='library'>
       <Filters />
 
       <div class='index'>
@@ -44,68 +44,33 @@ export default {
 }
 </script>
 
-<style>
-.ui {
+<style scoped>
+.library {
   display: flex;
 }
 
 .index {
   width: 70%;
-  /* border: 1px solid red; */
 }
 
-.subtitle {
-  font-size: 24px;
-  color: #767676;
-  margin-bottom: 65px;
+.titles {
+  margin-bottom: 20px;
 }
 
-input.search {
-  margin-top: 0.5rem;
-  max-width: 500px;
-}
-
-.filter-controls {
-  margin-bottom: 15px;
-}
-
-.clear-filters {
-  margin-left: 10px;
-  text-decoration: underline;
-  color: #000000;
-}
-
-.clear-filters:hover {
-  cursor: pointer;
-}
-
-.resource-count {
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.resources {
-  padding: 0;
-  position: relative;
-}
-
-ul.resources li:first-child {
-  margin-top: 10px;
-}
-
-mark {
-  padding: 0px;
-}
-
-.page-title {
+.title {
   font-size: 48px;
   font-weight: bold;
   color: #000000;
   margin-bottom: 15px;
 }
 
+.subtitle {
+  font-size: 24px;
+  color: #767676;
+}
+
 @media screen and (max-width: 767px) {
-  .page-title {
+  .title {
     font-size: 25px;
   }
 

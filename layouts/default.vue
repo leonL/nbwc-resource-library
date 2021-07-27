@@ -92,7 +92,7 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 60px;
+  margin-bottom: 10px;
 }
 
 .links {
@@ -120,6 +120,10 @@ body {
   padding: 5px 10px;
   color: #ffffff;
   text-decoration: none;
+}
+
+mark {
+  padding: 0px;
 }
 
 .logo {
