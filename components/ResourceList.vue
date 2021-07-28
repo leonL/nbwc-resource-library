@@ -86,8 +86,9 @@ export default {
 
 <style scoped>
 .resource-count {
-  font-size: 15px;
-  font-weight: 600;
+  margin-left: 3px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .resources {

@@ -141,7 +141,7 @@ export default {
 
 <style>
 .filters {
-  padding-right: 30px;
+  padding-right: 10px;
   width: 30%;
 }
 
@@ -187,7 +187,7 @@ export default {
 
 .chevron {
   position: absolute;
-  top: 0;
+  bottom: 1px;
   right: 10px;
 }
 
