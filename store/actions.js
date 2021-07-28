@@ -77,5 +77,9 @@ export default {
       value = { from: value.from, to: value.to }
     }
     commit('setFilter', {type, value});
+  },
+
+  resetFilter ({commit}) {
+    commit('resetFilterState');
   }
 }

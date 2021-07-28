@@ -2,10 +2,12 @@
   <div class="filters">
     <h1 class="title main">{{ $t('filters') }}</h1>
 
+    <b-button class='clear' variant="link" v-on:click="resetFilter()">{{ $t('clearFilters') }}</b-button>
+
     <div class='date-published filter'>
       <div v-b-toggle.datePublishedOptions class='toggle'>
         <img class="icon calendar" src="~/assets/calendar.png">
-        <h2 class='title'>{{ $t('datePublished') }}</h2>
+        <h2 class='heading'>{{ $t('datePublished') }}</h2>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -26,7 +28,7 @@
     <div class="language filter">
       <div v-b-toggle.languageOptions class='toggle'>
         <img class="icon" src="~/assets/language.png">
-        <h2 class='title'>{{ $t('language') }}</h2>
+        <h2 class='heading'>{{ $t('language') }}</h2>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -44,7 +46,7 @@
     <div class="geographic-scopes filter">
       <div v-b-toggle.geographicScopeOptions class='toggle'>
         <img class="globe icon" src="~/assets/globe.png">
-        <h2 class='title'>{{ $t('geographicScope') }}</h2>
+        <h2 class='heading'>{{ $t('geographicScope') }}</h2>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -62,7 +64,7 @@
     <div class="content-types filter">
       <div v-b-toggle.contentTypeOptions class='toggle'>
         <img class="icon" src="~/assets/content-type.png">
-        <h2 class='title'>{{ $t('contentTypesFilter')}}</h2>
+        <h2 class='heading'>{{ $t('contentTypesFilter')}}</h2>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -80,7 +82,7 @@
     <div class="issues filter">
       <div v-b-toggle.issuesOptions class='toggle'>
         <img class="icon" src="~/assets/issues.png">
-        <h2 class='title'>{{ $t('issuesFilter') }}</h2>
+        <h2 class='heading'>{{ $t('issuesFilter') }}</h2>
         <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         <client-only>
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
@@ -121,7 +123,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['updateFilter']),
+    ...mapActions(['updateFilter', 'resetFilter']),
     optionsHtmlAttrsByFilterType(type) {
       return this.filterOptions[type].map(type => { 
         return { text: type[this.locale.toUpperCase()], value: type.ID } 
@@ -146,14 +148,19 @@ export default {
 .title {
   font-weight: bold;
   color: #000000;
-}
-
-.title.main {
   font-size: 24px;
-  margin-bottom: 10px;
 }
 
-.filter .title {
+.clear {
+  font-size: 20px;
+  color: #000000;
+  padding: 0;
+  text-decoration: underline;
+  margin-bottom: 20px;
+
+}
+
+.heading {
   font-size: 18px;
 }
 
