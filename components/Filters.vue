@@ -137,7 +137,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .filters {
   padding-right: 30px;
   width: 30%;
@@ -184,6 +184,11 @@ export default {
   right: 10px;
 }
 
+.chevron svg {
+  stroke: black;
+  stroke-width: 2;
+}
+
 .collapsed > .chevron.down,
 .not-collapsed > .chevron.up {
   display: none;
@@ -191,5 +196,10 @@ export default {
 
 .options {
   margin: 15px 0;
+}
+
+.options label {
+  font-size: 18px;
+  color: #000000;
 }
 </style>
