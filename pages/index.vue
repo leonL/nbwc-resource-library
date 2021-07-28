@@ -73,6 +73,7 @@ export default {
 
 input.search {
   padding-left: 35px;
+  margin-bottom: 5px;
 }
 
 .search.icon {
