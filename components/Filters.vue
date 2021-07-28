@@ -11,7 +11,7 @@
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         </client-only>
       </div>
-      <b-collapse id="datePublishedOptions">
+      <b-collapse id="datePublishedOptions" class="options">
         <RadioButtonFilter 
           :options="optionsHtmlAttrsByFilterType('datePublishedRanges')"
           :defaultOptionId="filter.datePublishedRangePreset"
@@ -32,7 +32,7 @@
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         </client-only>
       </div>
-      <b-collapse id="languageOptions">
+      <b-collapse id="languageOptions" class="options">
         <RadioButtonFilter 
           :options="optionsHtmlAttrsByFilterType('languages')"
           :defaultOptionId="filter.languageId"
@@ -50,7 +50,7 @@
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         </client-only>
       </div>
-      <b-collapse id="geographicScopeOptions">
+      <b-collapse id="geographicScopeOptions" class="options">
         <CheckboxFilter 
           :options="optionsHtmlAttrsByFilterType('geographicScopes')"
           :defaultOptionIds="filter.geographicScopeIds"
@@ -68,7 +68,7 @@
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         </client-only>
       </div>
-      <b-collapse id="contentTypeOptions">
+      <b-collapse id="contentTypeOptions" class="options">
         <CheckboxFilter 
           :options="optionsHtmlAttrsByFilterType('contentTypes')"
           :defaultOptionIds="filter.contentTypeIds"
@@ -86,7 +86,7 @@
           <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         </client-only>
       </div>
-      <b-collapse id="issuesOptions">
+      <b-collapse id="issuesOptions" class="options">
         <CheckboxFilter 
           :options="optionsHtmlAttrsByFilterType('issues')"
           :defaultOptionIds="filter.issueIds"
@@ -159,7 +159,6 @@ export default {
 
 .toggle {
   position: relative;
-  /* border: 1px solid red; */
 }
 
 .toggle .icon {
@@ -188,5 +187,9 @@ export default {
 .collapsed > .chevron.down,
 .not-collapsed > .chevron.up {
   display: none;
+}
+
+.options {
+  margin: 15px 0;
 }
 </style>

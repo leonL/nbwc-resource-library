@@ -58,3 +58,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.month-range {
+  position: relative;
+  margin: -15px 0 0 30px;
+}
+</style>

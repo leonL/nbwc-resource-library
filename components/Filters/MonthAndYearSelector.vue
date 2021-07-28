@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="month-year-inputs">
     <span class='label'>{{ label }}</span>
     <b-form-select v-model="monthSelected" :options="monthOptions"></b-form-select>
     <b-form-select v-model="yearSelected" :options="yearOptions"></b-form-select>
@@ -79,13 +79,23 @@
 </script>
 
 <style scoped>
+  .month-year-inputs {
+    display: flex;
+    align-items: center;
+  }
+
   .label {
     font-size: 14px;
+    text-align: right;
+    font-size: 14px;
+    color: #000000;
+    margin-right: 5px;
+    min-width: 35px;
   }
 
   select {
+    flex-grow: 1;
     display: inline;
-    width: 35%;
     font-size: 10px;
   }
 </style>

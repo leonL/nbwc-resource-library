@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="radios">
     <b-form-radio v-for="(option) in options" :key="option.value" :value="option.value" v-model="selectedOptionId" class="mb-3">
       {{ option.text }}
     </b-form-radio>      
@@ -34,5 +34,7 @@ export default {
 </script>
 
 <style scoped>
-
+.radios {
+  margin-left: 5px;
+}
 </style>

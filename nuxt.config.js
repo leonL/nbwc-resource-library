@@ -94,8 +94,8 @@ export default {
           of: 'of',
           from: 'From',
           to: 'To',
-          month: 'month',
-          year: 'year'
+          month: 'Month',
+          year: 'Year'
         },
         fr: {
           home: 'Accueil',
@@ -124,8 +124,8 @@ export default {
           of: 'de',
           from: 'De',
           to: 'À',
-          month: 'mois',
-          year: 'an'
+          month: 'Mois',
+          year: 'An'
         }
       }
     }
