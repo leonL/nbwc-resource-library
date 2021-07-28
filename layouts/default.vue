@@ -116,7 +116,7 @@ body {
 
 .links a.nuxt-link-exact-active.localeToggle {
   border-radius: 27px;
-  background-color: #3366FF;
+  background-color: var(--primary-color);
   padding: 5px 10px;
   color: #ffffff;
   text-decoration: none;

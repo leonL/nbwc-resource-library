@@ -60,7 +60,7 @@ export default {
 .title {
   font-size: 48px;
   font-weight: bold;
-  color: #000000;
+  color: var(--primary-color);
   margin-bottom: 10px;
 }
 
