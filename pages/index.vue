@@ -54,14 +54,14 @@ export default {
 }
 
 .titles {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .title {
   font-size: 48px;
   font-weight: bold;
   color: #000000;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .subtitle {
