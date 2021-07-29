@@ -14,9 +14,7 @@
         </client-only>
       </div>
       <b-collapse id="datePublishedOptions" class="options">
-        <RadioButtonFilter 
-          :type="'datePublishedRangePresetId'"
-        />
+        <RadioButtonFilter :type="'datePublishedRangePresetId'" />
         <MonthRangeFilter 
           v-on:newValue="updateFilter({type: 'customDatePublishedRange', value: $event})"
         />
@@ -39,7 +37,7 @@
       </b-collapse>
     </div>
 
-    <!-- <div class="geographic-scopes filter">
+    <div class="geographic-scopes filter">
       <div v-b-toggle.geographicScopeOptions class='toggle'>
         <img class="globe icon" src="~/assets/globe.png">
         <h2 class='heading'>{{ $t('geographicScope') }}</h2>
@@ -49,11 +47,7 @@
         </client-only>
       </div>
       <b-collapse id="geographicScopeOptions" class="options">
-        <CheckboxFilter 
-          :options="optionsHtmlAttrsByFilterType('geographicScopes')"
-          :defaultOptionIds="filter.geographicScopeIds"
-          v-on:newValue="updateFilter({type: 'geographicScopeIds', value: $event})"
-        />
+        <CheckboxFilter :type="'geographicScopeIds'" />
       </b-collapse>
     </div>
 
@@ -67,11 +61,7 @@
         </client-only>
       </div>
       <b-collapse id="contentTypeOptions" class="options">
-        <CheckboxFilter 
-          :options="optionsHtmlAttrsByFilterType('contentTypes')"
-          :defaultOptionIds="filter.contentTypeIds"
-          v-on:newValue="updateFilter({type: 'contentTypeIds', value: $event})"
-        />
+        <CheckboxFilter :type="'contentTypeIds'" />
       </b-collapse>
     </div>
 
@@ -85,13 +75,9 @@
         </client-only>
       </div>
       <b-collapse id="issuesOptions" class="options">
-        <CheckboxFilter 
-          :options="optionsHtmlAttrsByFilterType('issues')"
-          :defaultOptionIds="filter.issueIds"
-          v-on:newValue="updateFilter({type: 'issueIds', value: $event})"
-        />
+        <CheckboxFilter :type="'issueIds'" />
       </b-collapse>
-    </div> -->
+    </div>
 
   </div>
 </template>
