@@ -86,31 +86,13 @@
 import CheckboxFilter from './Filters/CheckboxFilter.vue';
 import RadioButtonFilter from './Filters/RadioButtonFilter.vue';
 import MonthRangeFilter from './Filters/MonthRangeFilter.vue';
-import { mapGetters, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'filters',
   
-  data () {
-    return {
-      customDateRangeIsValid: false
-    }
-  },
-
-  computed: {
-    ...mapGetters(['filterOptions', 'filter']),
-    locale: function() {
-      return this.$i18n.locale;
-    }
-  },
-
   methods: {
-    ...mapActions(['updateFilter', 'resetFilter']),
-    optionsHtmlAttrsByFilterType(type) {
-      return this.filterOptions[type].map(type => { 
-        return { text: type[this.locale.toUpperCase()], value: type.ID } 
-      });
-    }
+    ...mapActions(['updateFilter', 'resetFilter'])
   },
 
   components: {
@@ -118,7 +100,7 @@ export default {
     RadioButtonFilter,
     MonthRangeFilter
   }
-};
+}
 </script>
 
 <style>
