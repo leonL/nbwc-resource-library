@@ -78,7 +78,7 @@ const filterByIssue = (resources, {issueIds}) => {
   return filteredResources;
 }
 
-const filterBySearchString = (resources, {searchString}, searchRegExp, locale) => {
+const filterBySearchString = (resources, searchString, searchRegExp, locale) => {
   let filteredResources = resources;
   if (searchString.trim().length > 0) {
       

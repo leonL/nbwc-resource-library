@@ -9,6 +9,7 @@ export default () => ({
     ]
   },
   filter: {},
+  searchString: "",
   copy: [],
   locale: ''
 })

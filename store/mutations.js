@@ -77,18 +77,11 @@ export default {
   },
 
   setSearchString (state, string) {
-    state.filter.searchString = string;
+    state.searchString = string;
   },
 
   setLocale (state, locale) {
     state.locale = locale;
-  },
-
-  initializeFilters (state) {
-    state.filter = {
-      ...defaultFilterValues,
-      searchString: ""
-    }
   },
 
   setFilter (state, {type, value}) {
@@ -96,9 +89,6 @@ export default {
   },
 
   resetFilterValues (state) {
-    state.filter = {
-    ...defaultFilterValues,  
-    searchString: state.filter.searchString
-    }
+    state.filter = defaultFilterValues;
   }
 }
