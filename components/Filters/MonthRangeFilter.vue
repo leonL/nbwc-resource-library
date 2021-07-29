@@ -13,35 +13,22 @@
 
 <script>
 import MonthAndYearSelector from './MonthAndYearSelector.vue';
+import { mapActions } from 'vuex';
+
 
 export default {
   name: 'MonthRangeFilter',
 
   data() {
     return {
-      monthRange: {
-        from: null,
-        to: null
-      }
+      monthRange: { from: null, to: null }
     };
   },
 
-  methods: {
-    newDateValue(rangeSegment, value) {
-      this.monthRange[rangeSegment] = value; 
-
-      if (this.isRangeValid()) {
-        this.emitNewValue(this.monthRange);
-      } else {
-        this.emitNewValue(null);
-      }
-    },
-    emitNewValue(value) {
-      this.$emit('newValue', value);
-    },
+  computed: {
     isRangeValid() {
-      const r = this.monthRange;
-      let isValid = false;
+      let r = this.monthRange, isValid = false;
+
       if (r.from === null || r.to === null) {
         isValid = false;
       } else if ( new Date(r.from.year, r.from.month) > new Date(r.to.year, r.to.month) ) {
@@ -50,6 +37,17 @@ export default {
         isValid = true;
       }
       return isValid;
+    }
+  },
+
+  methods: {
+    ...mapActions(['updateFilter']),
+    newDateValue(rangeSegment, value) {
+      this.monthRange[rangeSegment] = value;
+      let monthRangeValue = this.isRangeValid ? Object.assign({}, this.monthRange) : null,
+        filterUpdateParams = {type: 'customDatePublishedRange', value: monthRangeValue};
+
+      this.updateFilter(filterUpdateParams);
     }
   },
 
