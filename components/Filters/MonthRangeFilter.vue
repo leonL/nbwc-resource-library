@@ -60,6 +60,6 @@ export default {
 <style>
 .month-range {
   position: relative;
-  margin: -10px 0 0 30px;
+  margin: -10px 35px 0 20px;
 }
 </style>

@@ -78,9 +78,8 @@ export default {
 }
 
 .label {
-  font-size: 14px;
   text-align: right;
-  font-size: 14px;
+  font-size: 12px;
   color: #000000;
   margin-right: 5px;
   min-width: 35px;
