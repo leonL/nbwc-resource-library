@@ -1,6 +1,7 @@
 import { isResourcePdf, resourceFieldNames as fields, 
   resourceFieldParsers as parsers, 
   resourceValidators as validators } from "./apiUtilities";
+import { defaultFilterValues } from "./resousrceFilterUtilities";
 
 export default {
   addResourcesToLibrary (state, resources) {
@@ -83,19 +84,21 @@ export default {
     state.locale = locale;
   },
 
-  resetFilterState (state) {
+  initializeFilters (state) {
     state.filter = {
-      languageId: "BOTH",
-      datePublishedRangePresetId: "anyDate",
-      customDatePublishedRange: null,
-      geographicScopeIds: [],
-      contentTypeIds: [],
-      issueIds: [],
+      ...defaultFilterValues,
       searchString: ""
     }
   },
 
   setFilter (state, {type, value}) {
     state.filter[type] = value;
+  },
+
+  resetFilterValues (state) {
+    state.filter = {
+    ...defaultFilterValues,  
+    searchString: state.filter.searchString
+    }
   }
 }

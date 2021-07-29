@@ -55,7 +55,7 @@ export default {
     this.$http.setToken(process.env.NBWC_AIRTABLE_API_KEY, 'Bearer');
     this.api = this.$http.create({ prefixUrl: apiUrl });
 
-    commit('resetFilterState');
+    commit('initializeFilters');
   
     await Promise.all([
       dispatch('fetchLibraryResources'),
@@ -76,7 +76,7 @@ export default {
     commit('setFilter', {type, value});
   },
 
-  resetFilter ({commit}) {
-    commit('resetFilterState');
+  clearFilters ({commit}) {
+    commit('resetFilterValues');
   }
 }

@@ -103,5 +103,14 @@ const filterBySearchString = (resources, {searchString}, searchRegExp, locale) =
   return filteredResources;
 }
 
+const defaultFilterValues = {
+  languageId: "BOTH",
+  datePublishedRangePresetId: "anyDate",
+  customDatePublishedRange: null,
+  geographicScopeIds: [],
+  contentTypeIds: [],
+  issueIds: []
+}
+
 export { filterByDatePublished, filterByLanguage, filterByGeographicScope, 
-  filterByContentType, filterByIssue, filterBySearchString };
+  filterByContentType, filterByIssue, filterBySearchString, defaultFilterValues };

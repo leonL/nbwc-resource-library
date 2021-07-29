@@ -2,7 +2,7 @@
   <div class="filters">
     <h1 class="title main">{{ $t('filters') }}</h1>
 
-    <b-button class='clear' variant="link" v-on:click="resetFilter()">{{ $t('clearFilters') }}</b-button>
+    <b-button class='clear' variant="link" v-on:click="clearFilters()">{{ $t('clearFilters') }}</b-button>
 
     <div class='date-published filter'>
       <div v-b-toggle.datePublishedOptions class='toggle'>
@@ -92,7 +92,7 @@ export default {
   name: 'filters',
   
   methods: {
-    ...mapActions(['updateFilter', 'resetFilter'])
+    ...mapActions(['updateFilter', 'clearFilters'])
   },
 
   components: {
