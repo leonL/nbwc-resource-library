@@ -4,6 +4,12 @@ const removeDiacritics = str => {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
+const mapFilterOptionsToHtmlAttrs = (options, locale) => {
+  return options.map(option => { 
+    return { text: option[locale.toUpperCase()], value: option.ID } 
+  });
+}
+
 const capitalize = string => string.charAt(0).toUpperCase() + string.slice(1);
 
 const tagMatchingSubstrs = (text, regEx) => {
@@ -24,5 +30,6 @@ const tagMatchingSubstrs = (text, regEx) => {
 }
 
 Vue.prototype.$removeDiacritics = removeDiacritics;
+Vue.prototype.$mapFilterOptionsToHtmlAttrs = mapFilterOptionsToHtmlAttrs;
 
 export { removeDiacritics, capitalize, tagMatchingSubstrs };

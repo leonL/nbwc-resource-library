@@ -1,7 +1,7 @@
 export default () => ({
   library: [],
   filterOptions: {
-    datePublishedRanges: [
+    datePublishedRangePresetId: [
       { ID: 'anyDate', EN:  'Any', FR: 'Quelconque' },
       { ID: 'pastMonth', EN:  'Past month', FR: 'Mois passé' },
       { ID: 'pastYear', EN:  'Past Year', FR: "L'année passée" },

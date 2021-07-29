@@ -3,10 +3,10 @@ const url = 'https://api.airtable.com/v0/appxlBEhiWnssKkbm';
 const defaultSearchParams = [['view', 'ALL RECORDS']]; 
 
 const filterTypeTableNames = { 
-  languages: 'LANGUAGES',
-  geographicScopes: 'GEOGRAPHIC SCOPES',
-  contentTypes: 'CONTENT TYPES',
-  issues: 'ISSUES'
+  languageId: 'LANGUAGES',
+  geographicScopeIds: 'GEOGRAPHIC SCOPES',
+  contentTypeIds: 'CONTENT TYPES',
+  issueIds: 'ISSUES'
 };
 
 const resourceFieldNames = {

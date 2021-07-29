@@ -43,10 +43,10 @@ export default {
   async fetchFilterOptions ({dispatch}) {
 
     await Promise.all([
-      dispatch('fetchOptionsForFilterType', 'languages'),
-      dispatch('fetchOptionsForFilterType', 'geographicScopes'),
-      dispatch('fetchOptionsForFilterType', 'contentTypes'),
-      dispatch('fetchOptionsForFilterType', 'issues')
+      dispatch('fetchOptionsForFilterType', 'languageId'),
+      dispatch('fetchOptionsForFilterType', 'geographicScopeIds'),
+      dispatch('fetchOptionsForFilterType', 'contentTypeIds'),
+      dispatch('fetchOptionsForFilterType', 'issueIds')
     ]);
   },
 

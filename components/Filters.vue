@@ -15,9 +15,7 @@
       </div>
       <b-collapse id="datePublishedOptions" class="options">
         <RadioButtonFilter 
-          :options="optionsHtmlAttrsByFilterType('datePublishedRanges')"
-          :defaultOptionId="filter.datePublishedRangePreset"
-          v-on:newValue="updateFilter({type: 'datePublishedRangePreset', value: $event})"
+          :type="'datePublishedRangePresetId'"
         />
         <MonthRangeFilter 
           v-on:newValue="updateFilter({type: 'customDatePublishedRange', value: $event})"
@@ -36,14 +34,12 @@
       </div>
       <b-collapse id="languageOptions" class="options">
         <RadioButtonFilter 
-          :options="optionsHtmlAttrsByFilterType('languages')"
-          :defaultOptionId="filter.languageId"
-          v-on:newValue="updateFilter({type: 'languageId', value: $event})"
+          :type="'languageId'"
         />
       </b-collapse>
     </div>
 
-    <div class="geographic-scopes filter">
+    <!-- <div class="geographic-scopes filter">
       <div v-b-toggle.geographicScopeOptions class='toggle'>
         <img class="globe icon" src="~/assets/globe.png">
         <h2 class='heading'>{{ $t('geographicScope') }}</h2>
@@ -95,7 +91,7 @@
           v-on:newValue="updateFilter({type: 'issueIds', value: $event})"
         />
       </b-collapse>
-    </div>
+    </div> -->
 
   </div>
 </template>

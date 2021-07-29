@@ -86,7 +86,7 @@ export default {
   resetFilterState (state) {
     state.filter = {
       languageId: "BOTH",
-      datePublishedRangePreset: "anyDate",
+      datePublishedRangePresetId: "anyDate",
       customDatePublishedRange: null,
       geographicScopeIds: [],
       contentTypeIds: [],

@@ -1,13 +1,13 @@
 import { removeDiacritics, capitalize, tagMatchingSubstrs } from "~/plugins/helpers"; 
 
-const filterByDatePublished = (resources, {datePublishedRangePreset, customDatePublishedRange}) => {
+const filterByDatePublished = (resources, {datePublishedRangePresetId, customDatePublishedRange}) => {
   let filteredResources = resources;
-  if (datePublishedRangePreset !== 'anyDate') {
+  if (datePublishedRangePresetId !== 'anyDate') {
     const currentDate = new Date,
       currentMonth = currentDate.getMonth(),
       currentYear = currentDate.getFullYear();
 
-    let presetRange = datePublishedRangePreset,
+    let presetRange = datePublishedRangePresetId,
       customRange = customDatePublishedRange,
       fromDate = null, 
       toDate = currentDate;  
