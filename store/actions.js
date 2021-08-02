@@ -7,9 +7,7 @@ export default {
       allResourcesFetched = false, 
       searchParams = [
         ['view', 'POST'], 
-        ['offset', offsetToken],
-        ['sort[0][field]', 'RECORD_CREATED_DATE'],
-        ['sort[0][direction]', 'desc']
+        ['offset', offsetToken]
       ]; 
       
     while (allResourcesFetched === false) {

@@ -52,7 +52,8 @@ export default {
         contentTypeIds: r[fields.contentTypeIds],
         enIssues: parsers.issues(r, 'EN'),
         frIssues: parsers.issues(r, 'FR'),
-        issueIds: r[fields.issueIds]
+        issueIds: r[fields.issueIds],
+        dateAdded: r[fields.dateAdded]
       }
     });
 

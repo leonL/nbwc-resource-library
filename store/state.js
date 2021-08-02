@@ -10,6 +10,10 @@ export default () => ({
   },
   filter: {},
   searchString: "",
+  sortOrder: {
+    byField: 'dateAdded',
+    direction: 'asc'
+  },
   copy: [],
   locale: ''
 })

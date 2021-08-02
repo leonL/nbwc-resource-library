@@ -26,7 +26,8 @@ const resourceFieldNames = {
   contentTypes: locale =>  `CONTENT TYPES ${locale}`,
   contentTypeIds: 'CONTENT TYPE IDS',
   issues: locale =>  `ISSUES ${locale}`,
-  issueIds: 'ISSUE IDS'
+  issueIds: 'ISSUE IDS',
+  dateAdded: 'RECORD CREATED DATE'
 };
 
 const resourceValidators = {

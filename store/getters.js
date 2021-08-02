@@ -2,7 +2,7 @@ import { removeDiacritics } from "~/plugins/helpers";
 import * as filters from "./resousrceFilterUtilities";
 
 export default {
-  resources: (state, {filter, searchString, searchRegExp, locale}) => {
+  resources: (state, {filter, sortOrder, searchString, searchRegExp, locale}) => {
     let resources = state.library.map(resource => ({...resource}));
 
     resources = filters.filterByDatePublished(resources, filter);
@@ -11,6 +11,8 @@ export default {
     resources = filters.filterByContentType(resources, filter);
     resources = filters.filterByIssue(resources, filter);
     resources = filters.filterBySearchString(resources, searchString, searchRegExp, locale);
+
+    resources = filters.orderBySortField(resources, sortOrder);
 
     return resources;
   },
@@ -38,5 +40,9 @@ export default {
 
   copy: state => {
     return state.copy;
+  },
+
+  sortOrder: state => {
+    return state.sortOrder;
   }
 }

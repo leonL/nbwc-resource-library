@@ -103,6 +103,34 @@ const filterBySearchString = (resources, searchString, searchRegExp, locale) => 
   return filteredResources;
 }
 
+const orderBySortField = (resources, sortOrder) => {
+  let orderedResources = resources.sort((aResource, bResource) => {
+    let aDate, bDate,
+      comparisonResult = sortOrder.direction === 'asc' ? -1 : 1;
+    
+    if (sortOrder.byField === "dateAdded") {
+      aDate = new Date(aResource.dateAdded),
+        bDate = new Date(bResource.dateAdded);
+    } else {
+      aDate = new Date(aResource.publicationYear, aResource.publicationMonth),
+        bDate = new Date(bResource.publicationYear, bResource.publicationMonth);
+
+      if (aResource.publicationDay !== null) aDate.setDate(aResource.publicationDay);
+      if (bResource.publicationDay !== null) bDate.setDate(bResource.publicationDay);
+    }
+
+    if (aDate < bDate) {
+      return comparisonResult;
+    } else if (aDate > bDate) {
+      return comparisonResult * -1;
+    } else {
+      return 0
+    }
+
+  });
+  return orderedResources;
+}
+
 const defaultFilterValues = {
   languageId: "BOTH",
   datePublishedRangePresetId: "anyDate",
@@ -113,4 +141,4 @@ const defaultFilterValues = {
 }
 
 export { filterByDatePublished, filterByLanguage, filterByGeographicScope, 
-  filterByContentType, filterByIssue, filterBySearchString, defaultFilterValues };
+  filterByContentType, filterByIssue, filterBySearchString, defaultFilterValues, orderBySortField };
