@@ -1,19 +1,31 @@
 <template>
   <div class='page'>
 
-    <client-only>
-      <span v-if="totalResourcesCount > resourcesPerPage" class="resource-count">
-        {{ currentPageIndexRange[0] + 1 }} 
-        &#8211; {{ currentPageIndexRange[0] + pageResorcesCount }}
-        {{ $t('of') }} {{ totalResourcesCount }} {{ $t('results') }}
+    <div class="details">
+      <client-only>
+        <span v-if="totalResourcesCount > resourcesPerPage" class="resource-count">
+          {{ currentPageIndexRange[0] + 1 }} 
+          &#8211; {{ currentPageIndexRange[0] + pageResorcesCount }}
+          {{ $t('of') }} {{ totalResourcesCount }} {{ $t('results') }}
+        </span>
+        <span v-else-if="totalResourcesCount === 0" class="resource-count zero">
+          {{ $t('noResult') }}
+        </span>
+        <span v-else class="resource-count one-pager">
+          {{ totalResourcesCount }} {{ $t('singlePageResults') }}
+        </span>
+      </client-only>
+      <span class="sortBy">
+        Sort by 
+        <b-dropdown right text="date posted (newest to oldest)" variant="link">
+          <b-dropdown-item href="#">date posted (newest to oldest)</b-dropdown-item>
+          <b-dropdown-item href="#">date posted (oldest to newest)</b-dropdown-item>
+          <b-dropdown-divider></b-dropdown-divider>
+          <b-dropdown-item href="#">date published (newest to oldest)</b-dropdown-item>
+          <b-dropdown-item href="#">date published (oldest to newest)</b-dropdown-item>
+        </b-dropdown>
       </span>
-      <span v-else-if="totalResourcesCount === 0" class="resource-count zero">
-        {{ $t('noResult') }}
-      </span>
-      <span v-else class="resource-count one-pager">
-        {{ totalResourcesCount }} {{ $t('singlePageResults') }}
-      </span>
-    </client-only>
+    </div>
     
     <ul id="resources-list" class="resources">
       <Resource
@@ -84,11 +96,38 @@ export default {
 }
 </script>
 
-<style scoped>
+<style> 
+.details {
+  display: flex;
+}
+
 .resource-count {
-  margin-left: 3px;
   font-size: 18px;
+  margin-left: 3px;
   font-weight: bold;
+}
+
+.sortBy {
+  flex-grow: 1;
+  text-align: right;
+  /* border: 1px solid black; */
+}
+
+.dropdown .btn {
+  font-size: 18px;
+  padding: 0;
+  border: 0;
+  position: relative;
+  bottom: 2px;
+  color: black;
+  font-weight: bold;
+}
+
+li a.dropdown-item {
+  text-decoration: unset;
+  font-weight: bold;
+  text-align: right;
+  font-size: 14px;
 }
 
 .resources {

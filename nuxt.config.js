@@ -57,7 +57,8 @@ export default {
       'CollapsePlugin',
       'FormSelectPlugin',
       'PaginationPlugin',
-      'IconsPlugin'
+      'IconsPlugin',
+      'DropdownPlugin'
     ],
     components: ['BIconList']
   },

@@ -12,7 +12,7 @@ export default () => ({
   searchString: "",
   sortOrder: {
     byField: 'dateAdded',
-    direction: 'asc'
+    direction: 'desc'
   },
   copy: [],
   locale: ''
