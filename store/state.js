@@ -8,6 +8,9 @@ export default () => ({
       { ID: 'customDateRange', EN:  'Custom date range', FR: 'Plage de dates personnalisée' }
     ]
   },
+  issueOptionCategories: {
+
+  },
   filter: {},
   searchString: "",
   sortOrderOptions: [

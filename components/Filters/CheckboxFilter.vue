@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form-checkbox v-for="(option) in options" :key="option.value" :value="option.value" class="mb-3"
+    <b-form-checkbox v-for="option in options" :key="option.value" :value="option.value" class="mb-3"
       :checked="filter[type]" v-on:change="updateFilter({type: type, value: $event})">
       {{ option.text }}
     </b-form-checkbox>  
@@ -21,9 +21,6 @@ export default {
     ...mapGetters(['filter', 'filterOptions']),
     options() {
       return this.$mapFilterOptionsToHtmlAttrs(this.filterOptions[this.type], this.$i18n.locale);
-    },
-    currentValue() {
-      return this.filter[this.type];
     }
   },
 

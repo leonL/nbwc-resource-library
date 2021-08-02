@@ -1,4 +1,4 @@
-import { url as apiUrl, defaultSearchParams, filterTypeTableNames } from "./apiUtilities";
+import { url as apiUrl, defaultSearchParams, filterTypeTableNames, filterSearchParams } from "./apiUtilities";
 
 export default {
   async fetchLibraryResources ({commit}) {
@@ -22,11 +22,32 @@ export default {
   async fetchOptionsForFilterType ({commit}, filterType) {
 
     let tableName = encodeURI(filterTypeTableNames[filterType]),
-      searchParams = defaultSearchParams,
+      searchParams = filterSearchParams,
       optionsJson = await this.api.$get(tableName, { searchParams }),
       options = optionsJson.records.map(r => r.fields);
 
     commit('setFilterOptions', {type: filterType, options});
+  },
+
+  async fetchOptionsForIssuesFilter ({commit}) {
+
+    let filterType = 'issueIds',
+      tableName = encodeURI(filterTypeTableNames[filterType]),
+      searchParams = [...filterSearchParams, ['fields', 'CATEGORY ID']],
+      optionsJson = await this.api.$get(tableName, { searchParams }),
+      issues = optionsJson.records.map(r => r.fields);
+
+    commit('setFilterOptions', {type: filterType, options: issues});
+  },
+
+  async fetchIssueCategories ({commit}) {
+  
+    let tableName = encodeURI('ISSUE CATEGORIES'),
+      searchParams = filterSearchParams,
+      optionsJson = await this.api.$get(tableName, { searchParams }),
+      categories = optionsJson.records.map(r => r.fields);
+
+    commit('setIssueCategories', categories);
   },
   
   async fetchCopy ({commit}) {
@@ -44,7 +65,8 @@ export default {
       dispatch('fetchOptionsForFilterType', 'languageId'),
       dispatch('fetchOptionsForFilterType', 'geographicScopeIds'),
       dispatch('fetchOptionsForFilterType', 'contentTypeIds'),
-      dispatch('fetchOptionsForFilterType', 'issueIds')
+      dispatch('fetchOptionsForIssuesFilter'),
+      dispatch('fetchIssueCategories')
     ]);
   },
 

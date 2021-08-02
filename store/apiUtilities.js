@@ -1,6 +1,7 @@
 const url = 'https://api.airtable.com/v0/appxlBEhiWnssKkbm';
 
-const defaultSearchParams = [['view', 'ALL RECORDS']]; 
+const defaultSearchParams = [['view', 'API']]; 
+const filterSearchParams = [...defaultSearchParams, ['fields', 'ID'], ['fields', 'EN'], ['fields', 'FR']];
 
 const filterTypeTableNames = { 
   languageId: 'LANGUAGES',
@@ -111,4 +112,5 @@ const resourceFieldParsers = {
   }
 };
 
-export { url, defaultSearchParams, filterTypeTableNames, resourceFieldNames, isResourcePdf, resourceFieldParsers, resourceValidators };
+export { url, defaultSearchParams, filterSearchParams, filterTypeTableNames, 
+  resourceFieldNames, isResourcePdf, resourceFieldParsers, resourceValidators };

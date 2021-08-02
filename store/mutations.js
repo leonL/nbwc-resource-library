@@ -95,5 +95,9 @@ export default {
 
   setSortOrderId (state, id) {
     state.sortOrderId = id;
+  },
+
+  setIssueCategories (state, categories) {
+    state.issueOptionCategories = categories;
   }
 }

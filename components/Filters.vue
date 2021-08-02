@@ -75,7 +75,7 @@
         </client-only>
       </div>
       <b-collapse id="issuesOptions" class="options">
-        <CheckboxFilter :type="'issueIds'" />
+        <IssueFilter />
       </b-collapse>
     </div>
 
@@ -86,6 +86,7 @@
 import CheckboxFilter from './Filters/CheckboxFilter.vue';
 import RadioButtonFilter from './Filters/RadioButtonFilter.vue';
 import MonthRangeFilter from './Filters/MonthRangeFilter.vue';
+import IssueFilter from './Filters/IssueFilter.vue';
 import { mapActions } from 'vuex';
 
 export default {
@@ -98,7 +99,8 @@ export default {
   components: {
     CheckboxFilter,
     RadioButtonFilter,
-    MonthRangeFilter
+    MonthRangeFilter,
+    IssueFilter
   }
 }
 </script>

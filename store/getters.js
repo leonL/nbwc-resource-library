@@ -52,5 +52,9 @@ export default {
   
   sortOrderOptions: state => {
     return state.sortOrderOptions;
+  },
+
+  issueCategories: state => {
+    return state.issueOptionCategories;
   }
 }
