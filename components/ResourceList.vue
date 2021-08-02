@@ -17,19 +17,19 @@
       </client-only>
       <span class="sortBy">
         Sort by 
-        <b-dropdown right text="date posted (newest to oldest)" variant="link">
-          <b-dropdown-item href="#">date posted (newest to oldest)</b-dropdown-item>
-          <b-dropdown-item href="#">date posted (oldest to newest)</b-dropdown-item>
-          <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item href="#">date published (newest to oldest)</b-dropdown-item>
-          <b-dropdown-item href="#">date published (oldest to newest)</b-dropdown-item>
+        <b-dropdown right variant="link">
+          <template #button-content>
+            {{ currentSortOrder[locale] }}
+          </template>
+          <b-dropdown-item v-for="option in otherSortOrders" :key="option.id" href="#"
+             v-on:click="updateSortOrderId(option.id)">{{ option[locale] }}</b-dropdown-item>
         </b-dropdown>
       </span>
     </div>
     
     <ul id="resources-list" class="resources">
       <Resource
-        v-for="(resource) in pageResources"
+        v-for="resource in pageResources"
         :key="resource.id"
         :resource="resource"
       />
@@ -54,7 +54,7 @@
 
 <script>
 import Resource from './Resource.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'ResourceList',
@@ -67,7 +67,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['resources']),
+    ...mapGetters(['resources', 'sortOrderOptions', 'sortOrderId']),
     currentPageIndexRange() {
       let rangeEnd = this.resourcesPerPage * this.currentPage,
         rangeStart = rangeEnd - this.resourcesPerPage;
@@ -81,7 +81,21 @@ export default {
     },
     pageResources() {
       return this.resources.slice(...this.currentPageIndexRange)
+    },
+    currentSortOrder() {
+      return this.sortOrderOptions.find(option => option.id === this.sortOrderId);
+    },
+    otherSortOrders() {
+      return this.sortOrderOptions.filter(option => option.id !== this.sortOrderId);
+    },
+    locale() {
+      return this.$i18n.locale;
     }
+  },
+
+  methods: {
+    ...mapActions(['updateSortOrderId']
+    )
   },
 
   components: {

@@ -76,5 +76,9 @@ export default {
 
   clearFilters ({commit}) {
     commit('resetFilterValues');
+  },
+
+  updateSortOrderId ({commit}, sortOrderId) {
+    commit('setSortOrderId', sortOrderId);
   }
 }

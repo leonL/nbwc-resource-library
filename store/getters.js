@@ -34,7 +34,7 @@ export default {
     return new RegExp(removeDiacritics(searchString), 'gi');
   },
 
-  locale: (state) => {
+  locale: state => {
     return state.locale;
   },
 
@@ -42,7 +42,15 @@ export default {
     return state.copy;
   },
 
-  sortOrder: state => {
-    return state.sortOrder;
+  sortOrderId: state => {
+    return state.sortOrderId;
+  },
+
+  sortOrder: (state, {sortOrderId}) => {
+    return state.sortOrderOptions.find(option => option.id === sortOrderId);
+  },
+  
+  sortOrderOptions: state => {
+    return state.sortOrderOptions;
   }
 }

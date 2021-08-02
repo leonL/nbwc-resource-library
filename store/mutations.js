@@ -91,5 +91,9 @@ export default {
 
   resetFilterValues (state) {
     state.filter = defaultFilterValues;
+  },
+
+  setSortOrderId (state, id) {
+    state.sortOrderId = id;
   }
 }
