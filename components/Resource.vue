@@ -31,11 +31,11 @@
       </div>
       <div class='tag-list' v-if="tags.contentTypes.length > 0">
         <img class="icon" src="~/assets/content-type.png">
-        <div>{{ tags.contentTypes }}</div>
+        <div>{{ contentTypesInAlphaOrder }}</div>
       </div>
       <div class='tag-list' v-if="tags.issues.length > 0">
         <img class="icon" src="~/assets/issues.png">
-        <div>{{ tags.issues }}</div>
+        <div>{{ issuesInAlphaOrder }}</div>
       </div>
     </div>
   </li>
@@ -107,8 +107,8 @@ export default {
     tags() {
       return {
         geographicScope: this.resource[`${this.primaryLanguageId}GeographicScope`],
-        contentTypes: this.resource[`${this.primaryLanguageId}ContentTypes`].join(', '),
-        issues: this.resource[`${this.primaryLanguageId}Issues`].join(', ')
+        contentTypes: this.resource[`${this.primaryLanguageId}ContentTypes`],
+        issues: this.resource[`${this.primaryLanguageId}Issues`]
       }
     },
     publication() {
@@ -117,6 +117,16 @@ export default {
     },
     isAuthor() {
       return this.resource.author.length > 0;
+    },
+    contentTypesInAlphaOrder() {
+      let contentTypes = [...this.tags.contentTypes],
+        inOrder = contentTypes.sort((a, b) => a.localeCompare(b, this.locale));
+      return inOrder.join(", ");
+    },
+    issuesInAlphaOrder() {
+      let issues = [...this.tags.issues],
+        inOrder = issues.sort((a, b) => a.localeCompare(b, this.locale));
+      return inOrder.join(", ");
     }
   }
 }
