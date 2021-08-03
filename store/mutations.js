@@ -90,7 +90,7 @@ export default {
   },
 
   resetFilterValues (state) {
-    state.filter = defaultFilterValues;
+    state.filter = { ...defaultFilterValues };
   },
 
   setSortOrderId (state, id) {
