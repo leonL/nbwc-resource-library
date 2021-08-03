@@ -7,9 +7,13 @@
     </h1>
 
     <div class="accreditation">
-      <div><span v-if="isAuthor">{{ resource.author }} &#8226;</span> {{ organizations }}</div>
       <div>
-        <span class="publication">{{ publication }}</span> Published {{ publicationDateString }}
+        <span v-if="isAuthor" v-html="resource.author + ' &#8226;'"></span> 
+        <span v-html="organizations"></span>
+      </div>
+      <div>
+        <span class="publication" v-html="publication"></span> 
+        <span>Published {{ publicationDateString }}</span>
       </div>
     </div>
 
