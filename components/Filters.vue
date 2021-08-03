@@ -113,13 +113,13 @@ export default {
 
 .title {
   font-weight: bold;
-  color: #000000;
+  color: black;
   font-size: 24px;
 }
 
 .clear {
   font-size: 20px;
-  color: #000000;
+  color: black;
   padding: 0;
   text-decoration: underline;
   margin-bottom: 20px;
@@ -176,6 +176,6 @@ export default {
 
 .options label {
   font-size: 18px;
-  color: #000000;
+  color: black;
 }
 </style>

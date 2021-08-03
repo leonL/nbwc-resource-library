@@ -134,7 +134,7 @@ li.resource {
 .title {
   font-weight: bold;
   margin-bottom: 5px;
-  font-size: 24px;
+  font-size: 1.4rem;
 }
 
 .title .pdf {
@@ -148,7 +148,7 @@ li.resource {
   bottom: 4px;
 }
 
-.title a {
+.title a:not(:hover) {
   color: var(--primary-color);
   text-decoration: none;
 }
