@@ -123,7 +123,10 @@ export default {
   padding: 0;
   text-decoration: underline;
   margin-bottom: 20px;
+}
 
+.filter {
+  margin-bottom: 25px;
 }
 
 .heading {
