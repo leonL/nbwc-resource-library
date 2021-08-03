@@ -8,9 +8,9 @@
       <div v-b-toggle.datePublishedOptions class='toggle'>
         <img class="icon calendar" src="~/assets/calendar.png">
         <h2 class='heading'>{{ $t('datePublished') }}</h2>
-        <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
+        <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         <client-only>
-          <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
+          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         </client-only>
       </div>
       <b-collapse id="datePublishedOptions" class="options">
@@ -25,9 +25,9 @@
       <div v-b-toggle.languageOptions class='toggle'>
         <img class="icon" src="~/assets/language.png">
         <h2 class='heading'>{{ $t('language') }}</h2>
-        <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
+        <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         <client-only>
-          <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
+          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         </client-only>
       </div>
       <b-collapse id="languageOptions" class="options">
@@ -41,9 +41,9 @@
       <div v-b-toggle.geographicScopeOptions class='toggle'>
         <img class="globe icon" src="~/assets/globe.png">
         <h2 class='heading'>{{ $t('geographicScope') }}</h2>
-        <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
+        <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         <client-only>
-          <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
+          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         </client-only>
       </div>
       <b-collapse id="geographicScopeOptions" class="options">
@@ -55,9 +55,9 @@
       <div v-b-toggle.contentTypeOptions class='toggle'>
         <img class="icon" src="~/assets/content-type.png">
         <h2 class='heading'>{{ $t('contentTypesFilter')}}</h2>
-        <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
+        <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         <client-only>
-          <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
+          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         </client-only>
       </div>
       <b-collapse id="contentTypeOptions" class="options">
@@ -69,9 +69,9 @@
       <div v-b-toggle.issuesOptions class='toggle'>
         <img class="icon" src="~/assets/issues.png">
         <h2 class='heading'>{{ $t('issuesFilter') }}</h2>
-        <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
+        <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         <client-only>
-          <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
+          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
         </client-only>
       </div>
       <b-collapse id="issuesOptions" class="options">
@@ -162,8 +162,8 @@ export default {
   stroke-width: 2;
 }
 
-.collapsed > .chevron.down,
-.not-collapsed > .chevron.up {
+.collapsed > .chevron.up,
+.not-collapsed > .chevron.down {
   display: none;
 }
 
