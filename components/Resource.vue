@@ -155,7 +155,7 @@ li.resource {
 
 .accreditation {
   color: #767676;
-  font-size: 18px;
+  font-size: 1.1rem;
 }
 
 .publication {
