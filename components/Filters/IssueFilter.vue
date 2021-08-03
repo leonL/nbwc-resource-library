@@ -26,8 +26,11 @@ export default {
 
   computed: {
     ...mapGetters(['issueCategories', 'filter', 'filterOptions']),
+    locale() {
+      return this.$i18n.locale;
+    },
     upperCaseLocale() {
-      return this.$i18n.locale.toUpperCase();
+      return this.locale.toUpperCase();
     },
     categoriesInAlphaOrder() {
       let categories = [...this.issueCategories], inOrder;
@@ -35,7 +38,7 @@ export default {
       inOrder = categories.sort((a, b) => {
         let aLabel = a[this.upperCaseLocale],
           bLabel = b[this.upperCaseLocale]
-        return aLabel.localeCompare(bLabel, this.$i18n.locale);       
+        return aLabel.localeCompare(bLabel, this.locale);       
       });
 
       return inOrder;
@@ -57,23 +60,30 @@ export default {
 </script>
 
 <style>
-.categories {
-  margin-left: 10px;
-}
 
 .category {
-  font-size: 16px;
+  font-size: 15px;
+  width: 85%;
+  font-weight: bolder;
 }
 
 .toggle-icon {
   position: absolute;
-  bottom: 1px;
+  bottom: 0;
   right: 10px;
+}
+
+.toggle-icon svg {
+  stroke: black;
 }
 
 .collapsed > .toggle-icon.down,
 .not-collapsed > .toggle-icon.up {
   display: none;
+}
+
+.issueOptions label {
+  width: 85%;
 }
 
 </style>
