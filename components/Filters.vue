@@ -107,7 +107,7 @@ export default {
 
 <style>
 .filters {
-  padding-right: 10px;
+  padding-right: 40px;
   width: 30%;
 }
 
