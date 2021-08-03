@@ -50,8 +50,15 @@ export default {
     categoryOptions(categoryId) {
       let issues = this.filterOptions.issueIds.filter(issue => {
         return issue['CATEGORY ID'][0] === categoryId;
+      }), issuesOrdered;
+
+      issuesOrdered = issues.sort((a, b) => {
+        let aText = a[this.upperCaseLocale],
+          bText = b[this.upperCaseLocale];
+        return aText.localeCompare(bText, this.locale);       
       });
-      let htmlAttrs = this.$mapFilterOptionsToHtmlAttrs(issues, this.$i18n.locale);
+
+      let htmlAttrs = this.$mapFilterOptionsToHtmlAttrs(issuesOrdered, this.$i18n.locale);
       return htmlAttrs;
     }
   }

@@ -19,8 +19,21 @@ export default {
 
   computed: {
     ...mapGetters(['filter', 'filterOptions']),
+    upperCaseLocale() {
+      return this.$i18n.locale.toUpperCase();
+    },
     options() {
-      return this.$mapFilterOptionsToHtmlAttrs(this.filterOptions[this.type], this.$i18n.locale);
+      let optionData = [...this.filterOptions[this.type]];
+
+      if (this.type === 'contentTypeIds') {
+        optionData = optionData.sort((a, b) => {
+          let aText = a[this.upperCaseLocale],
+            bText = b[this.upperCaseLocale];
+          return aText.localeCompare(bText, this.$i18n.locale);       
+        });
+      }
+
+      return this.$mapFilterOptionsToHtmlAttrs(optionData, this.$i18n.locale);
     }
   },
 
