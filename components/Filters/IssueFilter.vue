@@ -30,19 +30,15 @@ export default {
       return this.$i18n.locale.toUpperCase();
     },
     categoriesInAlphaOrder() {
-      let categories = [...this.issueCategories];
-      return categories.sort((a, b) => {
+      let categories = [...this.issueCategories], inOrder;
+      
+      inOrder = categories.sort((a, b) => {
         let aLabel = a[this.upperCaseLocale],
           bLabel = b[this.upperCaseLocale]
-
-        if (aLabel > bLabel) {
-          return 1;
-        }
-        if (aLabel < bLabel) {
-          return -1;
-        }
-        return 0;
+        return aLabel.localeCompare(bLabel, this.$i18n.locale);       
       });
+
+      return inOrder;
     }
   },
 
