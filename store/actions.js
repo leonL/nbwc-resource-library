@@ -88,10 +88,6 @@ export default {
     commit('setLocale', locale);
   },
 
-  searchLibrary ({commit}, searchString) {
-    commit('setSearchString', searchString.trim());
-  },
-
   updateFilter ({commit}, {type, value}) {
     commit('setFilter', {type, value});
   },

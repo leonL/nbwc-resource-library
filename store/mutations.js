@@ -77,10 +77,6 @@ export default {
     }
   },
 
-  setSearchString (state, string) {
-    state.searchString = string;
-  },
-
   setLocale (state, locale) {
     state.locale = locale;
   },

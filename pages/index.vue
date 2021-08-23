@@ -11,10 +11,6 @@
       <Filters />
 
       <div class='index'>
-        <b-form-input v-bind:value="searchString" v-on:input="searchLibrary($event)" debounce="500"
-          :placeholder="$t('searchPlaceholder')" class="search" :aria-label="$t('searchPlaceholder')"></b-form-input>
-        <img class="icon search" src="~/assets/search.png">
-
         <ResourceList />
       </div>
     </div>
@@ -27,12 +23,9 @@ import ResourceList from '@/components/ResourceList.vue';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  methods: {
-    ...mapActions(['searchLibrary'])
-  },
 
   computed: {
-    ...mapGetters(['resources', 'searchString', 'searchRegExp', 'copy']),
+    ...mapGetters(['resources', 'copy']),
     subtitle() {
       return this.copy[`${this.$i18n.locale.toLowerCase()}Subtitle`];
     }
@@ -69,17 +62,6 @@ export default {
 .subtitle {
   font-size: 24px;
   color: #767676;
-}
-
-input.search {
-  padding-left: 35px;
-  margin-bottom: 5px;
-}
-
-.search.icon {
-  position: absolute;
-  top: 7px;
-  left: 6px;
 }
 
 @media screen and (max-width: 767px) {

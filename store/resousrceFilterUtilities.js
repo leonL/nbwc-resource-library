@@ -141,4 +141,4 @@ const defaultFilterValues = {
 }
 
 export { filterByDatePublished, filterByLanguage, filterByGeographicScope, 
-  filterByContentType, filterByIssue, filterBySearchString, defaultFilterValues, orderBySortField };
+  filterByContentType, filterByIssue, defaultFilterValues, orderBySortField };

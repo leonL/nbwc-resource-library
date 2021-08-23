@@ -12,7 +12,6 @@ export default () => ({
 
   },
   filter: {},
-  searchString: "",
   sortOrderOptions: [
     {id: 0, byField: 'dateAdded', direction: 'asc', en: "date posted (new to old)", fr: "date postée (nouveau à vieux)"},
     {id: 1, byField: 'dateAdded', direction: 'desc', en: "date posted (old to new)", fr: "date postée (ancien au nouveau)"},
