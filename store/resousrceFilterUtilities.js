@@ -112,11 +112,8 @@ const orderBySortField = (resources, sortOrder) => {
       aDate = new Date(aResource.dateAdded),
         bDate = new Date(bResource.dateAdded);
     } else {
-      aDate = new Date(aResource.publicationYear, aResource.publicationMonth),
-        bDate = new Date(bResource.publicationYear, bResource.publicationMonth);
-
-      if (aResource.publicationDay !== null) aDate.setDate(aResource.publicationDay);
-      if (bResource.publicationDay !== null) bDate.setDate(bResource.publicationDay);
+      aDate = new Date(aResource.publicationYear, aResource.publicationMonth || 0, aResource.publicationDay || 1),
+        bDate = new Date(bResource.publicationYear, bResource.publicationMonth || 0, bResource.publicationDay || 1);
     }
 
     if (aDate < bDate) {

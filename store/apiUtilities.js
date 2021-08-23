@@ -41,8 +41,8 @@ const resourceValidators = {
   hasLink: (resource, langId) => {
     return resource.hasOwnProperty(resourceFieldNames.document(langId)) || resource.hasOwnProperty(resourceFieldNames.link(langId));
   },
-  hasPublishedDate: resource => {
-    return resource.hasOwnProperty(resourceFieldNames.publicationMonth) && resource.hasOwnProperty(resourceFieldNames.publicationYear); 
+  hasPublishedYear: resource => {
+    return resource.hasOwnProperty(resourceFieldNames.publicationYear); 
   }
 }
 
@@ -104,6 +104,11 @@ const resourceFieldParsers = {
       issues = resource[fieldName];
   
     return issues;
+  },
+  publicationMonth: (resource) => {
+    let month = null;
+    if (resource.hasOwnProperty(resourceFieldNames.publicationMonth)) month = resource[resourceFieldNames.publicationMonth] - 1;
+    return month;
   },
   publicationDay: (resource) => {
     let day = null;

@@ -84,22 +84,23 @@ export default {
     organizations() {
       return this.resource[`${this.primaryLanguageId}Organizations`];
     },
-    publicationMonthYear() {
-      return {
-        month: this.resource.publicationMonth,
-        year: this.resource.publicationYear
-      }
-    },
     publicationDateString() {
-      let {year, month} = this.publicationMonthYear, 
-        publicationDate = new Date(year, month),
-        dateFormat = { month: 'long', year: 'numeric' };
+      let yearPublished = this.resource.publicationYear,
+        dateString = yearPublished;
 
-      if (this.resource.publicationDay !== null) {
-        dateFormat.day = 'numeric';
-        publicationDate.setDate(this.resource.publicationDay);
+      if (this.resource.publicationMonth !== null) {
+        let publicationDate = new Date(yearPublished, this.resource.publicationMonth),
+          dateFormat = { month: 'long', year: 'numeric' };
+
+        if (this.resource.publicationDay !== null) {
+          dateFormat.day = 'numeric';
+          publicationDate.setDate(this.resource.publicationDay);
+        }
+
+        dateString = new Intl.DateTimeFormat('en-US', dateFormat).format(publicationDate);
       }
-      return new Intl.DateTimeFormat('en-US', dateFormat).format(publicationDate);
+
+      return dateString;
     },
     notes() {
       return this.resource[`${this.primaryLanguageId}Notes`];

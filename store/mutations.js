@@ -9,7 +9,7 @@ export default {
     let validResources = resources.filter(r => {
       let isValid = true;
 
-      if (!validators.hasPublishedDate(r)) return isValid = false;
+      if (!validators.hasPublishedYear(r)) return isValid = false;
 
       if (validators.hasLanguage(r)) {
         let languageId = parsers.languageId(r);
@@ -40,7 +40,7 @@ export default {
         enPublication: parsers.publication(r, 'EN'),
         frPublication: parsers.publication(r, 'FR'),
         publicationYear: r[fields.publicationYear],
-        publicationMonth: r[fields.publicationMonth] - 1,
+        publicationMonth: parsers.publicationMonth(r),
         publicationDay: parsers.publicationDay(r),
         enNotes: parsers.notes(r, 'EN'),
         frNotes: parsers.notes(r, 'FR'),
