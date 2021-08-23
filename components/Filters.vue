@@ -7,7 +7,7 @@
     <div class='date-published filter'>
       <div v-b-toggle.datePublishedOptions class='toggle'>
         <img class="icon calendar" src="~/assets/calendar.png">
-        <h2 class='heading'>{{ $t('datePublished') }}</h2>
+        <h2 class='heading'>{{ $t('publicationYear') }}</h2>
         <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         <client-only>
           <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
@@ -15,9 +15,6 @@
       </div>
       <b-collapse id="datePublishedOptions" class="options">
         <RadioButtonFilter :type="'datePublishedRangePresetId'" />
-        <MonthRangeFilter 
-          v-on:newValue="updateFilter({type: 'customDatePublishedRange', value: $event})"
-        />
       </b-collapse>
     </div>
 

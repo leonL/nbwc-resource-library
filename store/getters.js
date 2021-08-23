@@ -5,7 +5,7 @@ export default {
   resources: (state, {filter, sortOrder}) => {
     let resources = state.library.map(resource => ({...resource}));
 
-    resources = filters.filterByDatePublished(resources, filter);
+    resources = filters.filterByPublicationYear(resources, filter);
     resources = filters.filterByLanguage(resources, filter);
     resources = filters.filterByGeographicScope(resources, filter);
     resources = filters.filterByContentType(resources, filter);

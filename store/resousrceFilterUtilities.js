@@ -1,5 +1,22 @@
 import { removeDiacritics, capitalize, tagMatchingSubstrs } from "~/plugins/helpers"; 
 
+const filterByPublicationYear = (resources, {datePublishedRangePresetId}) => {
+  let filteredResources = resources;
+  if (datePublishedRangePresetId !== 'anyDate') {
+    let today = new Date(),
+      toYear = today.getFullYear(),
+      fromYear = toYear;
+
+    if (datePublishedRangePresetId === 'pastTwoYears') fromYear = fromYear - 2; 
+    if (datePublishedRangePresetId === 'pastFiveYears') fromYear = fromYear - 5;
+    
+    filteredResources = filteredResources.filter(r => {
+      return r.publicationYear >= fromYear && r.publicationYear <= toYear;
+    });
+  }
+  return filteredResources;
+}
+
 const filterByDatePublished = (resources, {datePublishedRangePresetId, customDatePublishedRange}) => {
   let filteredResources = resources;
   if (datePublishedRangePresetId !== 'anyDate') {
@@ -137,5 +154,5 @@ const defaultFilterValues = {
   issueIds: []
 }
 
-export { filterByDatePublished, filterByLanguage, filterByGeographicScope, 
+export { filterByPublicationYear, filterByLanguage, filterByGeographicScope, 
   filterByContentType, filterByIssue, defaultFilterValues, orderBySortField };

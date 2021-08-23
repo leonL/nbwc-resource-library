@@ -3,9 +3,9 @@ export default () => ({
   filterOptions: {
     datePublishedRangePresetId: [
       { ID: 'anyDate', EN:  'Any', FR: 'Quelconque' },
-      { ID: 'pastMonth', EN:  'Past month', FR: 'Mois passé' },
-      { ID: 'pastYear', EN:  'Past Year', FR: "L'année passée" },
-      { ID: 'customDateRange', EN:  'Custom date range', FR: 'Plage de dates personnalisée' }
+      { ID: 'thisYear', EN:  currentYear(), FR: currentYear() },
+      { ID: 'pastTwoYears', EN:  yearRangeText(2), FR: yearRangeText(2) },
+      { ID: 'pastFiveYears', EN:  yearRangeText(5), FR: yearRangeText(5) }
     ]
   },
   issueOptionCategories: {
@@ -22,3 +22,15 @@ export default () => ({
   copy: [],
   locale: ''
 })
+
+const currentYear = () => {
+  let today = new Date();
+  return today.getFullYear();
+};
+
+const yearRangeText = (delta) => {
+  let today = new Date(),
+    currentYear = today.getFullYear();
+  return `${currentYear - delta} - ${currentYear}`
+} 
+
