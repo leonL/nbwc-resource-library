@@ -89,6 +89,10 @@ export default {
     state.filter = { ...defaultFilterValues };
   },
 
+  resetIssuesFilterValues (state) {
+    state.filter.issueIds = [];
+  },
+
   setSortOrderId (state, id) {
     state.sortOrderId = id;
   },

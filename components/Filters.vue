@@ -1,5 +1,5 @@
 <template>
-  <div class="filters">
+  <div>
     <h1 class="title main">{{ $t('filters') }}</h1>
 
     <b-button class='clear' variant="link" v-on:click="clearFilters()">{{ $t('clearFilters') }}</b-button>
@@ -61,21 +61,6 @@
         <CheckboxFilter :type="'contentTypeIds'" />
       </b-collapse>
     </div>
-
-    <div class="issues filter">
-      <div v-b-toggle.issuesOptions class='toggle'>
-        <img class="icon" src="~/assets/issues.png">
-        <h2 class='heading'>{{ $t('issuesFilter') }}</h2>
-        <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
-        <client-only>
-          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
-        </client-only>
-      </div>
-      <b-collapse id="issuesOptions" class="options">
-        <IssueFilter />
-      </b-collapse>
-    </div>
-
   </div>
 </template>
 
@@ -83,7 +68,6 @@
 import CheckboxFilter from './Filters/CheckboxFilter.vue';
 import RadioButtonFilter from './Filters/RadioButtonFilter.vue';
 import MonthRangeFilter from './Filters/MonthRangeFilter.vue';
-import IssueFilter from './Filters/IssueFilter.vue';
 import { mapActions } from 'vuex';
 
 export default {
@@ -96,18 +80,12 @@ export default {
   components: {
     CheckboxFilter,
     RadioButtonFilter,
-    MonthRangeFilter,
-    IssueFilter
+    MonthRangeFilter
   }
 }
 </script>
 
 <style>
-.filters {
-  padding-right: 40px;
-  width: 30%;
-}
-
 .title {
   font-weight: bold;
   color: black;
@@ -127,14 +105,16 @@ export default {
 }
 
 .heading {
+  margin-right: 30px;
   font-size: 18px;
+  font-weight: bold;
 }
 
 .toggle {
   position: relative;
 }
 
-.toggle .icon {
+.icon {
   float: left;
   margin-right: 5px;
   position: relative;
@@ -153,7 +133,7 @@ export default {
 
 .chevron {
   position: absolute;
-  bottom: 1px;
+  top: 1px;
   right: 10px;
 }
 

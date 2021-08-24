@@ -8,7 +8,10 @@
     </div>
 
     <div class='library'>
-      <Filters />
+      <div class="filters">
+        <IssuesFilters /> 
+        <Filters />
+      </div>
 
       <div class='index'>
         <ResourceList />
@@ -19,6 +22,7 @@
 
 <script>
 import Filters from '@/components/Filters.vue';
+import IssuesFilters from '@/components/IssuesFilters.vue';
 import ResourceList from '@/components/ResourceList.vue';
 import { mapGetters, mapActions } from 'vuex';
 
@@ -33,6 +37,7 @@ export default {
 
   components: {
     Filters,
+    IssuesFilters,
     ResourceList
   }
 }
@@ -62,6 +67,11 @@ export default {
 .subtitle {
   font-size: 24px;
   color: #767676;
+}
+
+.filters {
+  padding-right: 40px;
+  width: 30%;
 }
 
 @media screen and (max-width: 767px) {

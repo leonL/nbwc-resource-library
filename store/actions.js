@@ -96,6 +96,10 @@ export default {
     commit('resetFilterValues');
   },
 
+  clearIssuesFilter ({commit}) {
+    commit('resetIssuesFilterValues');
+  },
+
   updateSortOrderId ({commit}, sortOrderId) {
     commit('setSortOrderId', sortOrderId);
   }
