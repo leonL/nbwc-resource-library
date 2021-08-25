@@ -33,7 +33,11 @@
       </div>
       <div class='tag-list' v-if="tags.contentTypes.length > 0">
         <img class="icon" src="~/assets/content-type.png">
-        <div>{{ contentTypesInAlphaOrder }}</div>
+        <div>
+          <span v-for="(contentType, index) in contentTypesInAlphaOrder" :key="contentType.id" :class="{ selected: contentTypeSelected(contentType.id) }"> 
+            {{ contentType.label }}<span v-if="index !== contentTypesInAlphaOrder.length - 1" class="semi-colon">;</span>
+          </span>
+        </div>
       </div>
       <div class='tag-list' v-if="tags.issues.length > 0">
         <img class="icon" src="~/assets/issues.png">
@@ -111,9 +115,15 @@ export default {
       return this.resource[`${this.primaryLanguageId}Notes`];
     },
     tags() {
+      let contentTypeIds = this.resource.contentTypeIds,
+        contentTypeLabels = this.resource[`${this.primaryLanguageId}ContentTypes`],
+        contentTypeData = contentTypeLabels.map((label, i) => {
+          return {id: contentTypeIds[i], label: label }
+        });
+
       return {
         geographicScope: this.resource[`${this.primaryLanguageId}GeographicScope`],
-        contentTypes: this.resource[`${this.primaryLanguageId}ContentTypes`],
+        contentTypes: contentTypeData,
         issues: this.resource[`${this.primaryLanguageId}Issues`]
       }
     },
@@ -136,13 +146,19 @@ export default {
     },
     contentTypesInAlphaOrder() {
       let contentTypes = [...this.tags.contentTypes],
-        inOrder = contentTypes.sort((a, b) => a.localeCompare(b, this.locale));
-      return inOrder.join(", ");
+        inOrder = contentTypes.sort((a, b) => a.label.localeCompare(b.label, this.locale));
+      return inOrder;
     },
     issuesInAlphaOrder() {
       let issues = [...this.tags.issues],
         inOrder = issues.sort((a, b) => a.localeCompare(b, this.locale));
       return inOrder.join(", ");
+    }
+  },
+
+  methods: {
+    contentTypeSelected(id) {
+      return this.filter.contentTypeIds.includes(id);
     }
   }
 }
@@ -216,6 +232,10 @@ li.resource {
 
 .tags .selected {
   font-weight: bold;
+}
+
+.tags .selected .semi-colon {
+  font-weight: normal;
 }
 
 .tag-list {
