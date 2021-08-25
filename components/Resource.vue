@@ -41,7 +41,11 @@
       </div>
       <div class='tag-list' v-if="tags.issues.length > 0">
         <img class="icon" src="~/assets/issues.png">
-        <div>{{ issuesInAlphaOrder }}</div>
+        <div>
+          <span v-for="(issueType, index) in issuesInAlphaOrder" :key="issueType.id" :class="{ selected: issueTypeSelected(issueType.id) }"> 
+            {{ issueType.label }}<span v-if="index !== issuesInAlphaOrder.length - 1" class="semi-colon">;</span>
+          </span>
+        </div>
       </div>
     </div>
   </li>
@@ -121,10 +125,16 @@ export default {
           return {id: contentTypeIds[i], label: label }
         });
 
+      let issueIds = this.resource.issueIds,
+        issueTypeLabels = this.resource[`${this.primaryLanguageId}Issues`],
+        issueTypeData = issueTypeLabels.map((label, i) => {
+          return {id: issueIds[i], label: label }
+        });
+
       return {
         geographicScope: this.resource[`${this.primaryLanguageId}GeographicScope`],
         contentTypes: contentTypeData,
-        issues: this.resource[`${this.primaryLanguageId}Issues`]
+        issues: issueTypeData
       }
     },
     publication() {
@@ -151,14 +161,17 @@ export default {
     },
     issuesInAlphaOrder() {
       let issues = [...this.tags.issues],
-        inOrder = issues.sort((a, b) => a.localeCompare(b, this.locale));
-      return inOrder.join(", ");
+        inOrder = issues.sort((a, b) => a.label.localeCompare(b.label, this.locale));
+      return inOrder;
     }
   },
 
   methods: {
     contentTypeSelected(id) {
       return this.filter.contentTypeIds.includes(id);
+    },
+    issueTypeSelected(id) {
+      return this.filter.issueIds.includes(id);
     }
   }
 }
