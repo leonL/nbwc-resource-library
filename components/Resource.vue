@@ -27,7 +27,9 @@
     <div class='tags'>
       <div class='tag-list'>
         <img class="icon" src="~/assets/globe.png">
-        <div>{{ tags.geographicScope }}</div>
+        <div>
+          <span :class="{ selected: geoScopeSelected }">{{ tags.geographicScope }}</span>
+        </div>
       </div>
       <div class='tag-list' v-if="tags.contentTypes.length > 0">
         <img class="icon" src="~/assets/content-type.png">
@@ -42,6 +44,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Resource',
 
@@ -50,6 +54,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters(['filter']),
     locale() {
       return this.$i18n.locale;
     },
@@ -118,6 +123,16 @@ export default {
     },
     isAuthor() {
       return this.resource.author.length > 0;
+    },
+    geoScopeSelected() {
+      let selectedGeoScopeIds = this.filter.geographicScopeIds,
+        isSelected = false;
+
+      if (selectedGeoScopeIds.length > 0) {
+        isSelected = selectedGeoScopeIds.includes(this.resource.geographicScopeId) ? true : false;
+      }
+
+      return isSelected;
     },
     contentTypesInAlphaOrder() {
       let contentTypes = [...this.tags.contentTypes],
@@ -197,6 +212,10 @@ li.resource {
   margin-right: 5px;
   position: relative;
   top: 4px;
+}
+
+.tags .selected {
+  font-weight: bold;
 }
 
 .tag-list {
