@@ -14,7 +14,7 @@
         </client-only>
       </div>
       <b-collapse id="datePublishedOptions" class="options">
-        <RadioButtonFilter :type="'datePublishedRangePresetId'" />
+        <YearRangeFilter />
       </b-collapse>
     </div>
 
@@ -67,11 +67,11 @@
 <script>
 import CheckboxFilter from './Filters/CheckboxFilter.vue';
 import RadioButtonFilter from './Filters/RadioButtonFilter.vue';
-import MonthRangeFilter from './Filters/MonthRangeFilter.vue';
+import YearRangeFilter from './Filters/YearRangeFilter.vue';
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'filters',
+  name: 'Filters',
   
   methods: {
     ...mapActions(['updateFilter', 'clearFilters'])
@@ -80,7 +80,7 @@ export default {
   components: {
     CheckboxFilter,
     RadioButtonFilter,
-    MonthRangeFilter
+    YearRangeFilter
   }
 }
 </script>

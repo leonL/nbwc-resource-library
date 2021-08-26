@@ -1,16 +1,7 @@
 export default () => ({
   library: [],
-  filterOptions: {
-    datePublishedRangePresetId: [
-      { ID: 'anyDate', EN:  'Any', FR: 'Quelconque' },
-      { ID: 'thisYear', EN:  currentYear(), FR: currentYear() },
-      { ID: 'pastTwoYears', EN:  yearRangeText(2), FR: yearRangeText(2) },
-      { ID: 'pastFiveYears', EN:  yearRangeText(5), FR: yearRangeText(5) }
-    ]
-  },
-  issueOptionCategories: {
-
-  },
+  filterOptions: {},
+  issueOptionCategories: {},
   filter: {},
   sortOrderOptions: [
     {id: 0, byField: 'datePublished', direction: 'desc', en: "date published (new to old)", fr: "date publiée (nouveau à vieux)"},
@@ -22,15 +13,4 @@ export default () => ({
   copy: [],
   locale: ''
 })
-
-const currentYear = () => {
-  let today = new Date();
-  return today.getFullYear();
-};
-
-const yearRangeText = (delta) => {
-  let today = new Date(),
-    currentYear = today.getFullYear();
-  return `${currentYear - delta} - ${currentYear}`
-} 
 

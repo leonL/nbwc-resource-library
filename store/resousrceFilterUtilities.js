@@ -1,15 +1,10 @@
 import { removeDiacritics, capitalize, tagMatchingSubstrs } from "~/plugins/helpers"; 
 
-const filterByPublicationYear = (resources, {datePublishedRangePresetId}) => {
+const filterByPublicationYear = (resources, {yearPublishedRange}) => {
   let filteredResources = resources;
-  if (datePublishedRangePresetId !== 'anyDate') {
-    let today = new Date(),
-      toYear = today.getFullYear(),
-      fromYear = toYear;
+  if (yearPublishedRange !== null) {
+    let fromYear = yearPublishedRange[0], toYear = yearPublishedRange[1];
 
-    if (datePublishedRangePresetId === 'pastTwoYears') fromYear = fromYear - 2; 
-    if (datePublishedRangePresetId === 'pastFiveYears') fromYear = fromYear - 5;
-    
     filteredResources = filteredResources.filter(r => {
       return r.publicationYear >= fromYear && r.publicationYear <= toYear;
     });
@@ -17,36 +12,36 @@ const filterByPublicationYear = (resources, {datePublishedRangePresetId}) => {
   return filteredResources;
 }
 
-const filterByDatePublished = (resources, {datePublishedRangePresetId, customDatePublishedRange}) => {
-  let filteredResources = resources;
-  if (datePublishedRangePresetId !== 'anyDate') {
-    const currentDate = new Date,
-      currentMonth = currentDate.getMonth(),
-      currentYear = currentDate.getFullYear();
+// const filterByDatePublished = (resources, {datePublishedRangePresetId, customDatePublishedRange}) => {
+//   let filteredResources = resources;
+//   if (datePublishedRangePresetId !== 'anyDate') {
+//     const currentDate = new Date,
+//       currentMonth = currentDate.getMonth(),
+//       currentYear = currentDate.getFullYear();
 
-    let presetRange = datePublishedRangePresetId,
-      customRange = customDatePublishedRange,
-      fromDate = null, 
-      toDate = currentDate;  
+//     let presetRange = datePublishedRangePresetId,
+//       customRange = customDatePublishedRange,
+//       fromDate = null, 
+//       toDate = currentDate;  
       
-    if (presetRange === "customDateRange" && customRange !== null) {
-      fromDate = new Date(customRange.from.year, customRange.from.month);
-      toDate = new Date(customRange.to.year, customRange.to.month);
-    } else if (presetRange === "pastMonth") {
-      fromDate = new Date(currentYear, currentMonth - 1);
-    } else if (presetRange === "pastYear") {
-      fromDate = new Date(currentYear - 1, currentMonth)
-    }
+//     if (presetRange === "customDateRange" && customRange !== null) {
+//       fromDate = new Date(customRange.from.year, customRange.from.month);
+//       toDate = new Date(customRange.to.year, customRange.to.month);
+//     } else if (presetRange === "pastMonth") {
+//       fromDate = new Date(currentYear, currentMonth - 1);
+//     } else if (presetRange === "pastYear") {
+//       fromDate = new Date(currentYear - 1, currentMonth)
+//     }
 
-    if (fromDate !== null) { // isNull when presetRange === "customDateRange" && customRange === null
-      filteredResources = resources.filter(r => {
-        let publicationDate = new Date(r.publicationYear, r.publicationMonth);
-        return (publicationDate >= fromDate && publicationDate <= toDate);
-      })
-    }
-  }  
-  return filteredResources; 
-}
+//     if (fromDate !== null) { // isNull when presetRange === "customDateRange" && customRange === null
+//       filteredResources = resources.filter(r => {
+//         let publicationDate = new Date(r.publicationYear, r.publicationMonth);
+//         return (publicationDate >= fromDate && publicationDate <= toDate);
+//       })
+//     }
+//   }  
+//   return filteredResources; 
+// }
 
 const filterByLanguage = (resources, {languageId}) => {
   let filteredResources = resources;
@@ -147,8 +142,7 @@ const orderBySortField = (resources, sortOrder) => {
 
 const defaultFilterValues = {
   languageId: "BOTH",
-  datePublishedRangePresetId: "anyDate",
-  customDatePublishedRange: null,
+  yearPublishedRange: null,
   geographicScopeIds: [],
   contentTypeIds: [],
   issueIds: []

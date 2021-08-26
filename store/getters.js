@@ -16,6 +16,11 @@ export default {
     return resources;
   },
 
+  earliestPublicationYear: state => {
+    let publiationYears = state.library.map(resource => resource.publicationYear);
+    return publiationYears.sort()[0];
+  },
+
   filterOptions: state => {
     return state.filterOptions;
   },
