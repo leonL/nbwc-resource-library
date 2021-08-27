@@ -7,7 +7,8 @@ const filterTypeTableNames = {
   languageId: 'LANGUAGES',
   geographicScopeIds: 'GEOGRAPHIC SCOPES',
   contentTypeIds: 'CONTENT TYPES',
-  issueIds: 'ISSUES'
+  issueIds: 'ISSUES',
+  organizationIds: 'ORGANIZATIONS'
 };
 
 const resourceFieldNames = {

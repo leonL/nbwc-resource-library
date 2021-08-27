@@ -65,6 +65,7 @@ export default {
       dispatch('fetchOptionsForFilterType', 'languageId'),
       dispatch('fetchOptionsForFilterType', 'geographicScopeIds'),
       dispatch('fetchOptionsForFilterType', 'contentTypeIds'),
+      dispatch('fetchOptionsForFilterType', 'organizationIds'),
       dispatch('fetchOptionsForIssuesFilter'),
       dispatch('fetchIssueCategories')
     ]);
