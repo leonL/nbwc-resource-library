@@ -244,6 +244,7 @@ li.resource {
 }
 
 .tags .selected {
+  color: var(--primary-color);
   font-weight: bold;
 }
 
