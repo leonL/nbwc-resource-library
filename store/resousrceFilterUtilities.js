@@ -78,6 +78,20 @@ const filterByContentType = (resources, {contentTypeIds}) => {
   return filteredResources;
 }
 
+const filterByOrganization = (resources, {organizationIds}) => {
+  let filteredResources = resources;
+
+  if (organizationIds.length > 0 ) {
+    filteredResources = resources.filter(r => {
+      return r.organizationIds.some(id => {
+        return organizationIds.includes(id);
+      })
+    })
+  }
+
+  return filteredResources;  
+}
+
 const filterByIssue = (resources, {issueIds}) => {
   let filteredResources = resources;
   if (issueIds.length > 0) {
@@ -145,8 +159,9 @@ const defaultFilterValues = {
   yearPublishedRange: null,
   geographicScopeIds: [],
   contentTypeIds: [],
-  issueIds: []
+  issueIds: [],
+  organizationIds: []
 }
 
 export { filterByPublicationYear, filterByLanguage, filterByGeographicScope, 
-  filterByContentType, filterByIssue, defaultFilterValues, orderBySortField };
+  filterByContentType, filterByIssue, filterByOrganization, defaultFilterValues, orderBySortField };

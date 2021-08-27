@@ -10,6 +10,7 @@ export default {
     resources = filters.filterByGeographicScope(resources, filter);
     resources = filters.filterByContentType(resources, filter);
     resources = filters.filterByIssue(resources, filter);
+    resources = filters.filterByOrganization(resources, filter);
 
     resources = filters.orderBySortField(resources, sortOrder);
 

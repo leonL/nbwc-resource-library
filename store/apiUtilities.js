@@ -18,6 +18,7 @@ const resourceFieldNames = {
   link: locale => `LINK ${locale}`,
   author: 'AUTHOR',
   organizations: locale => `ORGANIZATIONS ${locale}`,
+  organizationIds: 'ORGANIZATION IDS', 
   publication: locale => `PUBLICATION ${locale}`,
   publicationDay: 'PUBLICATION DAY',
   publicationMonth: 'PUBLICATION MONTH',
@@ -74,6 +75,12 @@ const resourceFieldParsers = {
       organizations = [];
     if (resource.hasOwnProperty(fieldName)) organizations = resource[fieldName];
     return organizations.join(', ');
+  },
+  organizationIds: (resource) => {
+    let fieldName = resourceFieldNames.organizationIds,
+      organiztionIds = [];
+    if (resource.hasOwnProperty(fieldName)) organiztionIds = resource[fieldName];
+    return organiztionIds;
   },
   publication: (resource, locale) => {
     let fieldName = resourceFieldNames.publication(locale),

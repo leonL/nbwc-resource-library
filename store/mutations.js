@@ -37,6 +37,7 @@ export default {
         author: r[fields.author] || "",
         enOrganizations: parsers.organizations(r, 'EN'),
         frOrganizations: parsers.organizations(r, 'FR'),
+        organizationIds: parsers.organizationIds(r),
         enPublication: parsers.publication(r, 'EN'),
         frPublication: parsers.publication(r, 'FR'),
         publicationYear: r[fields.publicationYear],
