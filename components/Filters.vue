@@ -61,6 +61,22 @@
         <CheckboxFilter :type="'contentTypeIds'" />
       </b-collapse>
     </div>
+
+    <div class="organization filter">
+      <div v-b-toggle.organizations class='toggle'>
+        <img class="icon" src="~/assets/content-type.png">
+        <h2 class='heading'>{{ $t('organization')}}</h2>
+        <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
+        <client-only>
+          <span class='chevron up' aria-hidden="true"><b-icon icon="chevron-up"></b-icon></span>
+        </client-only>
+      </div>
+      <b-collapse id="organizations" class="options">
+        <CheckboxFilter :type="'organizationIds'" />
+      </b-collapse>
+    </div>
+
+
   </div>
 </template>
 

@@ -25,13 +25,11 @@ export default {
     options() {
       let optionData = [...this.filterOptions[this.type]];
 
-      if (this.type === 'contentTypeIds') {
-        optionData = optionData.sort((a, b) => {
-          let aText = a[this.upperCaseLocale],
-            bText = b[this.upperCaseLocale];
-          return aText.localeCompare(bText, this.$i18n.locale);       
-        });
-      }
+      optionData = optionData.sort((a, b) => {
+        let aText = a[this.upperCaseLocale],
+          bText = b[this.upperCaseLocale];
+        return aText.localeCompare(bText, this.$i18n.locale);       
+      });
 
       return this.$mapFilterOptionsToHtmlAttrs(optionData, this.$i18n.locale);
     }
