@@ -64,7 +64,7 @@
 
     <div class="organization filter">
       <div v-b-toggle.organizations class='toggle'>
-        <img class="icon" src="~/assets/content-type.png">
+        <img class="icon" src="~/assets/organization.png">
         <h2 class='heading'>{{ $t('organization')}}</h2>
         <span class='chevron down' aria-hidden="true"><b-icon icon="chevron-down"></b-icon></span>
         <client-only>
