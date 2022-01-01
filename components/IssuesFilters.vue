@@ -63,6 +63,8 @@ export default {
         return aText.localeCompare(bText, this.locale);       
       });
 
+      debugger;
+
       let htmlAttrs = this.$mapFilterOptionsToHtmlAttrs(issuesOrdered, this.$i18n.locale);
       return htmlAttrs;
     }

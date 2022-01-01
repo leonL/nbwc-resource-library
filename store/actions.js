@@ -22,7 +22,7 @@ export default {
   async fetchOptionsForFilterType ({commit}, filterType) {
 
     let tableName = encodeURI(filterTypeTableNames[filterType]),
-      searchParams = [...filterSearchParams, ['filterByFormula', "NOT({RESOURCES} = '')"]],
+      searchParams = [...filterSearchParams, ['filterByFormula', "NOT({posted RESOURCES count} = 0)"]],
       optionsJson = await this.api.$get(tableName, { searchParams }),
       options = optionsJson.records.map(r => r.fields);
 
@@ -33,7 +33,7 @@ export default {
 
     let filterType = 'issueIds',
       tableName = encodeURI(filterTypeTableNames[filterType]),
-      searchParams = [...filterSearchParams, ['fields', 'CATEGORY ID'], ['filterByFormula', "NOT({RESOURCES} = '')"]],
+      searchParams = [...filterSearchParams, ['fields', 'CATEGORY ID'], ['filterByFormula', "NOT({posted RESOURCES count} = 0)"]],
       optionsJson = await this.api.$get(tableName, { searchParams }),
       issues = optionsJson.records.map(r => r.fields);
 
