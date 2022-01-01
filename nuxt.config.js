@@ -96,7 +96,8 @@ export default {
           to: 'To',
           month: 'Month',
           year: 'Year',
-          organization: 'Organization'
+          organization: 'Organization',
+          published: 'Published'
         },
         fr: {
           home: 'Accueil',
@@ -126,7 +127,8 @@ export default {
           to: 'À',
           month: 'Mois',
           year: 'An',
-          organization: 'Organisation'
+          organization: 'Organisation',
+          published: 'Publié'
         }
       }
     }

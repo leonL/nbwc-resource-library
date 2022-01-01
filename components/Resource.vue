@@ -13,7 +13,7 @@
       </div>
       <div>
         <span class="publication" v-html="publication"></span> 
-        <span>Published {{ publicationDateString }}</span>
+        <span>{{ $t('published') }} {{ publicationDateString }}</span>
       </div>
     </div>
 
@@ -103,14 +103,15 @@ export default {
 
       if (this.resource.publicationMonth !== null) {
         let publicationDate = new Date(yearPublished, this.resource.publicationMonth),
-          dateFormat = { month: 'long', year: 'numeric' };
+          dateFormat = { month: 'long', year: 'numeric' },
+          timeFormatLocale = this.locale === 'en' ? 'en-US' : 'fr';
 
         if (this.resource.publicationDay !== null) {
-          dateFormat.day = 'numeric';
+          dateFormat['day'] = 'numeric';
           publicationDate.setDate(this.resource.publicationDay);
         }
 
-        dateString = new Intl.DateTimeFormat('en-US', dateFormat).format(publicationDate);
+        dateString = new Intl.DateTimeFormat(timeFormatLocale, dateFormat).format(publicationDate);
       }
 
       return dateString;
